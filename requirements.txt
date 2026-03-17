@@ -1,0 +1,11 @@
+pandas
+Faker
+sqlalchemy
+networkx
+pyvis
+langchain
+langchain-openai
+openai
+pytest
+python-dotenv
+streamlit

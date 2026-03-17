@@ -1,0 +1,1002 @@
+[
+    {
+        "campaign_id": "CAMP-500",
+        "campaign_name": "Royalblue Tax inspector Promo",
+        "campaign_type": "Branding",
+        "channel": "Affiliate",
+        "budget_usd": 71681.14,
+        "actual_spend": 8185.85,
+        "start_date": "2024-09-30",
+        "end_date": "2025-08-16",
+        "target_audience": "Parents",
+        "status": "Active",
+        "performance_metrics": {
+            "clicks": 43504,
+            "impressions": 405284,
+            "conversions": 871,
+            "ctr": 0.93,
+            "roi": 1.71
+        },
+        "owner": "Rebecca Yates"
+    },
+    {
+        "campaign_id": "CAMP-501",
+        "campaign_name": "Darkcyan Actor Promo",
+        "campaign_type": "Branding",
+        "channel": "Email",
+        "budget_usd": 57604.74,
+        "actual_spend": 76237.1,
+        "start_date": "2024-05-26",
+        "end_date": "2025-04-03",
+        "target_audience": "Parents",
+        "status": "Active",
+        "performance_metrics": {
+            "clicks": 49195,
+            "impressions": 329572,
+            "conversions": 1638,
+            "ctr": 2.86,
+            "roi": 0.77
+        },
+        "owner": "Mason Davis"
+    },
+    {
+        "campaign_id": "CAMP-502",
+        "campaign_name": "Lightslategray Research officer, political party Promo",
+        "campaign_type": "Direct Mail",
+        "channel": "Social Media",
+        "budget_usd": 67346.45,
+        "actual_spend": 45232.74,
+        "start_date": "2024-08-06",
+        "end_date": "2025-03-11",
+        "target_audience": "Youth",
+        "status": "Active",
+        "performance_metrics": {
+            "clicks": 35515,
+            "impressions": 486343,
+            "conversions": 1438,
+            "ctr": 2.01,
+            "roi": 3.14
+        },
+        "owner": "Nicholas Meadows"
+    },
+    {
+        "campaign_id": "CAMP-503",
+        "campaign_name": "Blanchedalmond Nurse, learning disability Promo",
+        "campaign_type": "Retention",
+        "channel": "Affiliate",
+        "budget_usd": 57936.98,
+        "actual_spend": 85385.95,
+        "start_date": "2024-11-22",
+        "end_date": "2026-03-05",
+        "target_audience": "Seniors",
+        "status": "Planned",
+        "performance_metrics": {
+            "clicks": 18787,
+            "impressions": 563612,
+            "conversions": 742,
+            "ctr": 4.21,
+            "roi": 1.36
+        },
+        "owner": "Tamara Goodman"
+    },
+    {
+        "campaign_id": "CAMP-504",
+        "campaign_name": "Red Oceanographer Promo",
+        "campaign_type": "Retention",
+        "channel": "SMS",
+        "budget_usd": 83103.94,
+        "actual_spend": 19827.34,
+        "start_date": "2024-07-17",
+        "end_date": "2025-08-01",
+        "target_audience": "Youth",
+        "status": "Planned",
+        "performance_metrics": {
+            "clicks": 8453,
+            "impressions": 945220,
+            "conversions": 182,
+            "ctr": 4.14,
+            "roi": 2.83
+        },
+        "owner": "Robert Gates"
+    },
+    {
+        "campaign_id": "CAMP-505",
+        "campaign_name": "Cornflowerblue Teacher, secondary school Promo",
+        "campaign_type": "Retention",
+        "channel": "Affiliate",
+        "budget_usd": 94626.53,
+        "actual_spend": 41624.45,
+        "start_date": "2025-01-18",
+        "end_date": "2025-05-05",
+        "target_audience": "Seniors",
+        "status": "Completed",
+        "performance_metrics": {
+            "clicks": 46732,
+            "impressions": 871536,
+            "conversions": 2000,
+            "ctr": 4.96,
+            "roi": 2.47
+        },
+        "owner": "Larry Le"
+    },
+    {
+        "campaign_id": "CAMP-506",
+        "campaign_name": "Firebrick Warden/ranger Promo",
+        "campaign_type": "Retention",
+        "channel": "Affiliate",
+        "budget_usd": 84747.81,
+        "actual_spend": 79125.96,
+        "start_date": "2024-10-30",
+        "end_date": "2025-09-21",
+        "target_audience": "Parents",
+        "status": "Suspended",
+        "performance_metrics": {
+            "clicks": 34099,
+            "impressions": 254093,
+            "conversions": 14,
+            "ctr": 3.06,
+            "roi": 2.2
+        },
+        "owner": "Pamela Levy"
+    },
+    {
+        "campaign_id": "CAMP-507",
+        "campaign_name": "Palegoldenrod Clinical research associate Promo",
+        "campaign_type": "Retention",
+        "channel": "Email",
+        "budget_usd": 65149.62,
+        "actual_spend": 30466.31,
+        "start_date": "2024-09-09",
+        "end_date": "2025-09-20",
+        "target_audience": "Parents",
+        "status": "Planned",
+        "performance_metrics": {
+            "clicks": 7700,
+            "impressions": 810358,
+            "conversions": 1434,
+            "ctr": 0.91,
+            "roi": 3.21
+        },
+        "owner": "Cesar Miller"
+    },
+    {
+        "campaign_id": "CAMP-508",
+        "campaign_name": "Dodgerblue Public relations officer Promo",
+        "campaign_type": "Branding",
+        "channel": "Search",
+        "budget_usd": 20851.24,
+        "actual_spend": 30744.87,
+        "start_date": "2025-02-04",
+        "end_date": "2025-11-02",
+        "target_audience": "Professionals",
+        "status": "Active",
+        "performance_metrics": {
+            "clicks": 14610,
+            "impressions": 408037,
+            "conversions": 530,
+            "ctr": 3.01,
+            "roi": 2.84
+        },
+        "owner": "Patrick King"
+    },
+    {
+        "campaign_id": "CAMP-509",
+        "campaign_name": "Mediumorchid Video editor Promo",
+        "campaign_type": "Growth",
+        "channel": "SMS",
+        "budget_usd": 7671.81,
+        "actual_spend": 63542.9,
+        "start_date": "2024-05-28",
+        "end_date": "2026-01-03",
+        "target_audience": "Youth",
+        "status": "Active",
+        "performance_metrics": {
+            "clicks": 43341,
+            "impressions": 342173,
+            "conversions": 1237,
+            "ctr": 1.72,
+            "roi": 2.15
+        },
+        "owner": "Aaron Melton"
+    },
+    {
+        "campaign_id": "CAMP-510",
+        "campaign_name": "Cornflowerblue Armed forces operational officer Promo",
+        "campaign_type": "Direct Mail",
+        "channel": "Email",
+        "budget_usd": 65134.78,
+        "actual_spend": 13036.21,
+        "start_date": "2024-08-17",
+        "end_date": "2025-12-23",
+        "target_audience": "Youth",
+        "status": "Completed",
+        "performance_metrics": {
+            "clicks": 275,
+            "impressions": 392765,
+            "conversions": 1152,
+            "ctr": 1.92,
+            "roi": 3.99
+        },
+        "owner": "Michael French"
+    },
+    {
+        "campaign_id": "CAMP-511",
+        "campaign_name": "Mediumseagreen Pilot, airline Promo",
+        "campaign_type": "Branding",
+        "channel": "Affiliate",
+        "budget_usd": 73580.5,
+        "actual_spend": 85046.61,
+        "start_date": "2024-06-25",
+        "end_date": "2025-04-12",
+        "target_audience": "Professionals",
+        "status": "Planned",
+        "performance_metrics": {
+            "clicks": 37320,
+            "impressions": 884998,
+            "conversions": 1445,
+            "ctr": 3.15,
+            "roi": 2.25
+        },
+        "owner": "Douglas Edwards"
+    },
+    {
+        "campaign_id": "CAMP-512",
+        "campaign_name": "Lightgreen Engineer, electronics Promo",
+        "campaign_type": "Retention",
+        "channel": "Search",
+        "budget_usd": 66482.31,
+        "actual_spend": 27731.31,
+        "start_date": "2025-01-20",
+        "end_date": "2025-04-30",
+        "target_audience": "Professionals",
+        "status": "Completed",
+        "performance_metrics": {
+            "clicks": 15537,
+            "impressions": 91274,
+            "conversions": 1706,
+            "ctr": 1.5,
+            "roi": 2.75
+        },
+        "owner": "Justin Jordan"
+    },
+    {
+        "campaign_id": "CAMP-513",
+        "campaign_name": "Magenta Chartered public finance accountant Promo",
+        "campaign_type": "Direct Mail",
+        "channel": "SMS",
+        "budget_usd": 25908.88,
+        "actual_spend": 52718.52,
+        "start_date": "2024-12-23",
+        "end_date": "2025-07-21",
+        "target_audience": "Seniors",
+        "status": "Suspended",
+        "performance_metrics": {
+            "clicks": 2207,
+            "impressions": 498970,
+            "conversions": 961,
+            "ctr": 4.15,
+            "roi": 2.74
+        },
+        "owner": "Travis Wilson"
+    },
+    {
+        "campaign_id": "CAMP-514",
+        "campaign_name": "Lightsteelblue Product manager Promo",
+        "campaign_type": "Direct Mail",
+        "channel": "SMS",
+        "budget_usd": 68379.14,
+        "actual_spend": 54035.05,
+        "start_date": "2025-02-15",
+        "end_date": "2025-11-13",
+        "target_audience": "Parents",
+        "status": "Suspended",
+        "performance_metrics": {
+            "clicks": 9962,
+            "impressions": 462031,
+            "conversions": 673,
+            "ctr": 1.17,
+            "roi": 3.54
+        },
+        "owner": "Gordon Hall"
+    },
+    {
+        "campaign_id": "CAMP-515",
+        "campaign_name": "Limegreen Editor, commissioning Promo",
+        "campaign_type": "Growth",
+        "channel": "Social Media",
+        "budget_usd": 54228.79,
+        "actual_spend": 87463.64,
+        "start_date": "2025-01-31",
+        "end_date": "2025-04-26",
+        "target_audience": "Youth",
+        "status": "Planned",
+        "performance_metrics": {
+            "clicks": 47432,
+            "impressions": 703889,
+            "conversions": 518,
+            "ctr": 0.8,
+            "roi": 3.8
+        },
+        "owner": "Shelly Smith"
+    },
+    {
+        "campaign_id": "CAMP-516",
+        "campaign_name": "Chocolate Corporate treasurer Promo",
+        "campaign_type": "Direct Mail",
+        "channel": "Social Media",
+        "budget_usd": 55347.7,
+        "actual_spend": 17348.21,
+        "start_date": "2024-12-07",
+        "end_date": "2026-01-02",
+        "target_audience": "Professionals",
+        "status": "Suspended",
+        "performance_metrics": {
+            "clicks": 47171,
+            "impressions": 474907,
+            "conversions": 1285,
+            "ctr": 4.78,
+            "roi": 0.82
+        },
+        "owner": "Caitlin Mccarthy"
+    },
+    {
+        "campaign_id": "CAMP-517",
+        "campaign_name": "Salmon Chief Financial Officer Promo",
+        "campaign_type": "Growth",
+        "channel": "SMS",
+        "budget_usd": 32156.53,
+        "actual_spend": 70596.87,
+        "start_date": "2024-06-07",
+        "end_date": "2025-10-14",
+        "target_audience": "Professionals",
+        "status": "Completed",
+        "performance_metrics": {
+            "clicks": 32972,
+            "impressions": 704474,
+            "conversions": 1724,
+            "ctr": 0.14,
+            "roi": 3.93
+        },
+        "owner": "Sheila Bruce"
+    },
+    {
+        "campaign_id": "CAMP-518",
+        "campaign_name": "Olive Politician's assistant Promo",
+        "campaign_type": "Growth",
+        "channel": "Search",
+        "budget_usd": 83969.98,
+        "actual_spend": 65815.52,
+        "start_date": "2024-10-30",
+        "end_date": "2025-10-06",
+        "target_audience": "Professionals",
+        "status": "Suspended",
+        "performance_metrics": {
+            "clicks": 22714,
+            "impressions": 40460,
+            "conversions": 129,
+            "ctr": 1.57,
+            "roi": 0.75
+        },
+        "owner": "Gregory Escobar"
+    },
+    {
+        "campaign_id": "CAMP-519",
+        "campaign_name": "Olivedrab Psychologist, educational Promo",
+        "campaign_type": "Branding",
+        "channel": "Social Media",
+        "budget_usd": 79172.28,
+        "actual_spend": 2516.85,
+        "start_date": "2024-05-21",
+        "end_date": "2025-08-10",
+        "target_audience": "Parents",
+        "status": "Completed",
+        "performance_metrics": {
+            "clicks": 24273,
+            "impressions": 282045,
+            "conversions": 1915,
+            "ctr": 2.11,
+            "roi": 2.45
+        },
+        "owner": "Susan Brown"
+    },
+    {
+        "campaign_id": "CAMP-520",
+        "campaign_name": "Seagreen Youth worker Promo",
+        "campaign_type": "Retention",
+        "channel": "Affiliate",
+        "budget_usd": 42800.7,
+        "actual_spend": 48691.97,
+        "start_date": "2024-05-25",
+        "end_date": "2025-12-13",
+        "target_audience": "Seniors",
+        "status": "Completed",
+        "performance_metrics": {
+            "clicks": 36799,
+            "impressions": 340783,
+            "conversions": 1458,
+            "ctr": 3.65,
+            "roi": 3.85
+        },
+        "owner": "Alison Carpenter"
+    },
+    {
+        "campaign_id": "CAMP-521",
+        "campaign_name": "Coral Early years teacher Promo",
+        "campaign_type": "Growth",
+        "channel": "Social Media",
+        "budget_usd": 49459.25,
+        "actual_spend": 87024.96,
+        "start_date": "2024-09-14",
+        "end_date": "2025-07-18",
+        "target_audience": "Parents",
+        "status": "Planned",
+        "performance_metrics": {
+            "clicks": 23530,
+            "impressions": 845713,
+            "conversions": 102,
+            "ctr": 4.45,
+            "roi": 0.91
+        },
+        "owner": "Dr. Garrett Lee"
+    },
+    {
+        "campaign_id": "CAMP-522",
+        "campaign_name": "Goldenrod Counsellor Promo",
+        "campaign_type": "Growth",
+        "channel": "SMS",
+        "budget_usd": 42061.17,
+        "actual_spend": 40340.93,
+        "start_date": "2024-03-30",
+        "end_date": "2025-10-11",
+        "target_audience": "Parents",
+        "status": "Suspended",
+        "performance_metrics": {
+            "clicks": 21342,
+            "impressions": 111434,
+            "conversions": 1147,
+            "ctr": 4.8,
+            "roi": 0.87
+        },
+        "owner": "Monique Jackson"
+    },
+    {
+        "campaign_id": "CAMP-523",
+        "campaign_name": "Aliceblue Public affairs consultant Promo",
+        "campaign_type": "Retention",
+        "channel": "Social Media",
+        "budget_usd": 56391.2,
+        "actual_spend": 28941.69,
+        "start_date": "2024-07-22",
+        "end_date": "2025-07-01",
+        "target_audience": "Seniors",
+        "status": "Planned",
+        "performance_metrics": {
+            "clicks": 8051,
+            "impressions": 229513,
+            "conversions": 440,
+            "ctr": 2.24,
+            "roi": 1.61
+        },
+        "owner": "Alisha Stewart"
+    },
+    {
+        "campaign_id": "CAMP-524",
+        "campaign_name": "Lightslategray Proofreader Promo",
+        "campaign_type": "Retention",
+        "channel": "Social Media",
+        "budget_usd": 29929.09,
+        "actual_spend": 33062.76,
+        "start_date": "2024-05-03",
+        "end_date": "2025-08-07",
+        "target_audience": "Parents",
+        "status": "Active",
+        "performance_metrics": {
+            "clicks": 25171,
+            "impressions": 516150,
+            "conversions": 1118,
+            "ctr": 1.27,
+            "roi": 1.42
+        },
+        "owner": "Brian Hunter"
+    },
+    {
+        "campaign_id": "CAMP-525",
+        "campaign_name": "Blue Comptroller Promo",
+        "campaign_type": "Retention",
+        "channel": "Social Media",
+        "budget_usd": 51326.72,
+        "actual_spend": 47486.36,
+        "start_date": "2024-04-27",
+        "end_date": "2025-06-07",
+        "target_audience": "Professionals",
+        "status": "Suspended",
+        "performance_metrics": {
+            "clicks": 230,
+            "impressions": 842201,
+            "conversions": 1741,
+            "ctr": 2.01,
+            "roi": 1.59
+        },
+        "owner": "Kevin Turner"
+    },
+    {
+        "campaign_id": "CAMP-526",
+        "campaign_name": "Sienna Nurse, mental health Promo",
+        "campaign_type": "Retention",
+        "channel": "Affiliate",
+        "budget_usd": 96327.96,
+        "actual_spend": 77067.36,
+        "start_date": "2024-03-22",
+        "end_date": "2025-05-12",
+        "target_audience": "Youth",
+        "status": "Completed",
+        "performance_metrics": {
+            "clicks": 23926,
+            "impressions": 183572,
+            "conversions": 805,
+            "ctr": 1.02,
+            "roi": 1.72
+        },
+        "owner": "Kelly Riley"
+    },
+    {
+        "campaign_id": "CAMP-527",
+        "campaign_name": "Purple Production assistant, radio Promo",
+        "campaign_type": "Direct Mail",
+        "channel": "Search",
+        "budget_usd": 23509.61,
+        "actual_spend": 54863.93,
+        "start_date": "2024-06-15",
+        "end_date": "2025-06-16",
+        "target_audience": "Parents",
+        "status": "Active",
+        "performance_metrics": {
+            "clicks": 41097,
+            "impressions": 204528,
+            "conversions": 48,
+            "ctr": 1.97,
+            "roi": 1.01
+        },
+        "owner": "James Hernandez"
+    },
+    {
+        "campaign_id": "CAMP-528",
+        "campaign_name": "Paleturquoise Civil engineer, consulting Promo",
+        "campaign_type": "Growth",
+        "channel": "Email",
+        "budget_usd": 21149.95,
+        "actual_spend": 81043.05,
+        "start_date": "2024-09-19",
+        "end_date": "2025-04-27",
+        "target_audience": "Seniors",
+        "status": "Planned",
+        "performance_metrics": {
+            "clicks": 34274,
+            "impressions": 526089,
+            "conversions": 383,
+            "ctr": 3.66,
+            "roi": 1.8
+        },
+        "owner": "Rachel Lam"
+    },
+    {
+        "campaign_id": "CAMP-529",
+        "campaign_name": "Cyan Museum/gallery conservator Promo",
+        "campaign_type": "Retention",
+        "channel": "SMS",
+        "budget_usd": 61752.87,
+        "actual_spend": 74548.12,
+        "start_date": "2024-04-22",
+        "end_date": "2025-08-08",
+        "target_audience": "Parents",
+        "status": "Completed",
+        "performance_metrics": {
+            "clicks": 29865,
+            "impressions": 165956,
+            "conversions": 1863,
+            "ctr": 2.51,
+            "roi": 2.09
+        },
+        "owner": "Patrick Webb"
+    },
+    {
+        "campaign_id": "CAMP-530",
+        "campaign_name": "Peachpuff IT technical support officer Promo",
+        "campaign_type": "Branding",
+        "channel": "Social Media",
+        "budget_usd": 36890.01,
+        "actual_spend": 79233.62,
+        "start_date": "2024-12-26",
+        "end_date": "2025-05-16",
+        "target_audience": "Professionals",
+        "status": "Suspended",
+        "performance_metrics": {
+            "clicks": 37961,
+            "impressions": 336814,
+            "conversions": 1709,
+            "ctr": 1.71,
+            "roi": 3.8
+        },
+        "owner": "Mary Curtis"
+    },
+    {
+        "campaign_id": "CAMP-531",
+        "campaign_name": "Darkorchid Seismic interpreter Promo",
+        "campaign_type": "Direct Mail",
+        "channel": "Search",
+        "budget_usd": 86971.24,
+        "actual_spend": 76257.99,
+        "start_date": "2024-06-28",
+        "end_date": "2026-01-24",
+        "target_audience": "Parents",
+        "status": "Completed",
+        "performance_metrics": {
+            "clicks": 31579,
+            "impressions": 899459,
+            "conversions": 1218,
+            "ctr": 4.9,
+            "roi": 0.52
+        },
+        "owner": "Stephen Andrews"
+    },
+    {
+        "campaign_id": "CAMP-532",
+        "campaign_name": "Coral Archaeologist Promo",
+        "campaign_type": "Growth",
+        "channel": "Social Media",
+        "budget_usd": 70689.87,
+        "actual_spend": 58158.96,
+        "start_date": "2024-10-07",
+        "end_date": "2025-06-14",
+        "target_audience": "Professionals",
+        "status": "Completed",
+        "performance_metrics": {
+            "clicks": 22633,
+            "impressions": 519020,
+            "conversions": 65,
+            "ctr": 3.44,
+            "roi": 1.19
+        },
+        "owner": "Ruth Mccann"
+    },
+    {
+        "campaign_id": "CAMP-533",
+        "campaign_name": "Mediumslateblue Medical physicist Promo",
+        "campaign_type": "Branding",
+        "channel": "SMS",
+        "budget_usd": 90792.45,
+        "actual_spend": 6348.4,
+        "start_date": "2024-10-26",
+        "end_date": "2025-03-30",
+        "target_audience": "Professionals",
+        "status": "Planned",
+        "performance_metrics": {
+            "clicks": 19671,
+            "impressions": 110386,
+            "conversions": 865,
+            "ctr": 4.15,
+            "roi": 3.63
+        },
+        "owner": "Rodney Sims"
+    },
+    {
+        "campaign_id": "CAMP-534",
+        "campaign_name": "Darkslateblue Best boy Promo",
+        "campaign_type": "Growth",
+        "channel": "SMS",
+        "budget_usd": 24165.32,
+        "actual_spend": 82442.47,
+        "start_date": "2024-09-24",
+        "end_date": "2025-11-26",
+        "target_audience": "Youth",
+        "status": "Suspended",
+        "performance_metrics": {
+            "clicks": 32625,
+            "impressions": 272949,
+            "conversions": 1465,
+            "ctr": 0.79,
+            "roi": 2.98
+        },
+        "owner": "Michelle Oconnor"
+    },
+    {
+        "campaign_id": "CAMP-535",
+        "campaign_name": "Darkorchid Publishing rights manager Promo",
+        "campaign_type": "Growth",
+        "channel": "SMS",
+        "budget_usd": 76346.14,
+        "actual_spend": 60840.41,
+        "start_date": "2024-11-03",
+        "end_date": "2025-11-28",
+        "target_audience": "Youth",
+        "status": "Completed",
+        "performance_metrics": {
+            "clicks": 31878,
+            "impressions": 587454,
+            "conversions": 1676,
+            "ctr": 3.97,
+            "roi": 1.06
+        },
+        "owner": "Travis Brady"
+    },
+    {
+        "campaign_id": "CAMP-536",
+        "campaign_name": "Steelblue Engineer, manufacturing systems Promo",
+        "campaign_type": "Branding",
+        "channel": "Affiliate",
+        "budget_usd": 95385.75,
+        "actual_spend": 63314.24,
+        "start_date": "2024-10-14",
+        "end_date": "2025-06-27",
+        "target_audience": "Professionals",
+        "status": "Completed",
+        "performance_metrics": {
+            "clicks": 19256,
+            "impressions": 512333,
+            "conversions": 1200,
+            "ctr": 2.03,
+            "roi": 0.74
+        },
+        "owner": "Cole Johnson"
+    },
+    {
+        "campaign_id": "CAMP-537",
+        "campaign_name": "Lightblue Nutritional therapist Promo",
+        "campaign_type": "Retention",
+        "channel": "Search",
+        "budget_usd": 14426.89,
+        "actual_spend": 19085.69,
+        "start_date": "2025-02-11",
+        "end_date": "2025-09-06",
+        "target_audience": "Youth",
+        "status": "Suspended",
+        "performance_metrics": {
+            "clicks": 7357,
+            "impressions": 23893,
+            "conversions": 1318,
+            "ctr": 0.69,
+            "roi": 0.85
+        },
+        "owner": "Randall Carter"
+    },
+    {
+        "campaign_id": "CAMP-538",
+        "campaign_name": "Lightpink Jewellery designer Promo",
+        "campaign_type": "Branding",
+        "channel": "Affiliate",
+        "budget_usd": 5147.24,
+        "actual_spend": 78220.59,
+        "start_date": "2025-01-21",
+        "end_date": "2025-10-12",
+        "target_audience": "Parents",
+        "status": "Completed",
+        "performance_metrics": {
+            "clicks": 23630,
+            "impressions": 752220,
+            "conversions": 640,
+            "ctr": 2.85,
+            "roi": 0.75
+        },
+        "owner": "Tracy Harris"
+    },
+    {
+        "campaign_id": "CAMP-539",
+        "campaign_name": "Mediumpurple Market researcher Promo",
+        "campaign_type": "Growth",
+        "channel": "SMS",
+        "budget_usd": 86378.34,
+        "actual_spend": 16579.01,
+        "start_date": "2024-04-20",
+        "end_date": "2025-07-25",
+        "target_audience": "Parents",
+        "status": "Planned",
+        "performance_metrics": {
+            "clicks": 22389,
+            "impressions": 312215,
+            "conversions": 814,
+            "ctr": 2.05,
+            "roi": 2.82
+        },
+        "owner": "Rebecca Henderson"
+    },
+    {
+        "campaign_id": "CAMP-540",
+        "campaign_name": "Mediumpurple Call centre manager Promo",
+        "campaign_type": "Branding",
+        "channel": "Search",
+        "budget_usd": 64410.32,
+        "actual_spend": 44714.73,
+        "start_date": "2024-08-14",
+        "end_date": "2025-07-08",
+        "target_audience": "Seniors",
+        "status": "Active",
+        "performance_metrics": {
+            "clicks": 34568,
+            "impressions": 562415,
+            "conversions": 1535,
+            "ctr": 3.78,
+            "roi": 1.28
+        },
+        "owner": "Nancy Lee"
+    },
+    {
+        "campaign_id": "CAMP-541",
+        "campaign_name": "Whitesmoke Passenger transport manager Promo",
+        "campaign_type": "Growth",
+        "channel": "Affiliate",
+        "budget_usd": 96240.95,
+        "actual_spend": 5910.98,
+        "start_date": "2024-05-06",
+        "end_date": "2025-11-27",
+        "target_audience": "Professionals",
+        "status": "Completed",
+        "performance_metrics": {
+            "clicks": 47522,
+            "impressions": 779459,
+            "conversions": 590,
+            "ctr": 4.12,
+            "roi": 0.74
+        },
+        "owner": "Kristie Ortiz"
+    },
+    {
+        "campaign_id": "CAMP-542",
+        "campaign_name": "Indigo Chartered management accountant Promo",
+        "campaign_type": "Growth",
+        "channel": "Affiliate",
+        "budget_usd": 12461.12,
+        "actual_spend": 78157.42,
+        "start_date": "2025-02-20",
+        "end_date": "2025-07-10",
+        "target_audience": "Seniors",
+        "status": "Suspended",
+        "performance_metrics": {
+            "clicks": 34235,
+            "impressions": 358028,
+            "conversions": 1502,
+            "ctr": 0.43,
+            "roi": 2.64
+        },
+        "owner": "Laura Spencer"
+    },
+    {
+        "campaign_id": "CAMP-543",
+        "campaign_name": "Darkorchid Nutritional therapist Promo",
+        "campaign_type": "Retention",
+        "channel": "Affiliate",
+        "budget_usd": 41655.93,
+        "actual_spend": 81952.48,
+        "start_date": "2024-12-02",
+        "end_date": "2025-12-22",
+        "target_audience": "Youth",
+        "status": "Active",
+        "performance_metrics": {
+            "clicks": 36971,
+            "impressions": 916344,
+            "conversions": 1317,
+            "ctr": 2.22,
+            "roi": 0.66
+        },
+        "owner": "Tim Williamson"
+    },
+    {
+        "campaign_id": "CAMP-544",
+        "campaign_name": "Aquamarine Radio broadcast assistant Promo",
+        "campaign_type": "Branding",
+        "channel": "Affiliate",
+        "budget_usd": 35971.48,
+        "actual_spend": 10915.65,
+        "start_date": "2025-01-03",
+        "end_date": "2025-05-05",
+        "target_audience": "Seniors",
+        "status": "Completed",
+        "performance_metrics": {
+            "clicks": 7384,
+            "impressions": 341157,
+            "conversions": 1741,
+            "ctr": 4.87,
+            "roi": 1.35
+        },
+        "owner": "Kimberly Hernandez"
+    },
+    {
+        "campaign_id": "CAMP-545",
+        "campaign_name": "Forestgreen Cytogeneticist Promo",
+        "campaign_type": "Branding",
+        "channel": "SMS",
+        "budget_usd": 8949.95,
+        "actual_spend": 57635.46,
+        "start_date": "2024-03-18",
+        "end_date": "2025-11-22",
+        "target_audience": "Parents",
+        "status": "Active",
+        "performance_metrics": {
+            "clicks": 4292,
+            "impressions": 574647,
+            "conversions": 1352,
+            "ctr": 2.2,
+            "roi": 1.12
+        },
+        "owner": "Eric Garza"
+    },
+    {
+        "campaign_id": "CAMP-546",
+        "campaign_name": "Olive Broadcast presenter Promo",
+        "campaign_type": "Growth",
+        "channel": "Affiliate",
+        "budget_usd": 86718.78,
+        "actual_spend": 13648.37,
+        "start_date": "2024-11-20",
+        "end_date": "2025-08-05",
+        "target_audience": "Professionals",
+        "status": "Completed",
+        "performance_metrics": {
+            "clicks": 32640,
+            "impressions": 718181,
+            "conversions": 763,
+            "ctr": 4.62,
+            "roi": 2.74
+        },
+        "owner": "Jacqueline Davis"
+    },
+    {
+        "campaign_id": "CAMP-547",
+        "campaign_name": "Tan Solicitor, Scotland Promo",
+        "campaign_type": "Retention",
+        "channel": "Search",
+        "budget_usd": 72095.29,
+        "actual_spend": 52009.16,
+        "start_date": "2024-03-22",
+        "end_date": "2026-03-06",
+        "target_audience": "Youth",
+        "status": "Active",
+        "performance_metrics": {
+            "clicks": 45715,
+            "impressions": 100130,
+            "conversions": 838,
+            "ctr": 4.08,
+            "roi": 1.96
+        },
+        "owner": "Robert Jones"
+    },
+    {
+        "campaign_id": "CAMP-548",
+        "campaign_name": "Whitesmoke Geologist, wellsite Promo",
+        "campaign_type": "Growth",
+        "channel": "SMS",
+        "budget_usd": 18402.19,
+        "actual_spend": 36816.71,
+        "start_date": "2024-07-04",
+        "end_date": "2025-09-11",
+        "target_audience": "Seniors",
+        "status": "Active",
+        "performance_metrics": {
+            "clicks": 45608,
+            "impressions": 268070,
+            "conversions": 199,
+            "ctr": 2.9,
+            "roi": 0.77
+        },
+        "owner": "Annette Conner"
+    },
+    {
+        "campaign_id": "CAMP-549",
+        "campaign_name": "Greenyellow Scientist, product/process development Promo",
+        "campaign_type": "Branding",
+        "channel": "Email",
+        "budget_usd": 56131.84,
+        "actual_spend": 89282.44,
+        "start_date": "2024-05-25",
+        "end_date": "2025-05-08",
+        "target_audience": "Youth",
+        "status": "Suspended",
+        "performance_metrics": {
+            "clicks": 5415,
+            "impressions": 347353,
+            "conversions": 1011,
+            "ctr": 1.13,
+            "roi": 1.14
+        },
+        "owner": "Zachary Brandt"
+    }
+]

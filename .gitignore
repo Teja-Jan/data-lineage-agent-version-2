@@ -1,0 +1,10 @@
+venv/
+__pycache__/
+*.pyc
+.env
+.streamlit/
+data/chroma_db/
+logs/
+output/
+reports/visualizations/
+*.html
