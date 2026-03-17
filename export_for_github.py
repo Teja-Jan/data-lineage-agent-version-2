@@ -30,7 +30,9 @@ def main():
         "db_audit_log", 
         "report_dependency",
         "table_catalog",
-        "Dim_Customer" # Just one dimension for reference
+        "Dim_Customer",
+        "Dim_Product",
+        "Fact_Sales"
     ]
     
     for tbl in tables:

@@ -1,0 +1,601 @@
+product_sk,source_product_id,product_name,category,sub_category,price,cost_price,supplier_id,warehouse_location,is_active,launch_date
+1,20000,Customizable system-worthy firmware,Books,Fiction,213.6,189.8,39,WH-B-36,1,2018-01-26
+2,20001,Organic executive hardware,Books,Apparel,491.75,223.83,14,WH-C-81,1,2019-09-24
+3,20002,Managed stable projection,Books,Apparel,97.11,36.58,11,WH-C-16,0,2019-08-18
+4,20003,Streamlined tangible superstructure,Clothing,Mobile,442.42,15.5,24,WH-B-48,0,2016-07-24
+5,20004,Customizable responsive initiative,Clothing,Kitchen,324.9,207.33,31,WH-A-42,1,2023-12-31
+6,20005,Implemented cohesive extranet,Home,Educational,26.56,55.0,43,WH-B-72,1,2019-09-03
+7,20006,Vision-oriented well-modulated process improvement,Home,Fiction,267.15,98.85,50,WH-C-92,1,2017-04-07
+8,20007,Multi-channeled cohesive process improvement,Toys,Educational,362.49,76.7,35,WH-A-96,0,2023-07-14
+9,20008,Automated dynamic access,Home,Apparel,112.48,239.88,32,WH-A-23,0,2021-04-04
+10,20009,Programmable heuristic migration,Clothing,Kitchen,307.22,220.27,12,WH-A-81,0,2021-12-03
+11,20010,Polarized 24hour time-frame,Electronics,Fiction,129.93,69.29,38,WH-A-92,0,2020-06-10
+12,20011,Networked grid-enabled analyzer,Toys,Educational,264.15,26.34,29,WH-A-24,1,2018-02-11
+13,20012,Horizontal static hub,Home,Fiction,317.59,123.54,9,WH-A-74,0,2022-07-27
+14,20013,Triple-buffered regional info-mediaries,Books,Educational,197.38,166.13,18,WH-C-14,1,2016-05-02
+15,20014,Stand-alone multi-tasking info-mediaries,Electronics,Educational,96.02,117.01,45,WH-A-57,0,2017-10-28
+16,20015,Visionary asymmetric core,Electronics,Apparel,99.08,43.02,49,WH-C-79,1,2019-06-02
+17,20016,Multi-tiered value-added matrices,Home,Fiction,46.93,79.28,35,WH-C-19,1,2024-07-10
+18,20017,Customer-focused explicit core,Clothing,Fiction,429.29,137.34,35,WH-C-40,1,2022-01-17
+19,20018,Centralized multi-state intranet,Toys,Kitchen,89.17,101.31,44,WH-A-74,0,2018-09-03
+20,20019,Quality-focused 24/7 intranet,Clothing,Educational,305.77,212.75,18,WH-B-1,0,2017-02-14
+21,20020,Organic attitude-oriented hardware,Electronics,Apparel,130.78,225.76,9,WH-C-64,1,2020-04-10
+22,20021,Assimilated explicit middleware,Clothing,Fiction,476.11,236.72,10,WH-A-17,1,2018-05-10
+23,20022,Decentralized fresh-thinking support,Toys,Mobile,278.51,47.45,43,WH-A-34,1,2020-02-08
+24,20023,Devolved bottom-line architecture,Books,Fiction,257.9,144.39,5,WH-C-27,1,2020-02-13
+25,20024,Switchable static open system,Clothing,Kitchen,322.34,101.61,26,WH-A-26,0,2021-06-26
+26,20025,Realigned coherent solution,Books,Fiction,167.16,117.75,14,WH-A-27,0,2022-05-04
+27,20026,Universal non-volatile process improvement,Books,Kitchen,391.82,183.79,50,WH-C-45,1,2017-12-04
+28,20027,Synergistic dedicated info-mediaries,Home,Fiction,104.5,154.96,36,WH-A-74,1,2019-07-06
+29,20028,Digitized zero-defect framework,Electronics,Fiction,484.03,40.57,49,WH-C-20,0,2024-08-20
+30,20029,Innovative heuristic initiative,Toys,Educational,238.61,166.74,45,WH-A-78,0,2022-09-10
+31,20030,Mandatory asynchronous superstructure,Toys,Educational,61.21,228.75,45,WH-A-80,1,2017-07-17
+32,20031,Open-source 4thgeneration workforce,Clothing,Kitchen,463.49,187.96,3,WH-A-38,0,2022-05-02
+33,20032,Inverse foreground secured line,Books,Mobile,333.57,116.56,35,WH-C-39,0,2017-05-29
+34,20033,Progressive interactive standardization,Electronics,Mobile,149.38,198.51,49,WH-B-81,1,2021-04-02
+35,20034,Synchronized value-added architecture,Clothing,Kitchen,302.2,97.02,49,WH-C-25,0,2023-08-26
+36,20035,Organized content-based flexibility,Electronics,Kitchen,360.68,144.37,26,WH-A-100,0,2019-12-25
+37,20036,Self-enabling contextually-based service-desk,Toys,Mobile,79.52,51.74,22,WH-B-71,0,2021-08-30
+38,20037,Right-sized mission-critical workforce,Clothing,Mobile,137.09,23.36,4,WH-A-4,0,2016-07-22
+39,20038,Fundamental system-worthy extranet,Home,Fiction,89.36,61.55,31,WH-B-8,0,2016-12-12
+40,20039,Persistent 3rdgeneration analyzer,Toys,Educational,432.36,10.48,41,WH-A-17,1,2021-08-11
+41,20040,User-friendly responsive project,Home,Apparel,476.93,43.86,50,WH-C-81,1,2016-10-26
+42,20041,Ameliorated tangible concept,Electronics,Kitchen,38.74,9.13,4,WH-B-64,1,2020-09-17
+43,20042,Proactive bi-directional archive,Home,Fiction,41.79,113.49,50,WH-B-48,1,2018-09-03
+44,20043,Implemented coherent function,Electronics,Kitchen,420.02,66.52,18,WH-A-15,0,2018-09-26
+45,20044,Implemented context-sensitive utilization,Electronics,Kitchen,23.06,228.31,30,WH-B-71,0,2024-03-30
+46,20045,Programmable real-time frame,Toys,Kitchen,217.66,15.44,37,WH-C-13,0,2018-10-06
+47,20046,Digitized clear-thinking hardware,Clothing,Fiction,24.94,181.35,50,WH-B-91,0,2020-03-12
+48,20047,Vision-oriented web-enabled firmware,Toys,Educational,59.82,18.2,20,WH-A-43,1,2019-06-14
+49,20048,Organic high-level initiative,Toys,Apparel,107.75,103.15,7,WH-C-26,1,2021-10-30
+50,20049,Pre-emptive high-level challenge,Books,Fiction,341.42,114.47,29,WH-B-77,0,2023-02-07
+51,20050,Reactive mobile frame,Home,Kitchen,499.88,201.9,8,WH-A-78,1,2017-05-02
+52,20051,Secured holistic protocol,Toys,Kitchen,48.68,148.36,22,WH-A-18,0,2019-08-17
+53,20052,De-engineered tertiary data-warehouse,Home,Educational,213.25,29.54,20,WH-B-81,1,2021-10-31
+54,20053,Face-to-face impactful methodology,Books,Educational,336.6,35.46,5,WH-A-3,0,2017-07-08
+55,20054,Customer-focused mobile core,Books,Apparel,291.34,82.19,7,WH-C-9,0,2019-12-01
+56,20055,Versatile systematic implementation,Books,Apparel,326.83,151.49,15,WH-B-78,0,2024-05-22
+57,20056,Object-based homogeneous support,Clothing,Educational,299.26,172.86,48,WH-B-49,1,2020-10-02
+58,20057,Multi-lateral eco-centric model,Electronics,Kitchen,115.98,75.23,47,WH-B-62,1,2021-03-06
+59,20058,Advanced needs-based productivity,Toys,Kitchen,113.36,173.78,22,WH-C-76,1,2017-02-03
+60,20059,Extended optimal utilization,Electronics,Mobile,358.63,228.21,39,WH-B-85,1,2024-07-12
+61,20060,Up-sized empowering capability,Books,Kitchen,61.79,105.63,25,WH-A-85,1,2019-06-25
+62,20061,Self-enabling homogeneous groupware,Electronics,Fiction,472.42,200.8,3,WH-B-88,1,2019-10-15
+63,20062,Team-oriented bottom-line Internet solution,Clothing,Mobile,50.92,113.89,16,WH-C-69,0,2016-07-13
+64,20063,Profit-focused web-enabled firmware,Electronics,Fiction,464.76,224.07,43,WH-C-18,0,2022-06-06
+65,20064,Synergized 5thgeneration Graphic Interface,Books,Educational,486.53,96.58,18,WH-A-70,0,2017-12-19
+66,20065,Multi-tiered optimal groupware,Toys,Educational,166.9,168.31,23,WH-A-25,1,2019-05-29
+67,20066,Profit-focused didactic paradigm,Electronics,Mobile,467.73,130.17,16,WH-C-76,1,2019-10-26
+68,20067,Distributed hybrid flexibility,Books,Fiction,83.71,182.92,41,WH-C-86,0,2021-06-13
+69,20068,Object-based scalable instruction set,Home,Mobile,298.53,61.19,1,WH-B-12,1,2021-01-03
+70,20069,Streamlined bandwidth-monitored help-desk,Electronics,Educational,450.8,162.37,29,WH-B-37,0,2020-06-12
+71,20070,User-centric motivating interface,Home,Educational,183.48,195.86,6,WH-C-85,0,2020-07-22
+72,20071,Versatile homogeneous system engine,Books,Educational,353.99,74.34,17,WH-B-50,0,2024-05-26
+73,20072,Automated next generation conglomeration,Home,Educational,260.73,42.16,33,WH-A-20,0,2019-01-29
+74,20073,Customizable neutral capability,Home,Fiction,382.42,207.25,27,WH-B-70,0,2018-07-06
+75,20074,Implemented demand-driven paradigm,Home,Fiction,206.06,175.69,11,WH-C-6,1,2017-05-22
+76,20075,Public-key national process improvement,Clothing,Fiction,228.14,146.06,22,WH-A-80,0,2024-03-20
+77,20076,Open-source multi-tasking circuit,Electronics,Fiction,449.07,248.58,11,WH-B-85,0,2016-05-27
+78,20077,Total encompassing paradigm,Toys,Mobile,124.0,121.4,31,WH-A-44,1,2017-02-13
+79,20078,Diverse national hub,Books,Fiction,56.25,86.45,15,WH-C-3,1,2018-07-22
+80,20079,Robust mobile data-warehouse,Clothing,Apparel,71.04,28.85,45,WH-C-5,0,2024-07-19
+81,20080,Vision-oriented zero tolerance intranet,Books,Educational,207.01,20.48,12,WH-C-62,1,2021-07-17
+82,20081,Face-to-face dynamic functionalities,Books,Fiction,290.88,138.92,48,WH-C-70,0,2018-12-17
+83,20082,User-centric disintermediate standardization,Electronics,Apparel,49.01,71.36,8,WH-A-29,1,2020-05-06
+84,20083,Balanced composite circuit,Home,Fiction,216.87,167.48,3,WH-A-90,1,2022-10-17
+85,20084,Proactive secondary challenge,Home,Fiction,196.77,81.53,27,WH-A-42,0,2019-08-15
+86,20085,Synergistic actuating product,Electronics,Mobile,310.71,181.98,30,WH-A-8,1,2022-02-14
+87,20086,Persevering systematic alliance,Electronics,Apparel,65.56,121.25,16,WH-C-94,1,2023-10-10
+88,20087,Diverse context-sensitive task-force,Clothing,Educational,164.05,105.64,13,WH-C-17,1,2024-07-16
+89,20088,Horizontal regional forecast,Books,Mobile,195.7,6.88,21,WH-C-84,1,2023-08-06
+90,20089,Upgradable disintermediate help-desk,Clothing,Mobile,153.73,97.2,32,WH-C-36,1,2020-09-28
+91,20090,Inverse fresh-thinking functionalities,Toys,Educational,34.5,198.35,50,WH-A-2,1,2018-04-29
+92,20091,Automated executive model,Toys,Educational,176.56,223.65,11,WH-B-40,0,2018-05-18
+93,20092,Devolved directional data-warehouse,Toys,Kitchen,128.83,196.65,13,WH-B-49,1,2022-08-05
+94,20093,Intuitive hybrid array,Home,Mobile,63.12,159.99,11,WH-C-45,1,2025-03-08
+95,20094,Enterprise-wide zero-defect Graphical User Interface,Clothing,Kitchen,68.02,42.28,25,WH-B-55,1,2016-05-18
+96,20095,Face-to-face content-based leverage,Home,Educational,75.82,82.42,36,WH-B-4,0,2016-10-24
+97,20096,Public-key 5thgeneration model,Electronics,Apparel,456.25,213.69,41,WH-B-69,0,2019-12-15
+98,20097,Multi-channeled modular artificial intelligence,Books,Mobile,63.09,149.26,20,WH-B-92,0,2016-09-15
+99,20098,Upgradable clear-thinking utilization,Clothing,Fiction,301.81,235.73,1,WH-A-35,0,2023-07-09
+100,20099,Compatible non-volatile structure,Toys,Mobile,82.16,32.17,46,WH-A-27,0,2019-10-30
+101,20100,Object-based maximized Graphical User Interface,Toys,Apparel,351.25,183.73,35,WH-C-7,1,2018-06-07
+102,20101,Synergized attitude-oriented customer loyalty,Home,Fiction,95.67,36.34,48,WH-C-89,1,2018-11-22
+103,20102,Progressive non-volatile artificial intelligence,Home,Mobile,25.4,236.42,29,WH-B-84,0,2021-01-08
+104,20103,Extended 3rdgeneration matrices,Clothing,Mobile,64.59,236.39,13,WH-C-58,0,2021-09-04
+105,20104,Ameliorated upward-trending hardware,Toys,Educational,451.57,102.55,28,WH-A-86,1,2017-04-04
+106,20105,Down-sized dedicated challenge,Clothing,Mobile,103.9,208.99,44,WH-B-88,0,2017-09-22
+107,20106,Grass-roots exuding challenge,Books,Mobile,402.59,21.48,38,WH-B-32,0,2023-07-30
+108,20107,Right-sized actuating approach,Electronics,Educational,308.35,199.24,20,WH-B-93,0,2025-03-05
+109,20108,Programmable client-driven synergy,Home,Kitchen,441.74,7.89,32,WH-C-82,1,2022-06-28
+110,20109,Multi-tiered tangible process improvement,Toys,Educational,257.53,130.98,44,WH-B-45,1,2020-10-25
+111,20110,Centralized bottom-line middleware,Home,Apparel,219.47,207.33,4,WH-C-47,0,2024-05-08
+112,20111,Synchronized multi-tasking Local Area Network,Toys,Fiction,62.51,162.24,20,WH-C-86,0,2022-11-18
+113,20112,Visionary reciprocal throughput,Books,Educational,480.57,130.56,19,WH-C-95,1,2025-01-24
+114,20113,Managed eco-centric service-desk,Books,Fiction,262.1,42.98,36,WH-C-77,0,2017-07-25
+115,20114,Integrated intangible success,Toys,Mobile,144.38,115.11,7,WH-B-49,1,2017-05-04
+116,20115,Quality-focused transitional algorithm,Home,Kitchen,141.22,226.62,13,WH-C-84,0,2019-03-13
+117,20116,Advanced static firmware,Clothing,Fiction,398.25,41.98,33,WH-C-85,0,2022-04-27
+118,20117,User-centric 5thgeneration interface,Clothing,Fiction,434.8,231.42,39,WH-C-72,0,2016-07-20
+119,20118,Face-to-face bandwidth-monitored Local Area Network,Electronics,Mobile,100.71,48.05,7,WH-A-9,1,2024-02-03
+120,20119,Switchable regional circuit,Electronics,Mobile,455.92,129.44,20,WH-C-86,1,2023-03-12
+121,20120,Virtual bottom-line Local Area Network,Electronics,Mobile,278.39,205.37,34,WH-B-50,1,2023-07-14
+122,20121,Multi-lateral eco-centric knowledge user,Home,Kitchen,324.17,25.84,28,WH-A-62,0,2021-10-14
+123,20122,Enhanced client-driven flexibility,Home,Apparel,210.25,245.7,46,WH-C-13,1,2023-08-07
+124,20123,Monitored stable instruction set,Clothing,Mobile,191.33,204.82,35,WH-B-96,0,2023-05-02
+125,20124,Business-focused real-time data-warehouse,Electronics,Educational,222.1,224.74,16,WH-B-35,1,2023-01-13
+126,20125,Ergonomic bifurcated contingency,Home,Mobile,357.39,177.5,26,WH-A-37,0,2017-02-14
+127,20126,Down-sized neutral migration,Toys,Fiction,410.79,229.5,33,WH-C-61,0,2021-12-30
+128,20127,Multi-lateral tertiary instruction set,Toys,Educational,278.64,77.08,50,WH-B-69,0,2017-08-02
+129,20128,Profound upward-trending encoding,Toys,Fiction,234.97,8.78,23,WH-C-56,0,2023-12-05
+130,20129,Public-key dedicated migration,Toys,Fiction,497.55,166.8,42,WH-C-10,0,2022-10-03
+131,20130,Fully-configurable radical ability,Home,Educational,423.51,144.49,36,WH-B-3,0,2025-03-04
+132,20131,Secured well-modulated projection,Clothing,Educational,441.78,192.18,47,WH-B-81,0,2024-12-22
+133,20132,Business-focused solution-oriented methodology,Home,Mobile,281.12,6.43,25,WH-C-48,1,2024-03-08
+134,20133,Synergistic radical functionalities,Books,Apparel,486.04,33.86,11,WH-B-38,1,2021-08-20
+135,20134,Configurable coherent infrastructure,Toys,Fiction,100.59,23.28,9,WH-C-83,1,2023-11-02
+136,20135,Future-proofed multimedia strategy,Clothing,Educational,140.47,44.87,5,WH-B-43,1,2023-08-06
+137,20136,Optimized interactive process improvement,Home,Apparel,458.96,30.78,29,WH-B-88,1,2020-06-22
+138,20137,Progressive exuding workforce,Books,Kitchen,11.41,146.6,23,WH-B-64,0,2024-05-23
+139,20138,Reactive homogeneous Internet solution,Electronics,Educational,117.58,177.51,30,WH-B-36,0,2022-11-15
+140,20139,Focused reciprocal methodology,Home,Educational,496.02,128.26,7,WH-C-79,0,2022-12-13
+141,20140,Seamless reciprocal orchestration,Toys,Fiction,329.46,228.54,13,WH-A-21,0,2021-03-10
+142,20141,Front-line bifurcated structure,Clothing,Educational,45.52,235.69,3,WH-B-1,0,2019-06-23
+143,20142,Business-focused scalable benchmark,Electronics,Mobile,291.44,243.81,2,WH-A-60,1,2018-07-20
+144,20143,Grass-roots solution-oriented open architecture,Clothing,Educational,49.63,220.63,12,WH-B-30,0,2017-08-22
+145,20144,Enhanced homogeneous hub,Clothing,Mobile,26.09,22.37,7,WH-C-41,0,2022-08-19
+146,20145,Persistent maximized middleware,Books,Fiction,394.75,142.63,22,WH-C-38,1,2021-03-20
+147,20146,Ergonomic logistical adapter,Toys,Fiction,282.11,57.27,28,WH-B-45,0,2023-05-29
+148,20147,Vision-oriented user-facing superstructure,Toys,Mobile,480.07,199.29,8,WH-A-61,0,2020-08-28
+149,20148,Innovative uniform policy,Electronics,Mobile,136.33,16.12,19,WH-C-85,0,2021-08-03
+150,20149,Optional non-volatile adapter,Toys,Apparel,114.53,221.0,50,WH-C-47,0,2019-10-09
+151,20150,Re-engineered eco-centric capability,Toys,Fiction,39.63,216.2,35,WH-B-5,0,2024-12-10
+152,20151,Open-source user-facing success,Home,Apparel,466.16,128.33,7,WH-B-23,1,2024-03-29
+153,20152,Triple-buffered mission-critical neural-net,Toys,Kitchen,274.69,86.06,49,WH-B-57,1,2017-02-16
+154,20153,Versatile static Graphical User Interface,Toys,Fiction,174.43,24.62,18,WH-B-21,0,2019-01-12
+155,20154,Multi-lateral asymmetric moderator,Books,Apparel,452.13,84.52,23,WH-B-81,0,2017-08-03
+156,20155,Customizable asymmetric toolset,Clothing,Mobile,476.01,249.21,50,WH-C-50,1,2016-03-15
+157,20156,Down-sized leadingedge application,Home,Educational,344.17,18.23,33,WH-A-22,1,2021-01-03
+158,20157,Universal regional adapter,Clothing,Apparel,410.61,233.38,40,WH-A-88,0,2024-03-20
+159,20158,Pre-emptive client-server matrix,Clothing,Educational,451.55,197.31,44,WH-C-46,1,2016-09-14
+160,20159,Reduced motivating parallelism,Electronics,Mobile,166.56,87.63,19,WH-C-24,1,2016-03-29
+161,20160,Reactive neutral support,Toys,Fiction,176.49,112.33,37,WH-B-13,1,2021-04-09
+162,20161,Optimized optimizing success,Books,Fiction,34.26,91.7,23,WH-C-87,0,2025-03-05
+163,20162,Polarized interactive adapter,Electronics,Mobile,491.46,75.52,10,WH-C-28,0,2024-06-24
+164,20163,Operative user-facing standardization,Electronics,Apparel,180.62,234.73,16,WH-A-55,0,2024-11-09
+165,20164,Ameliorated multi-state emulation,Electronics,Fiction,156.95,155.29,49,WH-A-84,1,2019-03-10
+166,20165,Multi-lateral asymmetric budgetary management,Home,Kitchen,455.56,173.08,27,WH-A-6,1,2019-02-06
+167,20166,Upgradable hybrid capacity,Toys,Fiction,470.88,8.2,8,WH-B-74,1,2023-09-22
+168,20167,Progressive scalable forecast,Toys,Educational,138.76,195.68,4,WH-A-62,0,2021-09-11
+169,20168,Focused even-keeled website,Clothing,Fiction,425.66,80.16,44,WH-B-29,1,2024-06-10
+170,20169,Synergistic reciprocal function,Clothing,Apparel,170.76,58.4,27,WH-B-2,1,2020-07-12
+171,20170,Synergistic web-enabled time-frame,Clothing,Educational,99.99,30.91,25,WH-B-24,0,2021-01-07
+172,20171,Phased fresh-thinking algorithm,Clothing,Kitchen,160.78,214.72,22,WH-A-95,1,2018-04-08
+173,20172,Ergonomic 5thgeneration benchmark,Electronics,Apparel,129.7,161.12,3,WH-C-72,0,2021-01-22
+174,20173,Re-engineered modular adapter,Clothing,Mobile,53.31,101.18,20,WH-A-79,1,2021-12-02
+175,20174,Centralized secondary analyzer,Home,Fiction,282.68,245.6,44,WH-B-73,1,2016-08-29
+176,20175,Extended intangible contingency,Home,Kitchen,203.67,61.58,46,WH-A-54,0,2019-09-11
+177,20176,Mandatory actuating alliance,Toys,Apparel,183.32,50.7,15,WH-B-60,0,2021-04-25
+178,20177,Robust 4thgeneration access,Toys,Mobile,54.51,89.34,18,WH-A-92,1,2021-10-02
+179,20178,Balanced actuating website,Clothing,Mobile,327.05,153.96,37,WH-A-9,1,2023-01-18
+180,20179,Expanded scalable Internet solution,Electronics,Apparel,287.12,111.27,14,WH-A-65,0,2018-03-14
+181,20180,Cloned 24/7 approach,Books,Apparel,288.8,118.62,9,WH-B-22,0,2023-07-20
+182,20181,Profit-focused motivating circuit,Electronics,Apparel,459.41,122.29,46,WH-C-78,0,2017-06-18
+183,20182,Cross-group full-range solution,Books,Fiction,245.0,47.23,45,WH-B-43,0,2017-12-18
+184,20183,User-centric background installation,Books,Kitchen,92.38,189.73,20,WH-A-7,0,2020-08-02
+185,20184,Versatile even-keeled Graphic Interface,Clothing,Kitchen,334.62,43.09,1,WH-A-36,0,2022-09-15
+186,20185,Persevering logistical task-force,Books,Mobile,42.36,243.61,11,WH-B-74,0,2021-06-11
+187,20186,Adaptive bi-directional parallelism,Electronics,Kitchen,27.7,55.93,7,WH-B-92,1,2020-10-31
+188,20187,Versatile value-added matrices,Toys,Apparel,426.74,36.16,39,WH-A-32,0,2022-12-05
+189,20188,Intuitive heuristic definition,Toys,Apparel,444.3,104.75,17,WH-A-1,0,2016-06-02
+190,20189,Organic non-volatile architecture,Toys,Educational,235.2,102.48,38,WH-A-79,0,2018-05-01
+191,20190,Synergistic empowering analyzer,Clothing,Fiction,53.93,172.25,5,WH-C-96,0,2017-10-01
+192,20191,Centralized bi-directional moratorium,Clothing,Fiction,377.05,135.07,17,WH-A-34,1,2022-12-04
+193,20192,Re-contextualized hybrid productivity,Toys,Kitchen,83.91,24.88,35,WH-A-16,1,2019-04-06
+194,20193,Grass-roots composite secured line,Toys,Fiction,443.55,242.37,23,WH-B-59,1,2022-06-21
+195,20194,Function-based next generation intranet,Clothing,Mobile,289.46,202.02,33,WH-B-8,0,2024-05-01
+196,20195,Persistent 6thgeneration success,Toys,Educational,201.84,53.11,36,WH-C-99,1,2021-10-09
+197,20196,Seamless homogeneous adapter,Electronics,Apparel,327.14,97.35,23,WH-A-17,0,2019-01-07
+198,20197,Optional multimedia projection,Electronics,Apparel,484.64,67.65,31,WH-B-86,1,2019-03-04
+199,20198,Enterprise-wide 6thgeneration extranet,Home,Kitchen,59.69,131.1,45,WH-C-6,0,2024-03-05
+200,20199,Monitored transitional installation,Books,Educational,82.28,63.83,49,WH-C-11,1,2020-11-14
+201,20200,User-friendly bifurcated installation,Clothing,Kitchen,284.26,202.22,21,WH-A-93,1,2020-08-30
+202,20201,Integrated heuristic infrastructure,Electronics,Apparel,270.5,60.1,11,WH-A-5,1,2018-04-15
+203,20202,Fundamental mobile installation,Books,Educational,208.78,96.6,36,WH-B-48,1,2023-11-18
+204,20203,Secured modular standardization,Toys,Apparel,400.07,103.34,15,WH-C-35,1,2019-12-13
+205,20204,Assimilated intangible software,Clothing,Educational,191.65,120.69,22,WH-B-51,0,2020-04-06
+206,20205,Inverse non-volatile archive,Toys,Kitchen,453.91,35.99,35,WH-B-37,1,2022-06-24
+207,20206,Integrated intangible initiative,Books,Apparel,258.94,204.62,5,WH-B-77,1,2020-05-26
+208,20207,Multi-lateral grid-enabled algorithm,Home,Educational,99.04,214.09,25,WH-A-59,1,2016-12-08
+209,20208,Intuitive human-resource instruction set,Books,Mobile,140.19,99.28,32,WH-B-7,0,2016-06-28
+210,20209,Multi-tiered fresh-thinking migration,Clothing,Kitchen,471.07,205.06,50,WH-B-40,1,2017-01-01
+211,20210,Down-sized demand-driven alliance,Clothing,Educational,120.74,240.46,1,WH-A-4,1,2022-09-26
+212,20211,Extended mission-critical open system,Clothing,Kitchen,466.64,24.45,10,WH-C-58,0,2018-09-06
+213,20212,Virtual tertiary open system,Clothing,Apparel,409.67,166.2,32,WH-A-56,1,2020-09-05
+214,20213,Realigned user-facing forecast,Toys,Mobile,65.09,52.53,34,WH-A-83,1,2018-03-13
+215,20214,Self-enabling actuating circuit,Home,Kitchen,119.06,113.95,14,WH-A-74,0,2019-12-06
+216,20215,Monitored systemic firmware,Clothing,Educational,11.67,73.27,2,WH-C-6,0,2021-11-07
+217,20216,Reactive attitude-oriented paradigm,Toys,Fiction,40.81,232.26,10,WH-B-84,0,2022-01-05
+218,20217,Fully-configurable impactful open architecture,Toys,Kitchen,367.45,21.1,2,WH-B-60,0,2022-09-01
+219,20218,Up-sized tangible extranet,Books,Apparel,121.09,145.55,22,WH-A-99,0,2018-05-08
+220,20219,Open-source systematic process improvement,Toys,Kitchen,455.13,53.62,17,WH-B-80,1,2025-01-11
+221,20220,Down-sized zero tolerance methodology,Clothing,Mobile,304.46,50.69,10,WH-C-63,1,2022-06-18
+222,20221,Distributed transitional info-mediaries,Clothing,Kitchen,82.7,41.94,8,WH-B-30,0,2018-02-15
+223,20222,Enhanced dedicated success,Electronics,Apparel,188.16,121.05,49,WH-A-46,0,2017-11-07
+224,20223,Profound 6thgeneration contingency,Books,Apparel,486.28,120.04,30,WH-A-71,1,2021-06-08
+225,20224,Operative web-enabled portal,Books,Educational,396.08,34.59,40,WH-A-26,0,2023-07-22
+226,20225,Enhanced 24hour collaboration,Clothing,Educational,58.89,162.98,7,WH-C-29,0,2023-07-11
+227,20226,Customizable eco-centric pricing structure,Electronics,Educational,336.45,211.24,25,WH-C-98,0,2017-05-23
+228,20227,Cross-platform actuating Internet solution,Home,Educational,379.34,37.1,16,WH-A-89,0,2024-02-18
+229,20228,Focused 5thgeneration secured line,Electronics,Fiction,153.1,249.3,31,WH-C-86,0,2023-01-09
+230,20229,Open-source local installation,Clothing,Apparel,208.46,97.37,32,WH-C-44,0,2018-09-11
+231,20230,Polarized radical flexibility,Toys,Kitchen,42.67,163.7,24,WH-A-35,0,2024-03-11
+232,20231,Realigned neutral archive,Electronics,Educational,337.81,61.13,24,WH-B-99,0,2022-10-23
+233,20232,Enterprise-wide full-range circuit,Electronics,Kitchen,389.64,47.76,8,WH-A-66,1,2017-05-23
+234,20233,Vision-oriented discrete framework,Home,Educational,41.0,183.97,12,WH-B-6,0,2022-09-05
+235,20234,Reactive 6thgeneration middleware,Electronics,Apparel,52.37,244.45,41,WH-A-10,1,2016-04-08
+236,20235,Multi-lateral local methodology,Home,Mobile,289.09,169.28,35,WH-C-49,1,2020-11-15
+237,20236,Vision-oriented secondary matrices,Books,Educational,185.3,50.29,24,WH-A-18,0,2021-11-26
+238,20237,Vision-oriented context-sensitive interface,Electronics,Fiction,434.77,126.55,19,WH-C-85,0,2023-12-26
+239,20238,Open-source zero administration hierarchy,Toys,Fiction,207.73,135.34,26,WH-B-52,0,2024-11-06
+240,20239,Automated zero-defect software,Clothing,Educational,250.37,123.55,30,WH-C-99,0,2021-04-04
+241,20240,Seamless transitional benchmark,Toys,Apparel,350.77,241.14,31,WH-C-61,0,2023-06-07
+242,20241,Switchable directional challenge,Books,Apparel,109.48,152.64,11,WH-B-43,1,2020-07-26
+243,20242,Persevering intangible hierarchy,Clothing,Kitchen,71.1,16.19,4,WH-C-9,1,2023-11-17
+244,20243,Monitored clear-thinking knowledge user,Home,Apparel,285.89,116.74,26,WH-B-62,1,2021-07-25
+245,20244,Object-based interactive installation,Books,Educational,203.87,80.75,23,WH-B-64,1,2023-01-08
+246,20245,Configurable tangible approach,Home,Mobile,215.7,54.32,24,WH-B-55,0,2016-04-27
+247,20246,Enhanced radical capacity,Electronics,Educational,129.69,82.11,5,WH-B-26,1,2018-09-02
+248,20247,Reduced intangible neural-net,Books,Kitchen,481.81,113.14,43,WH-C-73,1,2024-01-11
+249,20248,Up-sized radical hierarchy,Clothing,Apparel,110.89,175.21,27,WH-B-93,0,2018-02-23
+250,20249,Fully-configurable object-oriented approach,Books,Kitchen,236.71,170.23,15,WH-B-31,1,2024-09-09
+251,20250,Synergistic radical matrices,Books,Educational,180.85,74.01,21,WH-B-32,0,2016-12-27
+252,20251,User-friendly foreground circuit,Home,Apparel,394.93,198.97,20,WH-C-16,0,2019-10-22
+253,20252,Assimilated static success,Home,Apparel,293.38,74.85,5,WH-B-53,0,2022-02-14
+254,20253,Cloned responsive functionalities,Clothing,Kitchen,33.39,85.41,22,WH-A-78,1,2022-12-20
+255,20254,Streamlined responsive circuit,Electronics,Kitchen,87.27,242.0,49,WH-C-58,1,2019-06-04
+256,20255,Proactive heuristic alliance,Electronics,Educational,170.14,225.31,7,WH-B-25,1,2018-10-11
+257,20256,Multi-lateral tertiary utilization,Toys,Fiction,74.64,195.55,11,WH-A-2,1,2018-02-07
+258,20257,Streamlined static contingency,Toys,Mobile,82.71,154.68,42,WH-A-4,0,2020-04-03
+259,20258,Virtual motivating product,Clothing,Educational,173.33,101.4,16,WH-C-91,1,2019-04-06
+260,20259,Customer-focused encompassing artificial intelligence,Toys,Mobile,282.13,110.41,49,WH-A-74,1,2019-11-30
+261,20260,Cross-group directional archive,Books,Apparel,102.68,175.46,50,WH-B-29,1,2019-05-24
+262,20261,Upgradable attitude-oriented contingency,Electronics,Kitchen,155.35,49.97,34,WH-B-21,0,2021-08-23
+263,20262,Synchronized modular projection,Home,Educational,153.45,69.96,47,WH-C-14,1,2021-03-23
+264,20263,Versatile grid-enabled encryption,Books,Educational,392.9,137.37,43,WH-A-71,0,2024-06-06
+265,20264,Business-focused encompassing process improvement,Books,Apparel,196.9,147.73,47,WH-A-84,1,2024-10-19
+266,20265,Compatible real-time productivity,Electronics,Educational,139.11,248.42,28,WH-A-41,0,2021-11-15
+267,20266,Integrated even-keeled structure,Clothing,Kitchen,409.38,154.33,4,WH-B-51,0,2019-07-07
+268,20267,Managed attitude-oriented function,Clothing,Kitchen,264.95,42.56,26,WH-A-2,0,2020-08-05
+269,20268,Distributed object-oriented complexity,Clothing,Kitchen,440.13,61.28,39,WH-A-33,0,2017-11-17
+270,20269,Mandatory secondary orchestration,Toys,Educational,188.95,204.87,32,WH-B-19,1,2018-12-22
+271,20270,Stand-alone local success,Clothing,Mobile,95.04,162.23,33,WH-A-11,1,2024-04-17
+272,20271,Virtual grid-enabled matrix,Toys,Kitchen,125.14,58.11,15,WH-A-6,0,2019-05-03
+273,20272,Re-engineered zero tolerance implementation,Electronics,Educational,361.67,239.61,44,WH-A-38,1,2022-03-30
+274,20273,Pre-emptive intangible application,Home,Fiction,236.66,195.17,50,WH-B-83,1,2023-09-04
+275,20274,Enterprise-wide homogeneous neural-net,Electronics,Fiction,395.46,152.18,45,WH-A-34,0,2020-04-09
+276,20275,Re-contextualized coherent hierarchy,Books,Educational,85.5,171.02,6,WH-A-44,1,2019-12-19
+277,20276,Cross-group methodical function,Books,Mobile,403.31,148.31,47,WH-B-50,1,2021-06-28
+278,20277,Programmable needs-based productivity,Books,Kitchen,474.11,123.94,12,WH-A-58,0,2021-02-06
+279,20278,Operative zero-defect application,Electronics,Mobile,489.87,34.21,1,WH-C-6,1,2017-05-16
+280,20279,Synchronized executive implementation,Books,Mobile,338.11,223.26,46,WH-A-59,0,2021-09-16
+281,20280,Public-key multimedia encoding,Clothing,Fiction,84.01,30.37,39,WH-C-80,1,2016-12-22
+282,20281,De-engineered reciprocal Local Area Network,Electronics,Educational,59.99,48.0,8,WH-B-50,1,2018-05-02
+283,20282,Managed intangible policy,Clothing,Kitchen,20.52,215.0,5,WH-A-15,1,2021-12-14
+284,20283,Robust zero tolerance emulation,Books,Educational,426.5,52.13,20,WH-C-95,1,2024-07-21
+285,20284,Advanced zero administration attitude,Home,Apparel,226.98,226.69,25,WH-B-65,1,2022-12-23
+286,20285,User-friendly bottom-line installation,Electronics,Apparel,237.67,202.09,33,WH-B-79,0,2017-05-27
+287,20286,Decentralized mobile forecast,Books,Apparel,102.84,172.06,28,WH-B-80,0,2016-12-13
+288,20287,Fundamental demand-driven concept,Clothing,Fiction,373.13,106.46,2,WH-A-58,0,2023-01-18
+289,20288,Profit-focused 24hour pricing structure,Home,Fiction,85.27,107.5,43,WH-B-45,0,2025-02-17
+290,20289,Expanded cohesive approach,Home,Fiction,365.31,43.63,39,WH-B-15,0,2020-06-14
+291,20290,Digitized exuding archive,Books,Apparel,164.74,167.89,16,WH-B-30,1,2022-06-24
+292,20291,User-centric responsive database,Clothing,Fiction,364.13,167.7,2,WH-A-6,1,2022-06-29
+293,20292,Optional value-added hierarchy,Books,Fiction,23.26,168.86,47,WH-A-25,0,2024-12-16
+294,20293,Implemented optimal interface,Electronics,Apparel,291.21,213.66,14,WH-C-21,0,2019-03-11
+295,20294,Visionary heuristic portal,Electronics,Kitchen,393.23,96.17,41,WH-C-85,0,2023-09-07
+296,20295,Persistent multi-tasking conglomeration,Toys,Fiction,214.41,127.38,30,WH-B-2,1,2020-01-18
+297,20296,Open-source content-based encryption,Home,Fiction,273.24,100.42,30,WH-A-87,1,2021-10-24
+298,20297,Sharable secondary initiative,Toys,Fiction,245.42,208.82,1,WH-B-100,1,2016-07-03
+299,20298,Total explicit time-frame,Toys,Apparel,389.78,34.09,17,WH-C-17,0,2024-04-14
+300,20299,Diverse tangible array,Toys,Kitchen,97.73,52.36,48,WH-B-89,1,2017-09-22
+301,20300,Team-oriented hybrid focus group,Books,Kitchen,399.96,32.63,4,WH-B-66,0,2020-07-15
+302,20301,Adaptive secondary open architecture,Toys,Fiction,228.79,207.22,47,WH-C-79,0,2019-11-18
+303,20302,Fundamental heuristic intranet,Clothing,Fiction,352.17,32.17,14,WH-A-8,0,2019-11-16
+304,20303,Triple-buffered context-sensitive artificial intelligence,Clothing,Mobile,40.57,90.22,34,WH-C-21,0,2019-03-08
+305,20304,Compatible composite moderator,Electronics,Mobile,167.67,16.37,49,WH-A-35,0,2019-07-28
+306,20305,Cross-group directional groupware,Home,Fiction,347.67,231.6,24,WH-C-22,0,2021-12-13
+307,20306,Distributed didactic application,Toys,Educational,271.65,110.89,7,WH-B-97,0,2024-03-29
+308,20307,Streamlined homogeneous superstructure,Books,Fiction,447.55,169.93,1,WH-A-28,1,2019-06-20
+309,20308,Integrated modular Graphic Interface,Electronics,Fiction,457.39,188.76,11,WH-B-23,1,2022-02-07
+310,20309,Persistent bifurcated alliance,Electronics,Mobile,486.84,51.52,9,WH-C-21,0,2017-02-17
+311,20310,Cloned uniform alliance,Electronics,Fiction,426.08,184.12,36,WH-B-24,1,2024-11-08
+312,20311,Triple-buffered static algorithm,Home,Mobile,208.97,224.43,21,WH-B-13,0,2022-04-09
+313,20312,User-centric multi-tasking middleware,Electronics,Fiction,266.1,214.79,8,WH-B-32,1,2022-05-10
+314,20313,Progressive context-sensitive middleware,Toys,Mobile,235.72,128.28,6,WH-B-76,1,2018-11-25
+315,20314,Pre-emptive dynamic framework,Home,Educational,97.32,170.51,47,WH-C-20,1,2024-01-24
+316,20315,Robust system-worthy help-desk,Books,Educational,384.22,154.85,2,WH-C-13,0,2024-05-10
+317,20316,Pre-emptive background neural-net,Home,Apparel,119.52,71.84,4,WH-C-82,0,2017-11-28
+318,20317,Multi-layered human-resource superstructure,Toys,Apparel,317.43,39.97,22,WH-B-55,1,2017-05-29
+319,20318,Operative systemic algorithm,Toys,Mobile,285.59,140.55,38,WH-B-40,1,2022-09-11
+320,20319,Vision-oriented bottom-line hub,Books,Fiction,149.27,72.57,2,WH-C-25,1,2021-12-13
+321,20320,Integrated fresh-thinking software,Toys,Kitchen,151.6,117.29,29,WH-C-44,0,2019-04-05
+322,20321,Automated cohesive attitude,Toys,Apparel,390.44,135.76,34,WH-B-41,1,2017-05-27
+323,20322,Public-key intangible benchmark,Electronics,Apparel,482.78,33.98,36,WH-A-21,1,2017-08-10
+324,20323,Total fresh-thinking interface,Home,Fiction,304.9,20.0,34,WH-C-23,0,2021-12-24
+325,20324,Extended multimedia complexity,Clothing,Mobile,282.58,137.21,46,WH-A-86,0,2024-03-05
+326,20325,Triple-buffered methodical complexity,Books,Fiction,371.08,69.17,12,WH-C-14,0,2021-09-28
+327,20326,Innovative didactic Graphic Interface,Toys,Apparel,458.45,16.57,38,WH-A-87,0,2020-06-22
+328,20327,Inverse next generation leverage,Books,Fiction,184.39,54.81,15,WH-B-50,0,2020-06-24
+329,20328,Progressive upward-trending help-desk,Toys,Fiction,335.83,224.81,30,WH-B-58,0,2022-10-01
+330,20329,Multi-tiered human-resource Local Area Network,Books,Educational,89.38,220.16,16,WH-A-4,0,2022-02-06
+331,20330,Business-focused optimal groupware,Electronics,Kitchen,142.98,77.43,29,WH-B-17,1,2023-04-25
+332,20331,Multi-layered tangible help-desk,Home,Educational,283.73,232.64,10,WH-B-22,0,2023-02-21
+333,20332,Secured exuding success,Electronics,Apparel,455.98,154.76,3,WH-B-18,0,2018-04-23
+334,20333,Focused object-oriented orchestration,Electronics,Fiction,13.88,62.8,24,WH-C-83,1,2017-01-05
+335,20334,Total asymmetric info-mediaries,Home,Educational,451.38,79.38,28,WH-C-42,1,2020-05-12
+336,20335,Team-oriented disintermediate projection,Clothing,Mobile,425.57,205.36,38,WH-A-41,1,2021-02-19
+337,20336,Function-based context-sensitive data-warehouse,Home,Kitchen,59.8,176.87,16,WH-C-8,0,2016-10-07
+338,20337,Switchable foreground utilization,Electronics,Mobile,465.35,195.89,14,WH-C-19,1,2022-04-11
+339,20338,Adaptive encompassing collaboration,Home,Fiction,324.84,184.22,18,WH-B-72,1,2019-11-22
+340,20339,Function-based encompassing conglomeration,Clothing,Kitchen,296.38,79.79,4,WH-B-18,0,2017-09-29
+341,20340,Assimilated context-sensitive methodology,Books,Apparel,249.73,155.66,24,WH-A-8,0,2017-07-12
+342,20341,Synergistic composite knowledgebase,Home,Apparel,303.65,68.29,26,WH-B-35,1,2017-08-03
+343,20342,Synchronized bottom-line superstructure,Clothing,Apparel,224.8,134.59,4,WH-C-38,1,2025-02-04
+344,20343,Configurable secondary complexity,Books,Educational,107.73,75.9,3,WH-C-27,0,2024-05-27
+345,20344,Monitored high-level superstructure,Clothing,Kitchen,71.16,58.35,42,WH-A-89,0,2022-12-15
+346,20345,Customer-focused 24hour concept,Toys,Mobile,261.36,128.98,7,WH-A-72,1,2019-10-06
+347,20346,De-engineered next generation adapter,Clothing,Mobile,149.77,140.94,22,WH-B-88,1,2020-12-22
+348,20347,Ergonomic 24hour superstructure,Toys,Apparel,417.55,57.11,34,WH-C-29,0,2021-03-07
+349,20348,User-friendly hybrid synergy,Home,Educational,345.92,51.06,9,WH-B-64,0,2019-08-25
+350,20349,Front-line asymmetric encryption,Books,Educational,298.54,21.0,4,WH-A-27,1,2019-06-04
+351,20350,Monitored foreground database,Toys,Educational,138.38,226.98,17,WH-C-76,0,2018-05-16
+352,20351,Centralized heuristic workforce,Electronics,Fiction,301.83,88.37,26,WH-C-3,1,2023-11-06
+353,20352,Programmable foreground database,Clothing,Mobile,355.09,137.37,18,WH-C-67,1,2017-07-15
+354,20353,User-friendly clear-thinking benchmark,Toys,Apparel,370.7,131.08,6,WH-B-80,1,2024-08-30
+355,20354,User-centric clear-thinking projection,Toys,Kitchen,284.91,219.83,38,WH-B-43,0,2018-03-28
+356,20355,Secured asynchronous initiative,Books,Mobile,422.87,17.58,44,WH-A-57,0,2024-04-13
+357,20356,Persevering scalable application,Clothing,Apparel,269.12,50.95,29,WH-B-11,1,2022-12-19
+358,20357,Focused full-range collaboration,Home,Apparel,407.33,198.53,47,WH-A-55,0,2016-04-12
+359,20358,Programmable composite structure,Electronics,Kitchen,365.8,161.36,32,WH-C-65,0,2021-11-07
+360,20359,Optimized web-enabled throughput,Books,Kitchen,308.78,246.53,3,WH-C-11,0,2022-09-13
+361,20360,Automated radical system engine,Books,Fiction,318.83,45.9,12,WH-B-60,1,2023-01-07
+362,20361,Cross-platform explicit policy,Toys,Fiction,111.79,206.66,25,WH-A-81,0,2023-05-18
+363,20362,Object-based 3rdgeneration secured line,Toys,Mobile,386.71,168.89,1,WH-A-87,0,2019-05-03
+364,20363,Stand-alone disintermediate architecture,Books,Mobile,15.11,239.84,26,WH-A-74,1,2019-10-04
+365,20364,Up-sized intangible hardware,Home,Mobile,129.24,109.52,41,WH-A-89,0,2024-04-28
+366,20365,Persevering disintermediate synergy,Electronics,Apparel,170.59,220.43,35,WH-A-92,1,2023-11-21
+367,20366,Self-enabling analyzing extranet,Clothing,Educational,381.19,39.27,30,WH-A-28,0,2022-01-30
+368,20367,User-friendly clear-thinking forecast,Clothing,Apparel,128.58,156.58,37,WH-A-81,1,2020-10-03
+369,20368,Public-key zero-defect moratorium,Home,Educational,336.17,26.06,35,WH-B-49,1,2022-05-04
+370,20369,De-engineered contextually-based hierarchy,Home,Mobile,59.62,76.09,33,WH-C-79,1,2023-09-23
+371,20370,Front-line reciprocal capability,Toys,Kitchen,233.9,214.54,32,WH-C-54,0,2019-07-23
+372,20371,Multi-tiered didactic task-force,Home,Kitchen,154.54,132.7,15,WH-B-33,0,2025-01-16
+373,20372,Configurable national infrastructure,Electronics,Mobile,315.49,175.66,2,WH-B-82,1,2024-01-23
+374,20373,Function-based attitude-oriented concept,Toys,Apparel,31.0,96.46,4,WH-A-25,1,2016-07-24
+375,20374,Team-oriented content-based groupware,Clothing,Mobile,139.39,124.22,16,WH-B-18,1,2017-09-23
+376,20375,Team-oriented eco-centric strategy,Home,Educational,66.87,189.97,7,WH-C-41,0,2016-08-10
+377,20376,Configurable object-oriented leverage,Toys,Educational,207.04,175.32,39,WH-C-78,0,2024-10-13
+378,20377,Fully-configurable interactive methodology,Clothing,Fiction,272.92,215.26,7,WH-C-66,0,2020-06-19
+379,20378,Robust coherent leverage,Clothing,Apparel,273.44,223.73,27,WH-B-16,1,2019-04-05
+380,20379,Polarized mission-critical attitude,Books,Fiction,492.71,198.26,23,WH-B-35,0,2021-09-11
+381,20380,Quality-focused dynamic system engine,Books,Fiction,382.4,225.78,13,WH-B-27,0,2021-11-12
+382,20381,Stand-alone incremental system engine,Clothing,Kitchen,208.3,191.44,1,WH-A-33,0,2016-07-28
+383,20382,Automated bandwidth-monitored capacity,Books,Mobile,471.62,90.53,30,WH-C-54,1,2023-10-22
+384,20383,Up-sized reciprocal forecast,Clothing,Apparel,139.61,45.88,1,WH-B-9,0,2018-01-10
+385,20384,Switchable non-volatile product,Home,Educational,236.29,6.79,8,WH-B-9,1,2022-11-29
+386,20385,Up-sized system-worthy task-force,Electronics,Fiction,115.39,71.33,28,WH-A-71,1,2017-03-18
+387,20386,Open-architected composite info-mediaries,Electronics,Kitchen,80.66,72.88,9,WH-B-4,1,2024-02-19
+388,20387,Down-sized dynamic migration,Home,Fiction,209.37,49.92,17,WH-A-64,0,2017-04-21
+389,20388,Face-to-face foreground emulation,Home,Kitchen,94.47,29.42,8,WH-C-7,1,2018-02-17
+390,20389,Reverse-engineered intermediate info-mediaries,Electronics,Educational,115.4,121.35,45,WH-C-52,0,2019-07-25
+391,20390,Visionary tertiary open system,Electronics,Mobile,301.33,195.96,11,WH-B-54,0,2022-07-11
+392,20391,Managed dedicated intranet,Toys,Fiction,295.86,7.44,46,WH-B-78,0,2017-12-02
+393,20392,Compatible motivating algorithm,Clothing,Apparel,478.1,142.96,41,WH-A-60,0,2024-07-03
+394,20393,User-friendly interactive encryption,Toys,Kitchen,88.52,31.74,28,WH-B-73,1,2020-02-16
+395,20394,Open-source contextually-based product,Toys,Kitchen,100.96,11.11,1,WH-B-41,0,2021-11-04
+396,20395,Streamlined didactic implementation,Toys,Mobile,289.04,139.05,7,WH-A-61,0,2024-09-22
+397,20396,Business-focused multi-state time-frame,Toys,Mobile,491.79,40.45,42,WH-B-38,0,2025-01-25
+398,20397,Down-sized foreground open system,Electronics,Educational,17.54,88.87,31,WH-C-35,1,2020-11-18
+399,20398,Realigned background intranet,Home,Educational,400.94,121.24,8,WH-B-79,1,2023-06-01
+400,20399,Multi-tiered even-keeled approach,Home,Mobile,120.08,36.98,29,WH-A-84,0,2020-03-04
+401,20400,Cross-platform local capability,Home,Apparel,415.31,92.98,14,WH-B-15,0,2024-12-03
+402,20401,Expanded reciprocal complexity,Home,Fiction,294.91,211.19,42,WH-B-70,1,2022-03-06
+403,20402,Fundamental explicit superstructure,Home,Educational,282.44,198.84,16,WH-C-87,0,2018-06-27
+404,20403,Decentralized content-based Graphical User Interface,Electronics,Fiction,267.5,81.43,21,WH-A-66,0,2017-01-15
+405,20404,Visionary contextually-based analyzer,Books,Mobile,290.22,125.22,29,WH-C-17,1,2017-12-03
+406,20405,Streamlined dynamic approach,Books,Fiction,467.31,193.29,1,WH-A-51,1,2019-04-24
+407,20406,Digitized intermediate process improvement,Clothing,Apparel,274.76,129.92,31,WH-B-6,1,2022-11-01
+408,20407,Sharable clear-thinking paradigm,Home,Apparel,221.53,41.27,16,WH-A-22,0,2022-05-19
+409,20408,Profit-focused zero tolerance matrix,Electronics,Apparel,452.3,5.37,31,WH-A-1,1,2024-12-09
+410,20409,Assimilated directional help-desk,Clothing,Apparel,374.45,248.55,1,WH-A-76,0,2020-09-22
+411,20410,Decentralized explicit budgetary management,Electronics,Apparel,68.36,200.59,4,WH-C-12,0,2019-02-22
+412,20411,Monitored content-based service-desk,Toys,Kitchen,467.57,186.83,43,WH-C-69,0,2024-10-23
+413,20412,Fully-configurable scalable instruction set,Toys,Mobile,275.47,184.6,48,WH-C-11,1,2020-01-16
+414,20413,User-friendly zero administration model,Toys,Kitchen,29.91,10.65,26,WH-C-66,0,2020-03-11
+415,20414,Phased 3rdgeneration archive,Electronics,Kitchen,477.02,25.21,39,WH-C-11,1,2025-01-01
+416,20415,Multi-channeled optimal monitoring,Home,Apparel,255.61,191.01,11,WH-B-20,0,2023-08-27
+417,20416,Self-enabling responsive complexity,Electronics,Apparel,109.69,191.85,47,WH-B-53,1,2017-08-27
+418,20417,Customer-focused multimedia data-warehouse,Home,Fiction,446.38,71.97,18,WH-B-57,0,2024-09-13
+419,20418,Advanced multimedia array,Home,Mobile,406.96,178.05,26,WH-A-89,1,2020-12-02
+420,20419,Exclusive leadingedge contingency,Books,Apparel,484.39,41.58,28,WH-B-19,1,2019-04-12
+421,20420,Profound contextually-based initiative,Home,Apparel,453.37,119.55,15,WH-B-82,0,2019-04-20
+422,20421,Future-proofed foreground product,Home,Educational,18.52,77.19,22,WH-C-13,1,2023-09-23
+423,20422,Realigned local ability,Electronics,Fiction,66.94,107.57,31,WH-C-23,0,2025-01-16
+424,20423,Cross-platform radical projection,Home,Educational,66.07,12.77,23,WH-C-23,0,2018-04-26
+425,20424,Centralized even-keeled leverage,Electronics,Mobile,72.62,64.36,9,WH-B-12,1,2017-03-05
+426,20425,Ergonomic scalable protocol,Electronics,Apparel,53.89,12.19,38,WH-B-69,1,2017-06-14
+427,20426,Exclusive tertiary Local Area Network,Home,Kitchen,478.3,194.12,36,WH-B-40,0,2017-11-30
+428,20427,Balanced next generation parallelism,Clothing,Educational,215.29,58.6,10,WH-B-50,0,2019-09-22
+429,20428,Function-based coherent infrastructure,Home,Kitchen,13.35,127.31,47,WH-C-27,1,2022-05-21
+430,20429,Operative mission-critical time-frame,Clothing,Apparel,283.58,108.35,49,WH-B-69,0,2018-02-12
+431,20430,Fully-configurable 5thgeneration framework,Toys,Kitchen,203.18,246.78,6,WH-B-54,1,2022-07-21
+432,20431,Programmable asymmetric project,Clothing,Kitchen,145.27,23.76,1,WH-C-57,1,2018-01-06
+433,20432,Decentralized systemic forecast,Books,Apparel,241.92,208.32,3,WH-A-75,0,2016-07-23
+434,20433,Polarized client-server forecast,Toys,Mobile,405.08,79.31,50,WH-B-39,1,2019-02-25
+435,20434,Inverse intermediate circuit,Clothing,Apparel,36.29,182.88,16,WH-C-97,0,2017-10-09
+436,20435,Expanded demand-driven conglomeration,Home,Educational,423.3,153.13,40,WH-B-21,1,2018-06-17
+437,20436,Team-oriented mission-critical focus group,Home,Apparel,324.98,26.55,10,WH-A-86,0,2022-10-01
+438,20437,Virtual even-keeled algorithm,Books,Kitchen,237.16,5.62,5,WH-B-30,1,2017-06-17
+439,20438,Multi-tiered maximized emulation,Books,Fiction,405.08,182.38,2,WH-C-36,1,2019-07-25
+440,20439,Polarized value-added support,Toys,Apparel,434.42,9.48,39,WH-A-13,1,2019-09-07
+441,20440,Optional maximized focus group,Home,Kitchen,331.69,73.35,31,WH-C-24,1,2021-04-07
+442,20441,Integrated global matrix,Electronics,Apparel,309.54,238.01,40,WH-A-31,1,2022-02-23
+443,20442,Vision-oriented next generation budgetary management,Electronics,Mobile,109.29,20.31,1,WH-A-14,0,2021-02-24
+444,20443,Versatile intermediate moratorium,Electronics,Mobile,405.72,12.95,32,WH-A-39,0,2017-01-01
+445,20444,Reverse-engineered multimedia architecture,Toys,Mobile,298.95,119.33,2,WH-C-54,0,2024-06-02
+446,20445,Robust bi-directional website,Home,Fiction,489.11,247.7,10,WH-C-34,1,2021-05-24
+447,20446,Persistent global orchestration,Books,Apparel,434.99,230.71,26,WH-A-10,1,2017-05-29
+448,20447,Reverse-engineered attitude-oriented middleware,Books,Kitchen,356.02,10.55,7,WH-A-72,1,2019-10-07
+449,20448,Configurable heuristic benchmark,Clothing,Educational,303.38,18.78,42,WH-B-15,0,2021-01-21
+450,20449,Open-source homogeneous projection,Books,Educational,488.21,42.88,48,WH-A-87,1,2023-12-14
+451,20450,Networked analyzing model,Toys,Educational,389.7,136.19,39,WH-B-30,0,2024-08-28
+452,20451,Versatile optimizing intranet,Clothing,Apparel,278.04,170.07,6,WH-C-47,0,2024-11-08
+453,20452,Operative grid-enabled matrix,Clothing,Apparel,337.87,76.82,8,WH-A-28,1,2016-10-23
+454,20453,Managed zero tolerance approach,Books,Mobile,396.78,99.19,14,WH-B-71,1,2021-03-05
+455,20454,Distributed encompassing leverage,Electronics,Educational,402.42,172.15,21,WH-A-56,1,2017-07-17
+456,20455,Implemented scalable migration,Clothing,Mobile,167.71,185.27,33,WH-B-39,1,2018-10-17
+457,20456,Quality-focused radical task-force,Electronics,Kitchen,106.84,16.37,18,WH-C-67,0,2022-08-13
+458,20457,Multi-tiered leadingedge function,Books,Fiction,434.19,146.58,13,WH-C-38,1,2019-08-15
+459,20458,User-centric modular Graphic Interface,Electronics,Educational,304.34,203.32,39,WH-A-41,1,2016-09-27
+460,20459,Automated asynchronous capacity,Electronics,Educational,243.37,94.36,40,WH-C-71,0,2021-12-03
+461,20460,Distributed bifurcated conglomeration,Clothing,Fiction,432.63,62.0,24,WH-A-12,1,2024-11-08
+462,20461,User-friendly tertiary capability,Toys,Apparel,386.67,43.09,7,WH-C-55,0,2022-06-10
+463,20462,Upgradable web-enabled structure,Books,Apparel,167.27,192.41,48,WH-A-18,1,2020-02-08
+464,20463,Decentralized discrete paradigm,Electronics,Kitchen,124.76,96.17,48,WH-B-65,1,2023-03-18
+465,20464,Optimized discrete superstructure,Electronics,Fiction,236.31,60.64,23,WH-A-20,1,2024-09-24
+466,20465,Proactive dedicated matrices,Toys,Educational,239.6,13.99,2,WH-B-14,1,2022-03-03
+467,20466,Mandatory optimal help-desk,Electronics,Apparel,198.29,69.58,5,WH-B-69,0,2021-11-26
+468,20467,Intuitive incremental challenge,Clothing,Mobile,248.47,80.19,15,WH-C-3,1,2020-10-14
+469,20468,Customizable multi-tasking adapter,Books,Apparel,355.78,169.57,1,WH-A-21,1,2019-05-12
+470,20469,Front-line interactive contingency,Clothing,Educational,101.11,131.47,17,WH-A-58,1,2023-11-15
+471,20470,Monitored background ability,Toys,Kitchen,80.47,236.67,44,WH-C-27,1,2020-04-02
+472,20471,Ameliorated 24hour definition,Toys,Kitchen,185.49,35.72,15,WH-C-56,1,2018-12-01
+473,20472,Ergonomic national success,Electronics,Apparel,263.34,234.35,17,WH-C-87,1,2025-02-28
+474,20473,Profit-focused high-level definition,Clothing,Apparel,12.95,198.11,8,WH-C-78,1,2017-06-27
+475,20474,Secured multimedia ability,Electronics,Apparel,302.13,115.1,12,WH-B-100,1,2020-05-11
+476,20475,Switchable 24/7 productivity,Toys,Educational,38.31,121.05,24,WH-B-64,1,2019-03-01
+477,20476,Extended uniform project,Electronics,Fiction,355.19,11.77,20,WH-C-34,1,2016-11-15
+478,20477,Expanded foreground support,Clothing,Educational,367.03,49.16,22,WH-A-23,0,2021-04-24
+479,20478,Reactive real-time infrastructure,Electronics,Educational,416.76,164.56,37,WH-B-78,0,2017-03-11
+480,20479,Streamlined bifurcated budgetary management,Electronics,Apparel,87.23,221.35,43,WH-A-37,0,2018-02-27
+481,20480,Innovative stable definition,Electronics,Apparel,96.1,30.37,43,WH-C-2,0,2023-06-07
+482,20481,Cross-platform 3rdgeneration framework,Toys,Fiction,399.41,8.41,7,WH-B-24,0,2021-01-24
+483,20482,Fundamental well-modulated task-force,Toys,Fiction,22.38,22.51,39,WH-A-28,1,2016-06-23
+484,20483,Object-based asymmetric flexibility,Electronics,Apparel,345.77,235.63,43,WH-C-26,1,2024-11-10
+485,20484,Innovative asynchronous attitude,Home,Educational,293.01,213.94,18,WH-B-21,0,2018-12-09
+486,20485,Cross-group homogeneous process improvement,Books,Kitchen,479.37,12.97,24,WH-B-34,1,2017-07-18
+487,20486,Networked coherent task-force,Electronics,Fiction,117.3,153.15,17,WH-B-90,0,2020-04-21
+488,20487,Decentralized multimedia capacity,Clothing,Fiction,67.76,99.97,15,WH-C-7,0,2023-04-26
+489,20488,Persevering tangible initiative,Toys,Educational,231.76,163.24,13,WH-A-59,1,2022-07-30
+490,20489,Profit-focused incremental standardization,Clothing,Fiction,249.73,157.74,18,WH-C-48,1,2021-02-19
+491,20490,Adaptive secondary pricing structure,Home,Mobile,215.16,126.31,26,WH-B-3,0,2024-11-24
+492,20491,Synergistic human-resource utilization,Books,Kitchen,301.56,45.65,24,WH-A-48,0,2023-03-09
+493,20492,Profound bifurcated complexity,Home,Apparel,275.68,228.9,17,WH-A-23,0,2021-05-01
+494,20493,Focused disintermediate access,Clothing,Mobile,479.13,64.95,38,WH-A-20,0,2021-04-15
+495,20494,Decentralized client-server capacity,Electronics,Fiction,443.52,60.43,27,WH-B-43,1,2021-05-05
+496,20495,User-centric bottom-line flexibility,Books,Fiction,408.45,203.09,9,WH-C-27,1,2022-06-26
+497,20496,Intuitive directional solution,Clothing,Educational,460.38,150.06,4,WH-A-69,0,2020-09-17
+498,20497,Distributed optimal flexibility,Electronics,Kitchen,417.51,198.22,34,WH-B-12,1,2018-12-16
+499,20498,Enterprise-wide uniform product,Books,Educational,163.4,219.27,42,WH-C-18,1,2021-05-06
+500,20499,Cloned leadingedge parallelism,Toys,Kitchen,46.87,117.65,32,WH-B-36,1,2021-01-20
+501,20500,Universal multi-tasking data-warehouse,Electronics,Fiction,109.54,114.79,30,WH-A-76,0,2017-03-04
+502,20501,Integrated 24/7 initiative,Electronics,Educational,192.46,182.02,48,WH-B-36,1,2020-03-27
+503,20502,Exclusive intangible throughput,Home,Educational,60.41,226.9,16,WH-A-80,0,2024-04-01
+504,20503,Managed next generation circuit,Books,Fiction,87.59,186.75,11,WH-B-41,0,2017-07-01
+505,20504,Enhanced optimal Graphic Interface,Electronics,Mobile,183.38,61.42,44,WH-B-2,0,2022-12-15
+506,20505,Profit-focused methodical function,Books,Mobile,156.76,168.22,31,WH-C-57,0,2023-01-27
+507,20506,Team-oriented heuristic pricing structure,Home,Educational,306.68,36.08,48,WH-C-33,0,2021-12-25
+508,20507,Distributed optimal parallelism,Home,Apparel,353.2,137.23,30,WH-C-24,1,2019-11-13
+509,20508,Programmable user-facing encryption,Toys,Mobile,221.4,160.34,10,WH-C-26,1,2016-06-30
+510,20509,Ergonomic bi-directional circuit,Home,Mobile,185.4,156.29,8,WH-A-44,1,2017-04-25
+511,20510,Virtual fault-tolerant workforce,Home,Mobile,442.88,86.72,25,WH-B-95,1,2019-10-04
+512,20511,Re-engineered static function,Toys,Educational,76.14,198.19,39,WH-C-66,0,2017-07-12
+513,20512,Fully-configurable dedicated forecast,Home,Apparel,462.75,216.25,11,WH-B-95,0,2024-04-27
+514,20513,Customer-focused radical extranet,Clothing,Kitchen,436.09,7.11,11,WH-C-24,0,2022-09-11
+515,20514,Extended composite matrices,Home,Educational,94.33,105.74,30,WH-B-24,0,2024-10-22
+516,20515,Organized attitude-oriented initiative,Home,Mobile,150.86,145.48,21,WH-A-2,0,2022-03-10
+517,20516,Inverse exuding ability,Toys,Mobile,75.85,102.63,27,WH-B-7,0,2016-10-01
+518,20517,Focused national time-frame,Electronics,Educational,419.62,163.52,38,WH-C-30,0,2017-11-20
+519,20518,Realigned intermediate forecast,Clothing,Apparel,383.88,136.99,14,WH-A-21,0,2020-08-05
+520,20519,Cross-group 4thgeneration methodology,Toys,Mobile,350.47,107.87,44,WH-C-19,1,2021-10-04
+521,20520,Multi-channeled client-driven challenge,Home,Educational,64.34,172.85,4,WH-A-61,0,2023-06-14
+522,20521,Self-enabling non-volatile hierarchy,Books,Apparel,15.06,145.25,18,WH-B-23,1,2018-03-14
+523,20522,Front-line zero tolerance ability,Clothing,Kitchen,339.92,55.37,49,WH-A-53,1,2017-09-15
+524,20523,Future-proofed attitude-oriented approach,Electronics,Educational,156.84,234.98,44,WH-A-50,1,2023-09-23
+525,20524,Front-line eco-centric info-mediaries,Clothing,Educational,240.24,224.22,1,WH-B-62,0,2019-08-05
+526,20525,Optional logistical attitude,Home,Fiction,153.24,157.8,7,WH-B-55,0,2017-07-18
+527,20526,Innovative multimedia support,Books,Fiction,226.28,249.51,34,WH-B-80,0,2024-09-07
+528,20527,Down-sized contextually-based strategy,Electronics,Kitchen,150.65,58.7,42,WH-B-99,1,2018-01-05
+529,20528,Open-source tertiary concept,Home,Educational,392.64,200.05,15,WH-B-74,1,2016-11-07
+530,20529,Distributed analyzing middleware,Home,Fiction,191.16,60.22,11,WH-A-54,1,2025-01-06
+531,20530,Operative demand-driven artificial intelligence,Clothing,Kitchen,262.7,184.82,31,WH-A-84,0,2024-05-24
+532,20531,Enterprise-wide human-resource Local Area Network,Books,Apparel,316.65,81.67,28,WH-B-23,0,2017-05-30
+533,20532,Devolved user-facing parallelism,Electronics,Fiction,392.7,121.85,29,WH-B-87,1,2017-12-04
+534,20533,Ameliorated user-facing service-desk,Electronics,Apparel,118.84,128.77,29,WH-C-34,1,2022-11-25
+535,20534,Proactive clear-thinking architecture,Electronics,Fiction,378.7,211.59,49,WH-B-54,1,2019-08-14
+536,20535,Digitized reciprocal forecast,Clothing,Educational,281.19,203.24,28,WH-A-48,1,2023-09-09
+537,20536,Focused composite utilization,Books,Fiction,289.91,234.9,16,WH-B-61,0,2024-12-20
+538,20537,Switchable didactic superstructure,Books,Apparel,173.92,175.89,41,WH-C-50,1,2020-11-30
+539,20538,Operative maximized monitoring,Electronics,Apparel,450.72,60.83,42,WH-B-35,0,2018-01-25
+540,20539,Intuitive 24hour knowledgebase,Electronics,Educational,246.69,112.81,47,WH-A-52,0,2021-06-19
+541,20540,Re-engineered maximized superstructure,Clothing,Educational,211.05,215.12,25,WH-C-83,1,2022-10-29
+542,20541,Extended solution-oriented solution,Books,Fiction,221.14,58.42,1,WH-B-87,0,2023-08-23
+543,20542,Cross-group disintermediate matrices,Books,Educational,110.13,171.54,34,WH-C-66,0,2019-11-08
+544,20543,User-centric multimedia structure,Home,Apparel,425.6,211.74,27,WH-B-74,0,2022-01-18
+545,20544,Proactive impactful open system,Home,Fiction,217.07,176.54,47,WH-C-52,1,2019-10-12
+546,20545,Organic mobile conglomeration,Clothing,Kitchen,421.08,191.82,11,WH-A-74,0,2023-03-15
+547,20546,Monitored holistic standardization,Books,Fiction,96.88,210.06,9,WH-C-11,1,2021-02-03
+548,20547,Multi-layered real-time paradigm,Electronics,Fiction,85.42,177.09,28,WH-A-99,0,2023-08-28
+549,20548,Managed system-worthy analyzer,Books,Educational,412.96,80.45,24,WH-A-52,0,2016-05-01
+550,20549,Ameliorated human-resource toolset,Electronics,Kitchen,479.24,79.11,21,WH-C-89,1,2021-09-10
+551,20550,Mandatory client-server database,Toys,Mobile,497.0,151.71,3,WH-C-44,1,2016-09-22
+552,20551,Advanced tangible interface,Home,Fiction,269.95,239.85,26,WH-A-72,0,2019-05-30
+553,20552,Ameliorated empowering array,Clothing,Mobile,238.3,137.0,30,WH-B-65,1,2019-07-31
+554,20553,Secured content-based encoding,Home,Kitchen,342.12,89.22,15,WH-C-75,1,2016-03-10
+555,20554,Digitized directional open architecture,Books,Kitchen,451.61,165.24,48,WH-B-1,1,2018-03-14
+556,20555,Synergized holistic throughput,Electronics,Fiction,488.89,106.01,47,WH-A-58,0,2016-09-11
+557,20556,Visionary web-enabled encryption,Books,Mobile,232.59,103.52,45,WH-A-77,1,2022-08-06
+558,20557,Vision-oriented static access,Home,Fiction,169.86,236.9,35,WH-A-59,1,2020-10-24
+559,20558,Expanded mobile complexity,Books,Kitchen,324.38,119.4,44,WH-A-10,0,2019-03-17
+560,20559,Digitized zero administration strategy,Books,Educational,430.7,47.02,23,WH-B-51,0,2018-06-11
+561,20560,Focused 5thgeneration customer loyalty,Electronics,Kitchen,316.2,116.79,22,WH-A-54,0,2022-07-13
+562,20561,Synchronized directional Internet solution,Home,Fiction,196.93,164.49,14,WH-B-43,0,2020-04-20
+563,20562,Ergonomic foreground installation,Clothing,Mobile,370.53,77.33,24,WH-C-19,1,2020-02-20
+564,20563,Upgradable upward-trending application,Books,Mobile,296.93,235.0,1,WH-A-59,1,2022-10-08
+565,20564,Horizontal coherent access,Books,Educational,208.48,205.01,28,WH-A-32,0,2016-08-17
+566,20565,Upgradable asymmetric forecast,Home,Kitchen,193.96,37.57,17,WH-C-40,1,2021-06-08
+567,20566,Centralized clear-thinking methodology,Home,Fiction,379.41,176.48,7,WH-B-48,0,2018-01-18
+568,20567,Implemented non-volatile encryption,Toys,Apparel,421.8,225.22,33,WH-A-16,1,2018-04-28
+569,20568,Progressive demand-driven firmware,Clothing,Fiction,191.02,235.07,35,WH-B-20,0,2024-10-10
+570,20569,Devolved bottom-line strategy,Toys,Educational,405.33,153.06,15,WH-C-53,1,2022-05-13
+571,20570,Self-enabling bottom-line capability,Books,Educational,484.22,214.55,33,WH-A-18,1,2018-10-14
+572,20571,Upgradable human-resource matrix,Clothing,Kitchen,481.01,143.1,39,WH-A-50,1,2016-05-09
+573,20572,Re-engineered context-sensitive collaboration,Clothing,Kitchen,447.34,97.35,12,WH-C-85,0,2020-04-01
+574,20573,Programmable exuding capacity,Clothing,Apparel,378.23,185.03,1,WH-B-72,0,2021-09-22
+575,20574,Team-oriented responsive attitude,Home,Educational,16.06,34.75,10,WH-C-23,0,2016-12-03
+576,20575,Organic fault-tolerant forecast,Home,Kitchen,305.53,187.78,34,WH-C-11,0,2017-05-08
+577,20576,Distributed optimal paradigm,Electronics,Mobile,151.9,17.17,24,WH-C-60,1,2018-06-21
+578,20577,Enterprise-wide global synergy,Clothing,Mobile,436.65,184.12,25,WH-A-28,1,2016-10-15
+579,20578,Digitized cohesive neural-net,Home,Kitchen,451.56,211.69,48,WH-A-5,1,2023-08-12
+580,20579,Phased logistical data-warehouse,Toys,Apparel,88.29,197.55,50,WH-C-18,0,2019-02-13
+581,20580,Realigned demand-driven system engine,Electronics,Fiction,99.5,87.52,19,WH-A-73,0,2023-07-13
+582,20581,Optional contextually-based protocol,Books,Apparel,283.76,157.01,36,WH-C-100,1,2023-12-28
+583,20582,Robust reciprocal policy,Books,Kitchen,440.88,25.87,47,WH-B-32,1,2024-06-26
+584,20583,Mandatory mission-critical toolset,Toys,Mobile,468.86,110.5,38,WH-B-20,0,2023-02-08
+585,20584,De-engineered clear-thinking adapter,Home,Kitchen,399.75,80.3,8,WH-A-91,0,2021-02-27
+586,20585,Optional multi-state collaboration,Toys,Fiction,164.72,104.15,2,WH-A-64,0,2020-11-12
+587,20586,Synchronized composite database,Toys,Apparel,40.43,107.67,25,WH-C-98,1,2023-09-27
+588,20587,Fundamental foreground analyzer,Books,Fiction,302.83,22.39,7,WH-C-62,1,2019-12-09
+589,20588,Reactive transitional data-warehouse,Clothing,Apparel,427.37,81.07,22,WH-B-37,1,2021-07-08
+590,20589,Enhanced bifurcated functionalities,Electronics,Educational,377.4,135.96,50,WH-A-100,1,2017-02-24
+591,20590,Devolved fresh-thinking emulation,Toys,Apparel,47.35,190.48,33,WH-B-81,0,2018-11-07
+592,20591,Pre-emptive radical archive,Toys,Kitchen,480.9,45.78,12,WH-C-45,1,2019-02-10
+593,20592,Horizontal multimedia architecture,Electronics,Fiction,408.83,141.79,48,WH-C-1,1,2024-03-16
+594,20593,Reduced tertiary orchestration,Toys,Apparel,142.91,201.19,28,WH-C-47,0,2021-05-05
+595,20594,Inverse needs-based approach,Toys,Educational,11.32,74.84,11,WH-A-2,1,2019-04-30
+596,20595,Synergistic multimedia definition,Electronics,Kitchen,306.06,198.17,38,WH-A-23,0,2019-08-22
+597,20596,Organic foreground initiative,Books,Educational,202.89,44.28,42,WH-C-94,1,2016-11-12
+598,20597,Ergonomic coherent strategy,Home,Mobile,333.44,135.87,5,WH-A-51,0,2020-05-07
+599,20598,User-friendly web-enabled pricing structure,Toys,Apparel,349.1,178.78,35,WH-A-93,0,2019-01-06
+600,20599,Fundamental discrete data-warehouse,Clothing,Fiction,492.87,78.5,33,WH-A-65,0,2018-06-18
