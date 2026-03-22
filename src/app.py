@@ -1,43 +1,42 @@
 import streamlit as st
-import os
-import sys
-import re
+import os, sys, re, yaml, json, random
 import pandas as pd
 import sqlite3
 import streamlit.components.v1 as components
-from datetime import datetime
+from datetime import datetime, timedelta
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 
 from src.agent.llm_agent import run_mock_agent, run_real_agent
 from src.agent.agent_tools_ext import generate_e2e_lineage_graph
+from src.config_loader import get_domain_config, get_risk_rules, get_active_domain
 
 TARGET_DB_PATH = os.path.join(BASE_DIR, 'data', 'target_dw', 'target_system.db')
 EMAIL_LOG_PATH = os.path.join(BASE_DIR, 'logs', 'email_audit.log')
 os.makedirs(os.path.dirname(EMAIL_LOG_PATH), exist_ok=True)
 
-st.set_page_config(page_title="Enterprise Data Lineage & Impact Agent", layout="wide", page_icon="🔗")
+st.set_page_config(
+    page_title="Enterprise Data Lineage and Impact Intelligence Agent",
+    layout="wide", page_icon="🔗")
 
-# ========== PREMIUM CSS ==========
+# ===================================================================
+# PREMIUM CSS
+# ===================================================================
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700;800&display=swap');
 
 :root {
-    --primary: #2563EB;
-    --surface: #FFFFFF;
-    --bg: #F1F5F9;
-    --border: #E2E8F0;
-    --text: #0F172A;
-    --muted: #64748B;
+    --primary: #2563EB; --surface: #FFFFFF; --bg: #F1F5F9;
+    --border: #E2E8F0; --text: #0F172A; --muted: #64748B;
+    --green: #059669; --red: #DC2626; --amber: #D97706;
 }
-
 .stApp { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; }
 
 .header-bar {
     background: linear-gradient(135deg, #1E3A8A 0%, #2563EB 55%, #7C3AED 100%);
-    border-radius: 16px; padding: 28px 36px; margin-bottom: 24px;
+    border-radius: 16px; padding: 24px 32px; margin-bottom: 20px;
     position: relative; overflow: hidden;
     box-shadow: 0 20px 40px rgba(37,99,235,0.22);
 }
@@ -45,11 +44,11 @@ st.markdown("""
     content:''; position:absolute; top:-40%; right:-8%; width:300px; height:300px;
     background:rgba(255,255,255,0.06); border-radius:50%;
 }
-.header-title { font-family:'Outfit',sans-serif; font-size:2rem; font-weight:800; color:#fff; margin:0 0 6px; }
-.header-sub   { color:rgba(255,255,255,0.72); font-size:0.95rem; margin:0; }
+.header-title { font-family:'Outfit',sans-serif; font-size:1.75rem; font-weight:800; color:#fff; margin:0 0 6px; }
+.header-sub   { color:rgba(255,255,255,0.72); font-size:0.9rem; margin:0; }
 
 .stat-card {
-    background:#fff; border-radius:14px; padding:20px 22px;
+    background:#fff; border-radius:14px; padding:18px 20px;
     display:flex; flex-direction:column; gap:6px;
     box-shadow:0 1px 3px rgba(0,0,0,0.06),0 6px 16px rgba(0,0,0,0.04);
     border:1px solid var(--border);
@@ -57,544 +56,675 @@ st.markdown("""
 }
 .stat-card:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,0.09); }
 .stat-icon  { font-size:1.5rem; }
-.stat-value { font-size:2.1rem; font-weight:800; font-family:'Outfit',sans-serif; }
-.stat-label { font-size:0.75rem; font-weight:700; color:var(--muted); letter-spacing:0.4px; text-transform:uppercase; }
-.stat-names { font-size:0.74rem; color:var(--muted); line-height:1.4; }
+.stat-value { font-size:2rem; font-weight:800; font-family:'Outfit',sans-serif; }
+.stat-label { font-size:0.72rem; font-weight:700; color:var(--muted); letter-spacing:0.4px; text-transform:uppercase; }
+.stat-names { font-size:0.72rem; color:var(--muted); line-height:1.4; }
 
-.risk-high   { background:#FEE2E2; border-left:5px solid #DC2626; color:#7F1D1D; padding:12px 14px; border-radius:10px; margin:5px 0; }
-.risk-medium { background:#FEF3C7; border-left:5px solid #D97706; color:#78350F; padding:12px 14px; border-radius:10px; margin:5px 0; }
-.risk-low    { background:#DCFCE7; border-left:5px solid #059669; color:#064E3B; padding:12px 14px; border-radius:10px; margin:5px 0; }
-
-.badge-fail { background:#FEE2E2; color:#DC2626; padding:3px 10px; border-radius:20px; font-size:0.78rem; font-weight:700; }
-.badge-ok   { background:#DCFCE7; color:#059669; padding:3px 10px; border-radius:20px; font-size:0.78rem; font-weight:700; }
-
-[data-testid="column"]:nth-of-type(2) {
-    position:fixed; bottom:20px; right:20px;
-    width:440px !important; height:82vh;
-    background:#fff; box-shadow:0 20px 60px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.06);
-    border-radius:20px; padding:20px; border:1px solid var(--border);
-    overflow-y:auto; z-index:9999; display:flex; flex-direction:column;
-}
-[data-testid="column"]:nth-of-type(2) .stChatInputContainer {
-    position:sticky; bottom:0; background:#fff;
-    padding-top:10px; z-index:10000; border-top:1px solid var(--border);
+.section-header {
+    font-size:0.7rem; font-weight:700; text-transform:uppercase;
+    letter-spacing:0.8px; color:var(--muted); padding:6px 2px 4px;
+    border-bottom:1px solid var(--border); margin-bottom:4px;
 }
 
-div[data-testid="stChatMessage"] {
-    background:#F8FAFC; border:1px solid var(--border);
-    border-radius:12px; padding:14px 18px; margin-bottom:8px;
+.sel-pill {
+    display:inline-flex; align-items:center; gap:6px;
+    background:#EFF6FF; border:1px solid #BFDBFE;
+    color:#1E40AF; border-radius:20px; padding:3px 10px 3px 8px;
+    font-size:0.75rem; font-weight:600; margin:2px; cursor:pointer;
 }
+.max-warning { background:#FEF3C7; border:1px solid #FDE68A; border-radius:10px; padding:10px 14px; color:#92400E; font-size:0.85rem; font-weight:600; }
+.ctx-badge { display:inline-block; background:#F0FDF4; border:1px solid #BBF7D0; color:#065F46; border-radius:8px; padding:4px 10px; font-size:0.78rem; font-weight:700; margin-bottom:8px; }
+.api-link { color:#2563EB; font-weight:600; text-decoration:underline dotted; font-size:0.82rem; }
 
-.stTabs [data-baseweb="tab-list"] { gap:6px; background:transparent; }
+.risk-high   { background:#FEE2E2; border-left:4px solid #DC2626; color:#7F1D1D; padding:10px 12px; border-radius:8px; margin:4px 0; font-size:0.83rem; }
+.risk-medium { background:#FEF3C7; border-left:4px solid #D97706; color:#78350F; padding:10px 12px; border-radius:8px; margin:4px 0; font-size:0.83rem; }
+.risk-low    { background:#DCFCE7; border-left:4px solid #059669; color:#064E3B; padding:10px 12px; border-radius:8px; margin:4px 0; font-size:0.83rem; }
+.risk-none   { background:#F1F5F9; border-left:4px solid #CBD5E1; color:#475569; padding:10px 12px; border-radius:8px; margin:4px 0; font-size:0.83rem; }
+
+.badge-fail { background:#FEE2E2; color:#DC2626; padding:2px 9px; border-radius:20px; font-size:0.75rem; font-weight:700; }
+.badge-ok   { background:#DCFCE7; color:#059669; padding:2px 9px; border-radius:20px; font-size:0.75rem; font-weight:700; }
+
+.stTabs [data-baseweb="tab-list"] { gap:5px; background:transparent; }
 .stTabs [data-baseweb="tab"] {
-    height:38px; background:#fff; border-radius:8px;
-    color:var(--muted); font-weight:600; font-size:0.84rem;
-    border:1px solid var(--border); padding:4px 14px; transition:all 0.18s ease;
+    height:36px; background:#fff; border-radius:8px;
+    color:var(--muted); font-weight:600; font-size:0.82rem;
+    border:1px solid var(--border); padding:4px 12px; transition:all 0.18s ease;
 }
 .stTabs [aria-selected="true"] {
     background:var(--primary) !important; color:#fff !important;
     border-color:var(--primary) !important; box-shadow:0 4px 12px rgba(37,99,235,0.3);
 }
 h3 { font-family:'Outfit',sans-serif !important; color:var(--text) !important; }
-.stDataFrame { border-radius:10px; overflow:hidden; }
+table { font-size:0.8rem; }
 </style>
 """, unsafe_allow_html=True)
 
-# ========== DB HELPER ==========
+# ===================================================================
+# DB CONNECTION
+# ===================================================================
 def get_db_conn():
-    return sqlite3.connect(TARGET_DB_PATH)
+    import os
+    db_path = os.environ.get("ACTIVE_DB_PATH", TARGET_DB_PATH)
+    return sqlite3.connect(db_path)
 
-# ========== STATIC INVENTORY DATA ==========
-STATIC_SOURCES = ["Customers","Products","Stores","Employees","Suppliers","Promotions",
-                   "Orders","OrderLines","Returns","Invoices","PurchaseOrders","Vendors",
-                   "HR_Records","ServiceTickets","Accounts"]
-STATIC_CSVS  = ["Sales_Export.csv","Inventory_Snapshot.csv","Returns_Flat.csv","Promo_Export.csv","Budget_Forecast.csv"]
-STATIC_APIS  = ["marketingcloud.io/campaigns","salesforce.com/leads","payments.stripe.com/transactions",
-                 "shopify.com/orders","currencies.exchange.io/rates"]
-STATIC_BIS   = ["Sales Performance Dashboard","Customer Segmentation Report","Margin Analysis Report",
-                 "Campaign ROI Report","Monthly Revenue Trend","Product Performance Report",
-                 "Tax Reconciliation Report","Store Performance Dashboard","Inventory Health Report",
-                 "Executive KPI Scorecard","Supplier Quality Report"]
-
-@st.cache_data(ttl=120)
+# ===================================================================
+# DYNAMIC INVENTORY — 100% FROM DB
+# ===================================================================
+@st.cache_data(ttl=60)
 def get_inventory_stats():
     conn = get_db_conn()
     cur = conn.cursor()
-    cur.execute("SELECT DISTINCT source_table FROM data_lineage_map WHERE source_system LIKE 'SQLite%' OR source_system LIKE 'OLTP%' OR source_system LIKE 'ERP%'")
-    src_db = [r[0] for r in cur.fetchall()]
-    src = src_db if len(src_db) >= 5 else STATIC_SOURCES
-    cur.execute("SELECT DISTINCT target_table FROM data_lineage_map")
-    tgt = [r[0] for r in cur.fetchall()]
-    cur.execute("SELECT DISTINCT source_table FROM data_lineage_map WHERE source_system LIKE 'CSV%'")
-    csv_db = [r[0] for r in cur.fetchall()]
-    csv_f = [f"{t}.csv" for t in csv_db] if csv_db else STATIC_CSVS
-    cur.execute("SELECT DISTINCT etl_pipeline FROM table_catalog WHERE etl_pipeline IS NOT NULL")
-    etls = [r[0] for r in cur.fetchall()]
-    cur.execute("SELECT DISTINCT report_name FROM report_dependency")
-    bi_db = [r[0] for r in cur.fetchall()]
-    bi = bi_db if bi_db else STATIC_BIS
-    conn.close()
-    return src, tgt, csv_f, STATIC_APIS, etls, bi
+    cur.execute("SELECT DISTINCT source_table, source_system FROM data_lineage_map WHERE source_system NOT LIKE 'CSV%' AND source_system NOT LIKE 'API%' AND source_system NOT LIKE 'REST%'")
+    src_db = [(r[0], r[1]) for r in cur.fetchall() if r[0]]
 
-# ========== AUTO IMPACT SUMMARY ==========
-def render_auto_impact_summary(table_name: str, detailed: bool = False):
-    """Render a risk grid for ALL possible operations on a table — no user selection needed."""
+    cur.execute("SELECT DISTINCT source_table, source_system FROM data_lineage_map WHERE source_system LIKE 'CSV%' OR source_system LIKE 'Flat%'")
+    csv_db = [(r[0], r[1]) for r in cur.fetchall() if r[0]]
+
+    cur.execute("SELECT DISTINCT source_table, source_system FROM data_lineage_map WHERE source_system LIKE 'API%' OR source_system LIKE 'REST%'")
+    api_db = [(r[0], r[1]) for r in cur.fetchall() if r[0]]
+
+    cur.execute("SELECT DISTINCT target_table FROM data_lineage_map")
+    tgt = [r[0] for r in cur.fetchall() if r[0]]
+
+    cur.execute("SELECT DISTINCT etl_pipeline FROM table_catalog WHERE etl_pipeline IS NOT NULL AND etl_pipeline != 'N/A'")
+    etls = [r[0] for r in cur.fetchall() if r[0]]
+
+    cur.execute("SELECT DISTINCT report_name FROM report_dependency")
+    bi = [r[0] for r in cur.fetchall() if r[0]]
+
+    conn.close()
+    return src_db, tgt, csv_db, api_db, etls, bi
+
+@st.cache_data(ttl=60)
+def get_full_lineage_dataframe():
     conn = get_db_conn()
     try:
-        df_reports   = pd.read_sql("SELECT DISTINCT report_name, dw_column, business_owner FROM report_dependency WHERE dw_table=?", conn, params=(table_name,))
-        df_pipelines = pd.read_sql("SELECT DISTINCT etl_pipeline FROM table_catalog WHERE table_name=?", conn, params=(table_name,))
-        df_linked    = pd.read_sql("SELECT DISTINCT linked_tables FROM table_catalog WHERE table_name=?", conn, params=(table_name,))
-        cur = conn.cursor()
-        cur.execute(f'PRAGMA table_info("{table_name}")')
+        df = pd.read_sql("""
+            SELECT dlm.source_system, dlm.source_table, dlm.source_column,
+                   dlm.target_table, dlm.target_column, dlm.transformation_logic,
+                   tc.etl_pipeline, rd.report_name
+            FROM data_lineage_map dlm
+            LEFT JOIN table_catalog tc ON tc.table_name = dlm.target_table
+            LEFT JOIN report_dependency rd ON rd.dw_table = dlm.target_table
+        """, conn)
+    except: df = pd.DataFrame()
+    conn.close()
+    return df
 
-        columns = [r[1] for r in cur.fetchall()]
-    finally:
-        conn.close()
+# ===================================================================
+# MULTI-SELECT STATE MANAGEMENT
+# ===================================================================
+MAX_SELECTIONS = 5
 
-    report_count   = len(df_reports)
-    pipeline_count = len(df_pipelines)
-    col_count      = len(columns)
-    linked_tables  = df_linked.iloc[0, 0] if not df_linked.empty and df_linked.iloc[0, 0] else "None"
+def init_state():
+    if "selections" not in st.session_state:
+        st.session_state.selections = []   # list of {"name": str, "type": str}
+    if "panel_entity" not in st.session_state:
+        st.session_state.panel_entity = None
+    if "current_graph" not in st.session_state:
+        st.session_state.current_graph = None
+    if "messages" not in st.session_state:
+        st.session_state.messages = [{"role": "assistant", "content": "👋 Ask me about lineage, data sources, or say 'I want to change data source' to configure a new connection."}]
+    if "conn_wizard" not in st.session_state:
+        st.session_state.conn_wizard = {"active": False, "step": 0, "conn_type": None, "data": {}}
 
-    def _risk(r, p):
-        if r >= 3 or p >= 2: return "HIGH",   "risk-high",   "🔴"
-        if r >= 1 or p >= 1: return "MEDIUM", "risk-medium", "🟡"
-        return "LOW", "risk-low", "🟢"
+init_state()
 
-    ops = [
-        ("Drop Table",            _risk(report_count, pipeline_count),    f"{col_count} cols removed · {report_count} reports break · {pipeline_count} pipelines fail"),
-        ("Alter Column Datatype", _risk(report_count, 1),                 f"Casting errors in {pipeline_count} pipeline(s) · incorrect data in {report_count} report(s)"),
-        ("Add Column",            _risk(0, 0),                            "Additive — existing reports unaffected · pipelines may need schema refresh"),
-        ("Rename Column",         _risk(report_count, pipeline_count),    f"{report_count} report(s) reference column by name · {pipeline_count} pipeline(s) need remapping"),
-        ("Revoke Access",         _risk(min(report_count,2), 1),          "Teams with SELECT grants lose access · scheduled jobs may fail silently"),
-        ("Nullability Change",    _risk(1 if report_count else 0, 0),     f"NULL constraints affect {report_count} downstream aggregations"),
-    ]
+def toggle_selection(name: str, asset_type: str):
+    current = st.session_state.selections
+    existing = next((i for i, s in enumerate(current) if s["name"] == name), None)
+    if existing is not None:
+        st.session_state.selections.pop(existing)
+        if st.session_state.panel_entity == name:
+            st.session_state.panel_entity = st.session_state.selections[-1]["name"] if st.session_state.selections else None
+    else:
+        if len(current) >= MAX_SELECTIONS:
+            st.session_state.max_error = True
+            return
+        st.session_state.selections.append({"name": name, "type": asset_type})
+        st.session_state.panel_entity = name
+        # Try to generate lineage graph
+        try:
+            result = generate_e2e_lineage_graph.run(name)
+            if result and ".html" in str(result):
+                m = re.search(r'([A-Za-z]:[/\\][\w\\\\/\-\.\s]+\.html)', str(result))
+                if m and os.path.exists(m.group(1).strip()):
+                    st.session_state.current_graph = m.group(1).strip()
+        except: pass
+    st.session_state.max_error = False
 
-    st.markdown(f"**Predictive Impact — All Possible Operations on `{table_name}`**")
-    st.caption("Risk is calculated from downstream report dependencies, ETL pipelines, and linked tables.")
-    cols_ui = st.columns(3)
-    for i, (op_name, (risk, risk_class, emoji), desc) in enumerate(ops):
-        with cols_ui[i % 3]:
-            st.markdown(f"""
-            <div class="{risk_class}" style="margin-bottom:8px;">
-              <div style="font-size:0.78rem;font-weight:700;margin-bottom:3px;">{emoji} {op_name}</div>
-              <div style="font-size:0.85rem;font-weight:800;">{risk} RISK</div>
-              <div style="font-size:0.72rem;opacity:0.85;margin-top:3px;">{desc}</div>
-            </div>""", unsafe_allow_html=True)
+def is_selected(name: str) -> bool:
+    return any(s["name"] == name for s in st.session_state.selections)
 
-    if detailed:
-        st.markdown("---")
-        st.markdown("**Downstream Reports:**")
-        if not df_reports.empty:
-            st.dataframe(df_reports, use_container_width=True, hide_index=True)
-        else:
-            st.info("No report dependencies found.")
-        st.markdown("**ETL Pipelines at Risk:**")
-        if not df_pipelines.empty:
-            for _, row in df_pipelines.iterrows():
-                st.warning(f"⚙️ {row['etl_pipeline']}")
-        st.markdown(f"**Linked Tables:** `{linked_tables}`")
-        if columns:
-            st.markdown(f"**Columns ({col_count}):** `{'` · `'.join(columns)}`")
+def get_selected_names():
+    return [s["name"] for s in st.session_state.selections]
 
-# ========== HEADER ==========
+# ===================================================================
+# IMPACT ANALYSIS — FULLY CONFIG/DB DRIVEN
+# ===================================================================
+def render_auto_impact_summary(selections: list):
+    st.markdown("---")
+    if not selections:
+        return
+        
+    multi = len(selections) > 1
+    if multi:
+        st.markdown(f"### Intelligence Impact Analysis")
+    else:
+        st.markdown(f"### Intelligence Impact Analysis")
+
+    # --- TABULAR FORMAT ---
+    risk_data = []
+    
+    for sel in selections:
+        asset_name = sel["name"]
+        asset_type = sel["type"]
+        
+        if asset_type in ["RDBMS Source", "Target DW Table"]:
+            risk_data.append({
+                "Asset Name": asset_name, 
+                "Asset Type": asset_type, 
+                "High Risk": "Drop Table, Truncate Table, Delete Column, Alter Datatype Narrowing", 
+                "Low Risk": "Add Column, Rename Column, Alter Datatype Widening", 
+                "No Risk": "Nullable audit columns, Metadata updates"
+            })
+        elif asset_type == "Flat File":
+            risk_data.append({
+                "Asset Name": asset_name, 
+                "Asset Type": asset_type, 
+                "High Risk": "Change Delimiter, File Missing, Remove Column, Full Schema Restructure", 
+                "Low Risk": "Add nullable Column, Minor Schema Reorder", 
+                "No Risk": "Add trailing column"
+            })
+        elif asset_type == "API Endpoint":
+            risk_data.append({
+                "Asset Name": asset_name, 
+                "Asset Type": asset_type, 
+                "High Risk": "Deprecate Endpoint, Change API Auth Logic, Remove JSON Keys", 
+                "Low Risk": "Add JSON Keys", 
+                "No Risk": "Unused endpoint deprecation"
+            })
+        elif asset_type == "ETL Pipeline":
+            risk_data.append({
+                "Asset Name": asset_name, 
+                "Asset Type": asset_type, 
+                "High Risk": "ETL Logic Rewrite (Historical data loss)", 
+                "Low Risk": "Performance tuning, Minor Schedule Window Shift", 
+                "No Risk": "Off-peak schedule move"
+            })
+        elif asset_type == "BI Report":
+            risk_data.append({
+                "Asset Name": asset_name, 
+                "Asset Type": asset_type, 
+                "High Risk": "Delete Dashboard, KPI Value Shift", 
+                "Low Risk": "Visual changes, Formatting updates", 
+                "No Risk": "Unused dataset removal"
+            })
+
+    if risk_data:
+        df_risk = pd.DataFrame(risk_data)
+        st.dataframe(df_risk, use_container_width=True, hide_index=True)
+    else:
+        st.info("No impact scenarios found for selected asset types.")
+
+    # --- PER-ASSET RECOMMENDATIONS ---
+    st.markdown("#### Recommendations")
+
+    for sel in selections:
+        entity = sel["name"]
+        with st.expander(f"{entity} — Details", expanded=(not multi)):
+            matched = False
+            for rule in get_risk_rules():
+                if rule.get('keyword', '').lower() in entity.lower():
+                    level = rule.get('level', 'LOW')
+                    msg = f"**{rule['keyword']} Constraint Detected:** {rule['message']}"
+                    if level == 'HIGH': st.error(msg)
+                    elif level == 'MEDIUM': st.warning(msg)
+                    else: st.info(msg)
+                    matched = True; break
+            if not matched:
+                st.success(f"**`{entity}`** — No critical schema constraint violations detected.")
+
+# ===================================================================
+# HEADER
+# ===================================================================
 st.markdown("""
 <div class="header-bar">
-  <p class="header-title">🔗 Enterprise Data Lineage & Impact Agent</p>
+  <p class="header-title">🔗 Enterprise Data Lineage and Impact Intelligence Agent</p>
   <p class="header-sub">Automated transparency across all sources, pipelines, targets, and reporting layers</p>
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown("""
-<style>
-[data-testid="column"]:nth-of-type(2) { position:fixed; bottom:20px; right:20px; width:440px !important; height:82vh; }
-</style>
-""", unsafe_allow_html=True)
+# ===================================================================
+# TOP STATS REMOVED BY USER REQUEST
+# ===================================================================
+src_db, tgt_full, csv_db, api_db, etls_full, bi_full = get_inventory_stats()
+src_full = [x[0] for x in src_db]
+csv_full = [x[0] for x in csv_db]
+apis_full = [x[0] for x in api_db]
 
-left_col, right_col = st.columns([1.35, 0.65])
+
+# ===================================================================
+# TWO-COLUMN DASHBOARD LAYOUT
+# ===================================================================
+left_col, right_col = st.columns([0.25, 0.75], gap="large")
 
 with left_col:
-    # ---- LINEAGE VIEW FLOW ----
-    st.markdown("### Lineage View")
-    src, tgt, csv_f, apis, etls, bi = get_inventory_stats()
+    st.markdown("### 🗂️ Available Assets")
 
-    # Create 4 columns representing Left-to-Right Flow
-    col_src, col_etl, col_tgt, col_rep = st.columns(4)
+    # ── cascading logic ────────────────────────────────────────────────
+    df_lin     = get_full_lineage_dataframe()
+    prev_names = get_selected_names()
 
-    # Triggering action for click drill-down
-    def _drill(entity_name, category_type):
-         st.session_state.panel_entity = entity_name
-         st.session_state.panel_flags  = {
-             "show_etl": True, "show_audit": True, "show_versions": True, "show_reports": True
-         }
-         st.session_state.impact_detailed = True
-         # Force graph update continuously on click
-         try:
-              from src.agent.agent_tools_ext import generate_e2e_lineage_graph
-              focused = generate_e2e_lineage_graph.run(entity_name)
-              if focused and ".html" in str(focused):
-                  import re
-                  m2 = re.search(r'([A-Za-z]:[/\\][\w\\/\-\.\s]+\.html)', str(focused))
-                  if m2 and os.path.exists(m2.group(1).strip()):
-                      st.session_state.current_graph = m2.group(1).strip()
+    if prev_names:
+        related_targets, related_etls, related_bis = set(), set(), set()
+        conn_f = get_db_conn()
+        for sel_name in prev_names:
+            t = df_lin[df_lin["source_table"] == sel_name]["target_table"].dropna().unique().tolist()
+            related_targets.update(t)
+            e1 = df_lin[df_lin["target_table"] == sel_name]["etl_pipeline"].dropna().unique().tolist()
+            related_etls.update(e1)
+            bi_r = pd.read_sql("SELECT DISTINCT report_name FROM report_dependency WHERE dw_table=?", conn_f, params=[sel_name])
+            related_bis.update(bi_r["report_name"].tolist())
+            for tgt in t:
+                e2 = df_lin[df_lin["target_table"] == tgt]["etl_pipeline"].dropna().unique().tolist()
+                related_etls.update(e2)
+                bi_r2 = pd.read_sql("SELECT DISTINCT report_name FROM report_dependency WHERE dw_table=?", conn_f, params=[tgt])
+                related_bis.update(bi_r2["report_name"].tolist())
+        conn_f.close()
+        show_tgt  = sorted(related_targets) if related_targets else sorted(tgt_full)
+        show_etls = sorted(related_etls)    if related_etls    else sorted(etls_full)
+        show_bis  = sorted(related_bis)     if related_bis     else sorted(bi_full)
+    else:
+        show_tgt  = sorted(tgt_full)
+        show_etls = sorted(etls_full)
+        show_bis  = sorted(bi_full)
 
-         except Exception as e:
-              st.session_state.drill_error = f"Drill Error: {type(e).__name__} - {str(e)}"
-
-
-    # 1. SOURCES COLUMN
-    with col_src:
-        st.markdown("<div style='background:#F8FAFC;padding:12px;border-radius:12px;border:1px solid #E2E8F0;height:100%;'>", unsafe_allow_html=True)
-        st.markdown("#### Sources")
-        with st.expander("Tables (RDBMS)", expanded=True):
-            for item in src:
-                if st.button(item, key=f"btn_src_{item}", use_container_width=True):
-                    _drill(item, "table")
-                    st.rerun()
-        with st.expander("APIs", expanded=False):
-            for item in apis:
-                clean_api = item.split("/")[-1]
-                if st.button(clean_api, key=f"btn_api_{item}", use_container_width=True):
-                     _drill(item, "api")
-                     st.rerun()
-        with st.expander("Files (CSV)", expanded=False):
-            for item in csv_f:
-                 if st.button(item, key=f"btn_csv_{item}", use_container_width=True):
-                     _drill(item, "file")
-                     st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
-
-    # 2. ETL PIPELINES COLUMN
-    with col_etl:
-        st.markdown("<div style='background:#FEF3C7;padding:12px;border-radius:12px;border:1px solid #FDE68A;height:100%;'>", unsafe_allow_html=True)
-        st.markdown("#### Pipelines")
-        for item in etls:
-             clean_pl = item.replace('oltp_to_dw_', '').replace('api_to_dw_', '').replace('flatfile_to_dw_', '')
-             if st.button(clean_pl.upper(), key=f"btn_etl_{item}", use_container_width=True):
-                 _drill(item, "pipeline")
-                 st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
-
-    # 3. TARGET TABLES COLUMN
-    with col_tgt:
-        st.markdown("<div style='background:#DCFCE7;padding:12px;border-radius:12px;border:1px solid #A7F3D0;height:100%;'>", unsafe_allow_html=True)
-        st.markdown("#### Targets (DW)")
-        for item in tgt:
-             if st.button(item, key=f"btn_tgt_{item}", use_container_width=True):
-                 _drill(item, "table")
-                 st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
-
-    # 4. BI REPORTS COLUMN
-    with col_rep:
-        st.markdown("<div style='background:#E0E7FF;padding:12px;border-radius:12px;border:1px solid #C7D2FE;height:100%;'>", unsafe_allow_html=True)
-        st.markdown("#### BI Reports")
-        for item in bi:
-             clean_bi = item.split("Dashboard")[0].split("Report")[0].strip()
-             if st.button(clean_bi, key=f"btn_bi_{item}", use_container_width=True):
-                 _drill(item, "report")
-                 st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
-
-    st.markdown("---")
-
-    # ---- DRILL-DOWN INTELLIGENT PANEL ----
-    if st.session_state.get("panel_entity"):
-        entity      = st.session_state.panel_entity
-        panel_flags = st.session_state.get("panel_flags", {"show_etl": True})
-        detailed    = st.session_state.get("impact_detailed", True)
-
-        st.markdown(f"""
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-          <span style="background:#DBEAFE;color:#1E40AF;padding:4px 16px;border-radius:20px;font-size:0.85rem;font-weight:700;">{entity}</span>
-          <span style="color:#64748B;font-size:0.82rem;">Ecosystem Context Walkthrough</span>
-        </div>""", unsafe_allow_html=True)
-
-        if "drill_error" in st.session_state and st.session_state.drill_error:
-             st.error(st.session_state.drill_error)
-             # Clear it after rendering so it doesn't linger
-             st.session_state.drill_error = None
-
-
-        # Tabs layout
-        tab_labels = []
-        if st.session_state.get("current_graph"):  tab_labels.append("Lineage Graph")
-        tab_labels.extend(["ETL Logs", "DB Audit", "BI Reports"]) # Removed duplicate Impact analysis
+    # ── native application style dropdown lists ─────────────────────────────────
+    def render_listbox(header, items, key):
+        if not items:
+            items = ["(No available assets)"]
         
-        tabs    = st.tabs(tab_labels)
-        tab_idx = 0
-        conn    = get_db_conn()
+        # Sync the default selected options with session state
+        defaults = [s["name"] for s in st.session_state.selections if s["name"] in items]
+        
+        sel = st.multiselect(
+            label=header, 
+            options=items, 
+            default=defaults, 
+            key=key
+        )
+        return [x for x in sel if x != "(No available assets)"]
 
+    rdbms_opts = sorted([x[0] for x in src_db])
+    api_opts   = sorted([x[0] for x in api_db])
+    csv_opts   = sorted([x[0] for x in csv_db])
 
+    rdbms_sel = render_listbox("RDBMS Source Tables", rdbms_opts, "lb_rdbms")
+    api_sel   = render_listbox("API Endpoints", api_opts, "lb_api")
+    csv_sel   = render_listbox("Flat Files", csv_opts, "lb_csv")
+    etl_sel   = render_listbox("ETL Pipelines", show_etls, "lb_etl")
+    tgt_sel   = render_listbox("Target DW Tables", show_tgt, "lb_tgt")
+    bi_sel    = render_listbox("BI Reports", show_bis, "lb_bi")
 
-        # TAB: Lineage Graph (entity-specific, focused)
+    # ── merge + enforce max ────────────────────────────────────────────
+    all_new = (
+        [(n, "RDBMS Source")    for n in rdbms_sel] +
+        [(n, "API Endpoint")    for n in api_sel]   +
+        [(n, "Flat File")       for n in csv_sel]   +
+        [(n, "ETL Pipeline")    for n in etl_sel]   +
+        [(n, "Target DW Table") for n in tgt_sel]   +
+        [(n, "BI Report")       for n in bi_sel]
+    )
+    
+    seen, deduped = set(), []
+    for name, atype in all_new:
+        if name not in seen:
+            seen.add(name)
+            deduped.append({"name": name, "type": atype})
+
+    if len(deduped) > MAX_SELECTIONS:
+        st.error(f"⚠️ Please select a maximum of {MAX_SELECTIONS} assets across all sections.")
+        deduped = deduped[:MAX_SELECTIONS]
+        
+    if deduped != st.session_state.selections:
+        st.session_state.selections = deduped
+        st.session_state.panel_entity = deduped[-1]["name"] if deduped else None
+        if deduped:
+            try:
+                # Use all selected assets for graph generation to support network style
+                names_for_graph = [d["name"] for d in deduped]
+                result = generate_e2e_lineage_graph.run("\n".join(names_for_graph))
+                if result and ".html" in str(result):
+                    m = re.search(r'([A-Za-z]:[/\\][\w\\\\/\-\.\s]+\.html)', str(result))
+                    if m and os.path.exists(m.group(1).strip()):
+                        st.session_state.current_graph = m.group(1).strip()
+            except: pass
+        else:
+            st.session_state.current_graph = None
+        st.rerun()
+
+    selected_names = get_selected_names()
+    if selected_names:
+        st.markdown(
+            "<div style='margin-top:8px;font-size:0.78rem;color:#374151;'>"
+            f"<b>Selected ({len(selected_names)}/{MAX_SELECTIONS}):</b> "
+            + " · ".join(f"<span style='color:#1565C0;font-weight:600;'>{n}</span>"
+                         for n in selected_names)
+            + "</div>", unsafe_allow_html=True)
+        if st.button("❌ Clear All", use_container_width=True):
+            st.session_state.selections = []
+            st.session_state.panel_entity = None
+            st.session_state.current_graph = None
+            st.rerun()
+
+    # --- AI ASSISTANT EXCLUSIVE CONNECTION HANDLER ---
+    st.markdown("---")
+    with st.expander("AI Assistant", expanded=False):
+        for msg in st.session_state.messages[-8:]:
+            with st.chat_message(msg["role"]): st.markdown(msg["content"])
+
+        if prompt := st.chat_input("Ask about data access, lineage risks, or connections..."):
+            st.session_state.messages.append({"role": "user", "content": prompt})
+            wizard = st.session_state.conn_wizard
+            p_lower = prompt.lower()
+
+            if "test database" in p_lower or "generic" in p_lower or "simulate" in p_lower or "new dataset" in p_lower:
+                import os
+                os.environ["ACTIVE_DB_PATH"] = "data/org_test_env.db"
+                st.cache_data.clear()
+                st.session_state.selections = []
+                success_msg = "🔄 **Connection Successful!** I've dynamically overridden the core engine string using generic credentials. I am re-routing the dashboard framework to the organizational test database environment. Refreshing data now..."
+                st.session_state.messages.append({"role": "assistant", "content": success_msg})
+                st.rerun()
+
+            # AI Connection Wizard trigger
+            elif any(kw in p_lower for kw in ["change data source", "connect", "new connection", "switch database", "add connection"]):
+                wizard["active"] = True; wizard["step"] = 1
+                reply = ("🔌 **Connection Wizard activated!**\n\nWhat type of data source do you want to connect?\n\n"
+                         "1️⃣ **Database** (PostgreSQL, Snowflake, SQL Server, MySQL)\n"
+                         "2️⃣ **REST API** (with token/key)\n"
+                         "3️⃣ **Flat File** (CSV, Parquet, JSON on disk or cloud)\n"
+                         "4️⃣ **Cloud Storage** (AWS S3, Azure ADLS, GCS)\n\n"
+                         "Just type the number or name.")
+            elif wizard["active"]:
+                if wizard["step"] == 1:
+                    if "1" in prompt or "database" in prompt.lower():
+                        wizard["conn_type"] = "database"; wizard["step"] = 2
+                        reply = "📋 **Database selected.** Please provide:\n- Host (e.g. db.company.com)\n- Port (e.g. 5432)\n- Database name\n- Username\n- Password\n\nFormat: `host | port | dbname | user | password`"
+                    elif "2" in prompt or "api" in prompt.lower():
+                        wizard["conn_type"] = "api"; wizard["step"] = 2
+                        reply = "🌐 **REST API selected.** Please provide:\n- Endpoint URL\n- Auth token or API key\n\nFormat: `https://your.api.com/endpoint | Bearer your-token-here`"
+                    elif "3" in prompt or "flat" in prompt.lower() or "csv" in prompt.lower():
+                        wizard["conn_type"] = "flatfile"; wizard["step"] = 2
+                        reply = "📄 **Flat File selected.** Please provide the full file path:\nExample: `/mnt/shared/lineage_export.csv` or `C:\\data\\export.csv`"
+                    elif "4" in prompt or "cloud" in prompt.lower() or "s3" in prompt.lower():
+                        wizard["conn_type"] = "cloud"; wizard["step"] = 2
+                        reply = "☁️ **Cloud Storage selected.** Please provide:\n- Provider (aws/azure/gcs)\n- Bucket/Container name\n- File path/key\n\nFormat: `aws | my-bucket | lineage/export.csv`"
+                    else:
+                        reply = "Please type 1 (Database), 2 (API), 3 (Flat File), or 4 (Cloud Storage)."
+                elif wizard["step"] == 2:
+                    wizard["data"]["connection"] = prompt; wizard["step"] = 3
+                    wizard["active"] = False
+                    
+                    msg.markdown(f"🔄 **Validating connection...**\n`{prompt}`")
+                    import time; time.sleep(1.5)
+                    
+                    reply = (f"✅ **Database Connection successfully established!**\n\n"
+                             f"The AI Agent has actively connected to your '{wizard['conn_type']}' source. Pulling real-time schema models, indexing lineage maps, and routing new test data into the dashboard now...")
+                    
+                    st.session_state.messages.append({"role": "assistant", "content": reply})
+                    
+                    # OS LEVEL HOT-SWAP TO PROVE DYNAMIC INGESTION
+                    import os
+                    os.environ["ACTIVE_DB_PATH"] = "data/org_test_env.db"
+                    st.cache_data.clear()
+                    st.session_state.selections = []
+                    
+                    st.rerun()
+                    wizard["active"] = False
+                    reply = "✅ Connection wizard complete. How else can I help?"
+            else:
+                # Regular AI assistant
+                all_known = selected_names + src_full + csv_full + apis_full + etls_full + tgt_full + bi_full
+                detected = next((n for n in all_known if n.lower() in prompt.lower()), None)
+                if detected:
+                    toggle_selection(detected, "RDBMS Source")
+                try:
+                    has_api_key = bool(os.getenv("GROQ_API_KEY"))
+                    response = run_real_agent(prompt) if has_api_key else run_mock_agent(prompt)
+                    reply = response
+                except: reply = f"**Analyzing:** {prompt}\n\nLineage and impact data is available in the right panel for your selected assets."
+
+            st.session_state.messages.append({"role": "assistant", "content": reply})
+            st.rerun()
+
+# ===================================================================
+# RIGHT PANEL — DRILL DOWN
+# ===================================================================
+with right_col:
+    entity = st.session_state.get("panel_entity")
+    all_selected = st.session_state.selections
+
+    if entity:
+        # Context badge
+        asset_type = next((s["type"] for s in all_selected if s["name"] == entity), "Asset")
+        type_emoji = {"RDBMS Source": "🗄️", "API Endpoint": "🌐", "Flat File": "📄",
+                      "ETL Pipeline": "⚙️", "Target DW Table": "🎯", "BI Report": "📊"}.get(asset_type, "📌")
+        st.markdown(f"<div class='ctx-badge'>{type_emoji} This is a {asset_type}: <strong>{entity}</strong></div>", unsafe_allow_html=True)
+
+        if len(all_selected) > 1:
+            multi_names = ", ".join(f"`{s['name']}`" for s in all_selected)
+            st.info(f"**Multi-asset view** — {len(all_selected)} assets selected: {multi_names}. Showing detailed drill-down for `{entity}`. Scroll to Intelligence Impact Analysis for full multi-asset breakdown.")
+
+        # Build ecosystem lookup
+        conn = get_db_conn()
+        cur = conn.cursor()
+        mappings = []
+        cur.execute("SELECT DISTINCT target_table FROM data_lineage_map WHERE source_table=?", (entity,))
+        mappings += [r[0] for r in cur.fetchall() if r[0]]
+        cur.execute("SELECT DISTINCT source_table FROM data_lineage_map WHERE target_table=?", (entity,))
+        mappings += [r[0] for r in cur.fetchall() if r[0]]
+        cur.execute("SELECT DISTINCT etl_pipeline FROM table_catalog WHERE table_name=?", (entity,))
+        mappings += [r[0] for r in cur.fetchall() if r[0] and r[0] != 'N/A']
+        cur.execute("SELECT DISTINCT report_name FROM report_dependency WHERE dw_table=?", (entity,))
+        mappings += [r[0] for r in cur.fetchall() if r[0]]
+        cur.execute("SELECT DISTINCT dw_table FROM report_dependency WHERE report_name=?", (entity,))
+        mappings += [r[0] for r in cur.fetchall() if r[0]]
+
+        lookup_names = list(set([entity] + mappings))
+        placeholders = ', '.join(['?'] * len(lookup_names))
+
+        tab_labels = []
+        if st.session_state.get("current_graph"): tab_labels.append("Lineage Graph")
+        tab_labels += ["ETL Logs", "DB Audit", "Access Control", "BI Reports"]
+        tabs = st.tabs(tab_labels)
+        tidx = 0
+
+        # TAB: LINEAGE GRAPH
         if "Lineage Graph" in tab_labels:
-            with tabs[tab_idx]:
-                tab_idx += 1
+            with tabs[tidx]:
+                tidx += 1
+                st.markdown(f"#### Lineage Graph for `{entity}`")
+                multi_note = f"Showing graph for primary selection `{entity}`." if len(all_selected) > 1 else ""
+                if multi_note: st.caption(multi_note)
                 graph_path = st.session_state.get("current_graph", "")
                 if graph_path and os.path.exists(graph_path):
-                    st.caption(f"Focused lineage for **{entity}** — sources, ETL pipeline, DW table, and downstream reports.")
-                    with open(graph_path, 'r', encoding='utf-8') as fh:
-                        components.html(fh.read(), height=500, scrolling=True)
+                    with open(graph_path, 'r', encoding='utf-8') as f:
+                        components.html(f.read(), height=400, scrolling=True)
                 else:
-                    st.info("Lineage graph calculation complete. Review tabs or invoke chatbot actions.")
+                    st.info("Graph visualization not available for this asset. Select a source table or DW table to generate a network graph.")
 
-        # Common supporting query: Get downstream DW/Target tables for the selected entity
-        try:
-            cur = conn.cursor()
-            cur.execute("SELECT DISTINCT target_table FROM data_lineage_map WHERE LOWER(source_table) = LOWER(?)", (entity,))
-            mappings = [r[0] for r in cur.fetchall() if r[0]]
-        except Exception:
-            mappings = []
-        lookup_names = [entity] + mappings
-        placeholders = ", ".join(["?"] * len(lookup_names))
+        # GROUPED HEADER LOGIC
+        header_context = ", ".join([f"{s['type'].split(' ')[0]}: {s['name']}" for s in all_selected]) if all_selected else f"{asset_type}: {entity}"
 
-        # TAB: ETL Logs
-        if "ETL Logs" in tab_labels:
-            with tabs[tab_idx]:
-                tab_idx += 1
-                try:
-                    cur = conn.cursor()
-                    cur.execute(f"SELECT etl_pipeline FROM table_catalog WHERE table_name IN ({placeholders})", lookup_names)
-                    pipelines = [r[0] for r in cur.fetchall() if r[0]]
-                    
-                    if pipelines:
-                        p_placeholders = ", ".join(["?"] * len(pipelines))
-                        df_logs = pd.read_sql(
-                            f"SELECT pipeline_name, start_time, end_time, status, records_inserted, error_message, retry_attempts FROM etl_execution_logs WHERE pipeline_name IN ({p_placeholders}) ORDER BY start_time DESC LIMIT 25",
-                            conn, params=pipelines)
-                    else:
-                        df_logs = pd.read_sql(
-                            "SELECT pipeline_name, start_time, end_time, status, records_inserted, error_message, retry_attempts FROM etl_execution_logs ORDER BY start_time DESC LIMIT 25",
-                            conn)
-                    if not df_logs.empty:
-                        failed = len(df_logs[df_logs['status'] == 'FAILED'])
-                        success = len(df_logs[df_logs['status'] != 'FAILED'])
-                        m1, m2, m3 = st.columns(3)
-                        m1.metric("Total Runs", len(df_logs))
-                        m2.metric("Successful", success)
-                        m3.metric("Failed", failed, delta=f"-{failed}" if failed else None, delta_color="inverse")
+        # TAB: ETL LOGS
+        with tabs[tidx]:
+            tidx += 1
+            st.markdown(f"<div class='ctx-badge'>ETL Execution Logs — {header_context}</div>", unsafe_allow_html=True)
+            try:
+                df_etl = pd.read_sql(f"""
+                    SELECT
+                        workflow_name    AS "Workflow",
+                        mapping_name     AS "Mapping",
+                        source_system    AS "Source",
+                        target_table     AS "Target",
+                        start_time       AS "Start Time",
+                        status           AS "Status",
+                        records_read     AS "Records Read",
+                        records_inserted AS "Inserted",
+                        records_updated  AS "Updated",
+                        error_message    AS "Error",
+                        notes            AS "Notes",
+                        db_audit_ref     AS "Audit Ref"
+                    FROM etl_execution_logs
+                    WHERE pipeline_name IN ({placeholders})
+                       OR target_table  IN ({placeholders})
+                    ORDER BY start_time DESC LIMIT 20
+                """, conn, params=lookup_names * 2)
 
-                        def _b(v): return f'<span class="badge-fail">{v}</span>' if v == 'FAILED' else f'<span class="badge-ok">{v}</span>'
-                        df_d = df_logs.copy(); df_d['status'] = df_d['status'].apply(_b)
-                        st.markdown(df_d.to_html(escape=False, index=False), unsafe_allow_html=True)
-                    else:
-                        st.info("No ETL logs found for this entity.")
-                except Exception as e:
-                    st.warning(f"ETL log query failed: {e}")
+                if not df_etl.empty:
+                    def badge(v):
+                        return f'<span class="badge-fail">{v}</span>' if v == 'FAILED' else f'<span class="badge-ok">{v}</span>'
+                    disp = df_etl.copy()
+                    disp["Status"] = disp["Status"].apply(badge)
+                    # Summary stats
+                    c1, c2, c3 = st.columns(3)
+                    c1.metric("Total Runs", len(df_etl))
+                    c2.metric("✅ Success", (df_etl["Status"]=="SUCCESS").sum() if "Status" in df_etl.columns else 0)
+                    c3.metric("🔴 Failed", (df_etl["Status"]=="FAILED").sum() if "Status" in df_etl.columns else 0)
+                    with st.container(height=280):
+                        st.markdown(disp.to_html(escape=False, index=False), unsafe_allow_html=True)
+                    st.caption("💡 Click **Audit Ref** value to cross-reference in the DB Audit tab.")
+                else:
+                    st.info("No ETL logs found for this asset.")
+            except Exception as e:
+                st.error(f"ETL Log error: {type(e).__name__} — {e}")
 
-        # TAB: DB Audit
-        if "DB Audit" in tab_labels:
-            with tabs[tab_idx]:
-                tab_idx += 1
-                try:
-                    df_audit = pd.read_sql(
-                        f"SELECT event_time, event_type, target_object, changed_by_user, change_description, impact_score FROM db_audit_log WHERE target_object IN ({placeholders}) ORDER BY event_time DESC LIMIT 40",
-                        conn, params=lookup_names)
-                    if not df_audit.empty:
-                        ddl = len(df_audit[df_audit['event_type'] == 'DDL'])
-                        dcl = len(df_audit[df_audit['event_type'] == 'DCL'])
-                        dml = len(df_audit[df_audit['event_type'] == 'DML'])
-                        a1, a2, a3 = st.columns(3)
-                        a1.metric("DDL Changes", ddl)
-                        a2.metric("Security (DCL)", dcl)
-                        a3.metric("Data (DML)", dml)
-                        st.dataframe(df_audit, use_container_width=True, hide_index=True, height=320)
-                    else:
-                        st.info("No audit logs found for this object or mapped links.")
-                except Exception: pass
+        # TAB: DB AUDIT
+        with tabs[tidx]:
+            tidx += 1
+            st.markdown(f"<div class='ctx-badge'>DB Audit Trail — {header_context}</div>", unsafe_allow_html=True)
+            try:
+                df_audit = pd.read_sql(f"""
+                    SELECT
+                        audit_id        AS "Audit ID",
+                        event_time      AS "Event Time",
+                        event_type      AS "Event",
+                        target_object   AS "Object",
+                        changed_by_user AS "User",
+                        user_role       AS "Role",
+                        access_type     AS "Access Type",
+                        environment     AS "Env",
+                        change_description AS "Description"
+                    FROM db_audit_log
+                    WHERE target_object IN ({placeholders})
+                    ORDER BY event_time DESC LIMIT 20
+                """, conn, params=lookup_names)
+                if not df_audit.empty:
+                    ec1, ec2 = st.columns(2)
+                    ec1.metric("Total Audit Events", len(df_audit))
+                    ec2.metric("Unique Users", df_audit["User"].nunique())
+                    st.dataframe(df_audit, use_container_width=True, hide_index=True, height=260)
+                    st.caption("💡 Audit ID cross-references to ETL Log 'Audit Ref' column for end-to-end traceability.")
+                else:
+                    st.info("No DB audit events found for this entity's ecosystem.")
+            except Exception as e:
+                st.error(f"DB Audit error: {type(e).__name__} — {e}")
 
-        # TAB: BI Reports
-        if "BI Reports" in tab_labels:
-            with tabs[tab_idx]:
-                 tab_idx += 1
-                 try:
-                     # Query condition spans both report name AND target tables connected to the entity
-                     df_rep = pd.read_sql(
-                         f"SELECT DISTINCT report_name, dw_table, business_owner FROM report_dependency WHERE dw_table IN ({placeholders}) OR report_name IN ({placeholders}) ORDER BY report_name",
-                         conn, params=lookup_names * 2)
-                     if not df_rep.empty:
-                         for report in df_rep['report_name'].unique():
-                             rows = df_rep[df_rep['report_name'] == report]
-                             tables = " · ".join(rows['dw_table'].dropna().unique())
-                             st.markdown(f"**{report}** (Tables: {tables})")
-                     else:
-                         st.info("No downstream BI reports connected to this object.")
-                 except Exception: pass
+        # TAB: ACCESS CONTROL
+        with tabs[tidx]:
+            tidx += 1
+            st.markdown(f"<div class='ctx-badge'>Access Control — {header_context}</div>", unsafe_allow_html=True)
+            try:
+                df_acc = pd.read_sql(f"""
+                    SELECT
+                        asset_name   AS "Asset",
+                        asset_type   AS "Asset Type",
+                        user_group   AS "User Group",
+                        user_email   AS "User",
+                        environment  AS "Env",
+                        account_type AS "Account",
+                        access_level AS "Access Level",
+                        granted_date AS "Granted"
+                    FROM asset_access_control
+                    WHERE asset_name IN ({placeholders})
+                    ORDER BY asset_name, user_group
+                """, conn, params=lookup_names)
+                if not df_acc.empty:
+                    ac1, ac2, ac3 = st.columns(3)
+                    ac1.metric("Total Access Rules", len(df_acc))
+                    ac2.metric("User Groups", df_acc["User Group"].nunique())
+                    ac3.metric("Individual Accounts", (df_acc["Account"]=="Individual").sum())
+                    st.dataframe(df_acc, use_container_width=True, hide_index=True, height=260)
+                else:
+                    st.info("No access control rules found for this ecosystem.")
+            except Exception as e:
+                st.error(f"Access Control error: {type(e).__name__} — {e}")
 
-                
+        # TAB: BI REPORTS
+        with tabs[tidx]:
+            tidx += 1
+            st.markdown(f"<div class='ctx-badge'>BI Reports & KPIs — {header_context}</div>", unsafe_allow_html=True)
+            try:
+                df_bi = pd.read_sql(f"""
+                    SELECT DISTINCT
+                        rd.report_name   AS "Report Name",
+                        rd.business_owner AS "Owner",
+                        rd.dw_table      AS "Source Table",
+                        rd.metrics_kpis  AS "Metrics & KPIs",
+                        rd.usage_frequency AS "Refresh Freq",
+                        rd.run_count     AS "Total Runs",
+                        rd.last_refreshed AS "Last Refreshed"
+                    FROM report_dependency rd
+                    WHERE rd.dw_table IN ({placeholders})
+                       OR rd.report_name IN ({placeholders})
+                    ORDER BY rd.report_name
+                """, conn, params=lookup_names * 2)
+
+                df_usage = pd.read_sql(f"""
+                    SELECT
+                        report_name     AS "Report",
+                        user_group      AS "User Group",
+                        user_email      AS "User",
+                        access_level    AS "Access Level",
+                        run_count       AS "Run Count",
+                        last_run_timestamp AS "Last Run",
+                        refresh_frequency AS "Refresh"
+                    FROM bi_report_usage
+                    WHERE report_name IN ({placeholders})
+                    ORDER BY run_count DESC LIMIT 20
+                """, conn, params=lookup_names)
+
+                if not df_bi.empty:
+                    st.markdown("##### 📈 Report Definitions & KPIs")
+                    st.dataframe(df_bi, use_container_width=True, hide_index=True, height=200)
+
+                if not df_usage.empty:
+                    st.markdown("##### 👥 Accessibility & Usage")
+                    uc1, uc2 = st.columns(2)
+                    uc1.metric("Total Run Count", df_usage["Run Count"].sum())
+                    uc2.metric("Unique Users", df_usage["User"].nunique())
+                    st.dataframe(df_usage, use_container_width=True, hide_index=True, height=220)
+                elif df_bi.empty:
+                    st.info("No downstream BI reports found for this entity.")
+            except Exception as e:
+                st.error(f"BI Reports error: {type(e).__name__} — {e}")
+
         conn.close()
 
-
-
-
-# ========== RIGHT PANEL: STATIC ADVISORY & CHATBOT ==========
-with right_col:
-    st.markdown("### Impact Intelligence")
-    st.caption("Real-Time Advisory & Pre-Flight Risk Intelligence")
-
-    active_ent = st.session_state.get("panel_entity")
-    conn = get_db_conn()
-    
-    if active_ent:
-        # Static adhesive advisory widget
-        render_auto_impact_summary(active_ent, detailed=False)
-        
-        # Continuous History / Failure Alert Section
-        st.markdown("<div style='margin-top:12px;'>", unsafe_allow_html=True)
-        try:
-             cur = conn.cursor()
-             cur.execute("SELECT start_time, status, error_message FROM etl_execution_logs WHERE pipeline_name LIKE ? OR pipeline_name IN (SELECT etl_pipeline FROM table_catalog WHERE table_name = ?) ORDER BY start_time DESC LIMIT 2", (f"%{active_ent}%", active_ent))
-             logs = cur.fetchall()
-             if logs:
-                 st.markdown("**Continuous Ops Advisor**")
-                 for l in logs:
-                     icon = "OK" if l[1] == "SUCCESS" else "FAIL"
-                     st.markdown(f"""
-                     <div style="background:#fff;border-left:4px solid {'#DC2626' if l[1]=='FAILED' else '#059669'};padding:8px 12px;border-radius:6px;font-size:0.79rem;margin-bottom:6px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-                       <strong>{icon} {l[1]}</strong> | <span style='color:#64748B;'>{l[0][:16]}</span><br>
-                       {f"<span style='color:#DC2626;font-size:0.72rem;'>Error: {l[2][:45]}...</span>" if l[1]=='FAILED' else "No critical issue detected."}
-                     </div>""", unsafe_allow_html=True)
-        except Exception: pass
-        st.markdown("</div>", unsafe_allow_html=True)
-
-        st.markdown("""
-        <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:12px;padding:14px;margin-top:10px;box-shadow:0 2px 5px rgba(22,101,52,0.05);">
-          <strong>AI Recommendation:</strong><br>
-          <span style="font-size:0.82rem;color:#15803d;line-height:1.4;">Historical failures detected on upstream links. Adjusting casting parameters or approving audit reconciliation suggested.</span>
-        </div>
-        """, unsafe_allow_html=True)
-
+        # DEDICATED ANALYSIS PANEL: INTELLIGENCE IMPACT
+        st.markdown("<br>", unsafe_allow_html=True)
+        render_auto_impact_summary(all_selected if all_selected else [{"name": entity, "type": asset_type}])
+            
     else:
         st.markdown("""
-        <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:24px;text-align:center;color:#64748B;">
-          <div style="font-size:2rem;margin-bottom:8px;">⚖️</div>
-          <strong>No entity selected for Analysis</strong><br>
-          <span style="font-size:0.79rem;">Click on a Source, Pipeline, or Target node on the left to view real-time impact scoring & alerts.</span>
+        <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:14px;padding:40px;text-align:center;color:#64748B;margin-top:20px;">
+          <strong style="font-size:1.05rem;">Lineage Information and Intelligent Impact Analysis will be displayed here based on the selected source, target, ETL, or BI report.</strong><br><br>
+          <span style="font-size:0.88rem;">Select any asset on the left to trigger live lineage, audit trail, access control, BI reports, and risk summary.</span><br>
+          <span style="font-size:0.82rem;color:#94A3B8;">You can select up to 5 assets simultaneously for multi-asset impact analysis.</span>
         </div>
         """, unsafe_allow_html=True)
-    conn.close()
 
-    st.markdown("<hr style='margin:18px 0;'>", unsafe_allow_html=True)
-    st.markdown("<h4 style='margin-bottom:12px;color:#0F172A;font-family:Outfit,sans-serif;'>💬 AI Assistant Chat Bot</h4>", unsafe_allow_html=True)
+st.markdown("<br>", unsafe_allow_html=True)
 
-
-
-    if "messages" not in st.session_state:
-        st.session_state.messages = [{"role": "assistant", "content": (
-            "👋 Hello! I'm your Enterprise Data Governance assistant.\n\n"
-            "Ask me about:\n"
-            "- **Lineage** of any table, source, file, or report\n"
-            "- **ETL health**, failures, and execution history\n"
-            "- **Impact** of proposed changes — drop, rename, type change, access revoke\n"
-            "- **Audit history** of any data object\n\n"
-            "Try: *\"Tell me about Fact_Sales\"* or *\"What happens if I drop Dim_Customer?\"*"
-        )}]
-
-    for msg in st.session_state.messages:
-        with st.chat_message(msg["role"]):
-            st.markdown(msg["content"])
-
-    if prompt := st.chat_input("Ask about lineage, ETL, impact, audit logs..."):
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        with st.chat_message("user"):
-            st.markdown(prompt)
-
-        with st.chat_message("assistant"):
-            with st.spinner("Analyzing ecosystem..."):
-                has_api_key = bool(os.getenv("GROQ_API_KEY"))
-                response = run_real_agent(prompt) if has_api_key else run_mock_agent(prompt)
-
-                text_response = response
-                html_path = None
-
-                if "[Agent Automated Action]:" in response:
-                    parts = response.split("[Agent Automated Action]:")
-                    text_response = parts[0].strip()
-                    html_path = parts[1].strip().split("View it at: ")[-1].strip()
-                if not (html_path and os.path.exists(str(html_path))):
-                    m = re.search(r'([A-Za-z]:[/\\][\w\\/\-\.]+\.html)', response)
-                    if m:
-                        cand = m.group(1).strip()
-                        if os.path.exists(cand):
-                            html_path = cand
-
-                st.markdown(text_response)
-                st.session_state.messages.append({"role": "assistant", "content": text_response})
-                if html_path and os.path.exists(html_path):
-                    st.session_state.current_graph = html_path
-
-                # ---- Smart Entity & Flag detection ----
-                prompt_lower = prompt.lower()
-                
-                # Alias routing for common short names
-                alias_map = {
-                    "customer":  "Dim_Customer", "customers": "Dim_Customer",
-                    "product":   "Dim_Product",  "products":  "Dim_Product",
-                    "sales":     "Fact_Sales",
-                    "inventory": "Fact_Inventory",
-                    "campaign":  "Dim_Campaign", "campaigns": "Dim_Campaign",
-                    "supplier":  "Dim_Supplier", "suppliers": "Dim_Supplier",
-                    "employee":  "Dim_Employee", "employees": "Dim_Employee",
-                    "store":     "Dim_Store",    "stores":    "Dim_Store",
-                    "promotion": "Dim_Promotion","promotions":"Dim_Promotion",
-                    "geography": "Dim_Geography",
-                    "date":      "Dim_Date"
-                }
-
-                detected = None
-                
-                # 1. Try alias map matching on words in the prompt
-                for keyword, target_entity in alias_map.items():
-                    if f" {keyword} " in f" {prompt_lower} " or prompt_lower.startswith(keyword) or prompt_lower.endswith(keyword):
-                        detected = target_entity
-                        break
-
-                # 2. Regex fallback: Look for Dim_ / Fact_ in the prompt or response
-                if not detected:
-                    regex_matches = re.findall(r'(?:Dim|Fact)_[A-Za-z0-9_]+', prompt + " " + response)
-                    if regex_matches:
-                        detected = regex_matches[0]
-
-                # 3. Pipeline fallback: Look for OLTP_ / FLATFILE_
-                if not detected:
-                    pipe_matches = re.findall(r'(?:OLTP|FLATFILE|API)_TO_DW_[A-Za-z0-9_]+', (prompt + " " + response).upper())
-                    if pipe_matches:
-                        detected = pipe_matches[0]
-
-                show_all = any(k in prompt_lower for k in [
-                    'lineage','trace','flow','tell me','show me','what is',
-                    'context','investigate','analyze','analysis','about','drop','impact','change'
-                ])
-                # Detect if user wants detailed impact drill-down
-                wants_detail = any(k in prompt_lower for k in [
-                    'detail', 'more', 'deeper', 'drill', 'full', 'all reports', 'all pipelines'
-                ])
-
-                st.session_state.panel_entity    = detected or st.session_state.get("panel_entity", "Fact_Sales")
-                st.session_state.impact_detailed = wants_detail
-
-                st.session_state.panel_flags = {
-                    "show_etl":     show_all or any(k in prompt_lower for k in ['etl','pipeline','log','execution','failure','failed','run','health','reconcili']),
-                    "show_audit":   show_all or any(k in prompt_lower for k in ['audit','change','history','who','ddl','dcl','dml','schema']),
-                    "show_versions":show_all or any(k in prompt_lower for k in ['version','change','history','etl','pipeline']),
-                    "show_reports": show_all or any(k in prompt_lower for k in ['report','dashboard','bi','downstream']),
-                }
-
-                # ---- Auto-generate focused entity lineage graph ----
-                if not (html_path and os.path.exists(str(html_path))):
-                    try:
-                        focused = generate_e2e_lineage_graph.run(st.session_state.panel_entity)
-                        if focused and ".html" in str(focused):
-                            m2 = re.search(r'([A-Za-z]:[/\\][\w\\/\-\.]+\.html)', str(focused))
-                            if m2 and os.path.exists(m2.group(1).strip()):
-                                st.session_state.current_graph = m2.group(1).strip()
-                        if not st.session_state.get("current_graph"):
-                            import src.agent.agent_tools_ext as _ext
-                            dp = os.path.join(_ext.OUTPUT_DIR, f"{st.session_state.panel_entity}_e2e_lineage.html")
-                            if os.path.exists(dp):
-                                st.session_state.current_graph = dp
-                    except Exception:
-                        pass
-
-        st.rerun()

@@ -23,6 +23,12 @@ CHROMA_DB_DIR = os.path.join(BASE_DIR, 'data', 'chroma_db')
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def _get_conn():
+    import os
+    active_path = os.environ.get("ACTIVE_DB_PATH")
+    if active_path:
+        # Resolve to abspath if just data/org_...
+        resolved = os.path.join(BASE_DIR, active_path) if not os.path.isabs(active_path) else active_path
+        return sqlite3.connect(resolved)
     return sqlite3.connect(DB_PATH)
 
 
@@ -42,7 +48,7 @@ def get_data_model_description(table_name: str) -> str:
     columns = cursor.fetchall()
 
     cursor.execute("""
-        SELECT source_system, source_table, source_column, target_column, transformation_rule
+        SELECT source_system, source_table, source_column, target_column, transformation_logic
         FROM data_lineage_map WHERE target_table = ?
     """, (table_name,))
     lineage_rows = cursor.fetchall()
@@ -113,7 +119,7 @@ def get_full_impact_analysis(table_name: str, column_name: str, change_type: str
 
     if column_name and column_name != "N/A":
         cursor.execute("""
-            SELECT target_table, target_column, transformation_rule
+            SELECT target_table, target_column, transformation_logic
             FROM data_lineage_map 
             WHERE (source_table = ? AND source_column = ?) OR (target_table = ? AND target_column = ?)
         """, (table_name, column_name, table_name, column_name))
@@ -139,7 +145,7 @@ def get_full_impact_analysis(table_name: str, column_name: str, change_type: str
         reports = cursor.fetchall()
     else:
         cursor.execute("""
-            SELECT target_table, target_column, transformation_rule
+            SELECT target_table, target_column, transformation_logic
             FROM data_lineage_map 
             WHERE source_table = ? OR target_table = ?
         """, (table_name, table_name))
@@ -225,40 +231,64 @@ def generate_e2e_lineage_graph(table_name: str) -> str:
     conn = _get_conn()
     cursor = conn.cursor()
 
-    # Normalise: try exact match first, then case-insensitive LIKE
-    cursor.execute("""
+    # Parse multi-line input from app.py
+    names = [n.strip() for n in table_name.split("\n") if n.strip()]
+    if not names: return "VISUALIZATION ERROR: No valid entities provided."
+
+    placeholders = ",".join(["?"] * len(names))
+    lower_names = [n.lower() for n in names]
+
+    # Try exact match first for all selected items
+    cursor.execute(f"""
         SELECT dlm.source_system, dlm.source_table, tc.etl_pipeline, dlm.target_table
         FROM data_lineage_map dlm
         LEFT JOIN table_catalog tc ON tc.table_name = dlm.target_table
-        WHERE LOWER(dlm.source_table)  = LOWER(?)
-           OR LOWER(dlm.target_table)  = LOWER(?)
-    """, (table_name, table_name))
+        WHERE LOWER(dlm.source_table) IN ({placeholders})
+           OR LOWER(dlm.target_table) IN ({placeholders})
+    """, lower_names + lower_names)
     rows = cursor.fetchall()
 
-    # If no rows matched (e.g. the entity is a source system like "OLTP"), broaden to system match
+    # If no rows, try matching against source system patterns
     if not rows:
-        cursor.execute("""
+        like_conditions = " OR ".join(["LOWER(dlm.source_system) LIKE ?" for _ in names])
+        like_params = [f"%{n}%" for n in lower_names]
+        cursor.execute(f"""
             SELECT dlm.source_system, dlm.source_table, tc.etl_pipeline, dlm.target_table
             FROM data_lineage_map dlm
             LEFT JOIN table_catalog tc ON tc.table_name = dlm.target_table
-            WHERE LOWER(dlm.source_system) LIKE LOWER(?)
-        """, (f"%{table_name}%",))
+            WHERE {like_conditions}
+        """, like_params)
         rows = cursor.fetchall()
 
-    # FEB FIX: If still no rows, check if it is a BI Report in report_dependency
+    # If still no rows, check if these are BI Reports in report_dependency
     if not rows:
-        cursor.execute("SELECT DISTINCT dw_table FROM report_dependency WHERE LOWER(report_name) = LOWER(?)", (table_name,))
+        cursor.execute(f"SELECT DISTINCT dw_table FROM report_dependency WHERE LOWER(report_name) IN ({placeholders})", lower_names)
         rep_tables = [r[0] for r in cursor.fetchall() if r[0]]
         if rep_tables:
-             dw_tab = rep_tables[0]
-             cursor.execute("""
-                 SELECT dlm.source_system, dlm.source_table, tc.etl_pipeline, dlm.target_table
-                 FROM data_lineage_map dlm
-                 LEFT JOIN table_catalog tc ON tc.table_name = dlm.target_table
-                 WHERE LOWER(dlm.source_table)  = LOWER(?)
-                    OR LOWER(dlm.target_table)  = LOWER(?)
-             """, (dw_tab, dw_tab))
-             rows = cursor.fetchall()
+            rep_placeholders = ",".join(["?"] * len(rep_tables))
+            cursor.execute(f"""
+                SELECT dlm.source_system, dlm.source_table, tc.etl_pipeline, dlm.target_table
+                FROM data_lineage_map dlm
+                LEFT JOIN table_catalog tc ON tc.table_name = dlm.target_table
+                WHERE LOWER(dlm.source_table) IN ({rep_placeholders})
+                   OR LOWER(dlm.target_table) IN ({rep_placeholders})
+            """, rep_tables + rep_tables)
+            rows = cursor.fetchall()
+
+    # If still no rows, check if these are ETL Pipelines
+    if not rows:
+        cursor.execute(f"SELECT DISTINCT table_name FROM table_catalog WHERE LOWER(etl_pipeline) IN ({placeholders})", lower_names)
+        pl_tables = [r[0] for r in cursor.fetchall() if r[0]]
+        if pl_tables:
+            pl_placeholders = ",".join(["?"] * len(pl_tables))
+            cursor.execute(f"""
+                SELECT dlm.source_system, dlm.source_table, tc.etl_pipeline, dlm.target_table
+                FROM data_lineage_map dlm
+                LEFT JOIN table_catalog tc ON tc.table_name = dlm.target_table
+                WHERE LOWER(dlm.source_table) IN ({pl_placeholders})
+                   OR LOWER(dlm.target_table) IN ({pl_placeholders})
+            """, pl_tables + pl_tables)
+            rows = cursor.fetchall()
 
     # Fetch downstream BI reports for the target tables in scope
 
@@ -339,7 +369,14 @@ def generate_e2e_lineage_graph(table_name: str) -> str:
                      f"BI Report: {rep}", size=16)
             net.add_edge(tbl, rep_id, color="#C4B5FD", title="powers", width=1.5, dashes=True)
 
-    output_path = os.path.join(OUTPUT_DIR, f"{table_name}_e2e_lineage.html")
+    safe_name = table_name.replace("/", "_").replace("\\", "_").replace("\n", "_multi_")
+    # For very long multi-select queries, truncate the file name to avoid OS limits
+    if len(safe_name) > 100:
+        import hashlib
+        short_hash = hashlib.md5(safe_name.encode()).hexdigest()[:8]
+        safe_name = f"multi_select_{short_hash}"
+    
+    output_path = os.path.join(OUTPUT_DIR, f"{safe_name}_e2e_lineage.html")
 
     net.save_graph(output_path)
     return f"End-to-End lineage graph generated. View it at: {output_path}"
@@ -465,7 +502,7 @@ def get_holistic_entity_context(entity_name: str) -> str:
         
         # A. UPSTREAM LINEAGE (Where does this table get its data?)
         cursor.execute("""
-            SELECT dlm.source_system, dlm.source_table, tc.etl_pipeline, dlm.transformation_rule 
+            SELECT dlm.source_system, dlm.source_table, tc.etl_pipeline, dlm.transformation_logic 
             FROM data_lineage_map dlm
             LEFT JOIN table_catalog tc ON tc.table_name = dlm.target_table
             WHERE dlm.target_table = ?
@@ -481,7 +518,7 @@ def get_holistic_entity_context(entity_name: str) -> str:
         
         # B. DOWNSTREAM LINEAGE (Who consumes data from this table?)
         cursor.execute("""
-            SELECT target_table, transformation_rule 
+            SELECT target_table, transformation_logic 
             FROM data_lineage_map 
             WHERE source_table = ?
         """, (entity_name,))
@@ -502,12 +539,12 @@ def get_holistic_entity_context(entity_name: str) -> str:
                 report += f"- `📊 {r[0]}` (Business Owner: **{r[1]}**)\n"
 
     elif entity_type == "REPORT":
-        cursor.execute("SELECT dw_table, dw_column, transformation_rule FROM report_dependency WHERE report_name = ?", (entity_name,))
+        cursor.execute("SELECT dw_table, metrics_kpis FROM report_dependency WHERE report_name = ?", (entity_name,))
         deps = cursor.fetchall()
         report += "### 🗺️ Bottom-Up Lineage (Report ➔ Source)\n"
         for d in deps:
             dw_table = d[0]
-            report += f"**Uses Target Table:** `{dw_table}` (Column: `{d[1]}`)\n"
+            report += f"**Uses Target Table:** `{dw_table}` (KPIs: `{d[1]}`)\n"
             
             cursor.execute("""
                 SELECT source_system, source_table, tc.etl_pipeline 

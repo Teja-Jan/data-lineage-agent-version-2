@@ -1,0 +1,151 @@
+# ==============================================================================
+# PLUG-AND-PLAY CONFIGURATION — Edit this file to switch domains
+# No application code changes required. Just update this file and run:
+#   python run_pipeline.py
+# ==============================================================================
+
+domain: healthcare   # Options: healthcare | retail | finance | supply_chain | (any custom name)
+
+# --- Database Connection ---
+# Uncomment and fill in to connect to a real database instead of SQLite
+# db_type: postgresql          # postgresql | snowflake | sqlserver | mysql | sqlite
+# db_host: your-host.com
+# db_port: 5432
+# db_name: enterprise_db
+# db_user: your_user
+# db_password: your_password
+
+# --- API Connection ---
+# Uncomment to ingest from a REST API endpoint
+# api_endpoint: https://api.yourcompany.com/v1/lineage_feed
+# api_token: your_bearer_token
+
+# --- Flat File Path ---
+# Uncomment to ingest from a shared drive or data lake
+# flat_file_path: /mnt/shared/data/export.csv
+# flat_file_format: csv     # csv | parquet | json
+
+# --- Cloud Storage ---
+# Uncomment to ingest from AWS S3 or Azure Data Lake
+# cloud_provider: aws           # aws | azure | gcp
+# cloud_bucket: my-data-lake
+# cloud_key: exports/lineage_data.csv
+
+# ==============================================================================
+# DOMAIN DEFINITIONS
+# These drive the "Available Assets" in the UI, BI Reports, and Risk Rules.
+# Only change this block when switching domains.No code changes needed.
+# ==============================================================================
+
+domains:
+  healthcare:
+    rdbms_tables:
+      - Patients
+      - Providers
+      - Facilities
+      - Diagnoses
+      - Medications
+    flat_files:
+      - Lab_Results.csv
+      - Vitals_Export.csv
+      - Prescription_History.csv
+    api_endpoints:
+      - clearinghouse.io/claims
+      - epic.com/fhir_patient
+      - cms.gov/medicare_rates
+    target_tables:
+      - Dim_Patient
+      - Dim_Provider
+      - Dim_Facility
+      - Dim_Diagnosis
+      - Fact_Clinical_Encounter
+      - Fact_Claims
+    bi_reports:
+      - Hospital Readmission Risk Dashboard
+      - Financial Claims Outcome Report
+      - Provider Performance Scorecard
+      - Regional Outbreak Heatmap
+    risk_rules:
+      - keyword: Patient
+        level: HIGH
+        message: "Modifying this asset breaks `patient_sk` FK linking Fact_Clinical_Encounter."
+      - keyword: Encounter
+        level: HIGH
+        message: "Changes will cascade to all downstream clinical BI reports."
+      - keyword: Provider
+        level: MEDIUM
+        message: "Provider key changes will orphan financial facts in Fact_Claims."
+      - keyword: Claims
+        level: MEDIUM
+        message: "Update clearinghouse ETL mapping before altering this asset."
+
+  retail:
+    rdbms_tables:
+      - Customers
+      - Products
+      - Stores
+      - Employees
+      - Suppliers
+    flat_files:
+      - Sales_Export.csv
+      - Inventory_Snapshot.csv
+      - Promo_Export.csv
+    api_endpoints:
+      - salesforce.com/leads
+      - marketingcloud.io/campaigns
+      - payments.stripe.com/transactions
+    target_tables:
+      - Dim_Customer
+      - Dim_Product
+      - Dim_Store
+      - Fact_Sales
+      - Fact_Inventory
+    bi_reports:
+      - Sales Performance Dashboard
+      - Customer Segmentation Report
+      - Margin Analysis Report
+      - Inventory Health Report
+      - Executive KPI Scorecard
+    risk_rules:
+      - keyword: Product
+        level: HIGH
+        message: "Modifying this asset breaks `product_sk` FK to Fact_Sales."
+      - keyword: Customer
+        level: HIGH
+        message: "Customer key changes will orphan historical orders in Fact_Sales."
+      - keyword: Sales
+        level: MEDIUM
+        message: "Changes affect all downstream revenue BI dashboards."
+
+  finance:
+    rdbms_tables:
+      - Accounts
+      - Transactions
+      - CostCenters
+      - Budgets
+      - GLEntries
+    flat_files:
+      - Trial_Balance.csv
+      - AP_Extract.csv
+      - AR_Aging.csv
+    api_endpoints:
+      - sap.com/finance_api
+      - coupa.com/invoices
+      - bloomberg.com/rates
+    target_tables:
+      - Dim_Account
+      - Dim_CostCenter
+      - Fact_Ledger
+      - Fact_Cashflow
+    bi_reports:
+      - P&L Summary Dashboard
+      - Cash Flow Analysis Report
+      - Budget vs Actuals Scorecard
+      - AP/AR Aging Report
+    risk_rules:
+      - keyword: Account
+        level: HIGH
+        message: "Account key changes will orphan all ledger transactions in Fact_Ledger."
+      - keyword: Budget
+        level: MEDIUM
+        message: "Budget changes cascade to P&L and Cost Center reports."

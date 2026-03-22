@@ -9,3 +9,5 @@ openai
 pytest
 python-dotenv
 streamlit
+langchain-groq
+groq
