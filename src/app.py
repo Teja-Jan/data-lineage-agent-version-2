@@ -429,13 +429,32 @@ with left_col:
             wizard = st.session_state.conn_wizard
             p_lower = prompt.lower()
 
-            if "test database" in p_lower or "generic" in p_lower or "simulate" in p_lower or "new dataset" in p_lower:
+            if any(k in p_lower for k in ["retail", "ecommerce", "sales", "test database", "generic"]):
                 import os
                 os.environ["ACTIVE_DB_PATH"] = "data/org_test_env.db"
                 st.cache_data.clear()
                 st.session_state.selections = []
-                success_msg = "🔄 **Connection Successful!** I've dynamically overridden the core engine string using generic credentials. I am re-routing the dashboard framework to the organizational test database environment. Refreshing data now..."
+                success_msg = "🔄 **Connection Successful!** I've dynamically overridden the core engine string using generic credentials. I am re-routing the dashboard framework to the organizational **Retail / eCommerce** environment. Refreshing data now..."
                 st.session_state.messages.append({"role": "assistant", "content": success_msg})
+                st.rerun()
+                
+            elif any(k in p_lower for k in ["finance", "banking", "ledger", "transactions"]):
+                import os
+                os.environ["ACTIVE_DB_PATH"] = "data/org_finance_env.db"
+                st.cache_data.clear()
+                st.session_state.selections = []
+                success_msg = "🔄 **Connection Successful!** I've dynamically overridden the core engine string using generic credentials. I am re-routing the dashboard framework to the organizational **Finance / Banking** environment. Refreshing data now..."
+                st.session_state.messages.append({"role": "assistant", "content": success_msg})
+                st.rerun()
+
+            elif any(k in p_lower for k in ["healthcare", "default database", "revert", "restore"]):
+                import os
+                if "ACTIVE_DB_PATH" in os.environ:
+                    del os.environ["ACTIVE_DB_PATH"]
+                st.cache_data.clear()
+                st.session_state.selections = []
+                restore_msg = "🔄 **Connection Restored!** I have detached from the generic test environment. Re-routing the dashboard framework back to the primary **Healthcare Operational Database**. Refreshing data now..."
+                st.session_state.messages.append({"role": "assistant", "content": restore_msg})
                 st.rerun()
 
             # AI Connection Wizard trigger
@@ -477,7 +496,11 @@ with left_col:
                     
                     # OS LEVEL HOT-SWAP TO PROVE DYNAMIC INGESTION
                     import os
-                    os.environ["ACTIVE_DB_PATH"] = "data/org_test_env.db"
+                    if "finance" in p_lower or "bank" in p_lower or "ledger" in p_lower or "transaction" in p_lower:
+                        os.environ["ACTIVE_DB_PATH"] = "data/org_finance_env.db"
+                    else:
+                        os.environ["ACTIVE_DB_PATH"] = "data/org_test_env.db"
+
                     st.cache_data.clear()
                     st.session_state.selections = []
                     
