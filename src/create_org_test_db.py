@@ -17,7 +17,11 @@ def create_mock_db():
             table_name TEXT, column_name TEXT, data_type TEXT, is_pii BOOLEAN, etl_pipeline TEXT
         );
         CREATE TABLE IF NOT EXISTS etl_execution_logs (
-            run_id TEXT, pipeline_name TEXT, start_time TEXT, status TEXT, records_processed INTEGER, audit_ref TEXT
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            workflow_name TEXT, mapping_name TEXT, pipeline_name TEXT, source_system TEXT, target_table TEXT,
+            start_time TEXT, end_time TEXT, records_read INTEGER, records_inserted INTEGER,
+            records_updated INTEGER, transformation_metrics TEXT, status TEXT, error_message TEXT,
+            notes TEXT, db_audit_ref TEXT
         );
         CREATE TABLE IF NOT EXISTS db_audit_log (
             audit_id TEXT, event_time TEXT, event_type TEXT, target_object TEXT, changed_by_user TEXT, user_role TEXT, access_type TEXT, environment TEXT, change_description TEXT
@@ -69,12 +73,12 @@ def create_mock_db():
 
     # Populate ETL Logs
     cur.executescript("""
-        INSERT INTO etl_execution_logs (run_id, pipeline_name, start_time, status, records_processed, audit_ref) VALUES
-        ('RUN-001', 'Retail_Nightly_Sync', '2026-03-22 08:00:00', 'SUCCESS', 150000, 'AUD-991'),
-        ('RUN-002', 'Retail_Returns_Sync', '2026-03-22 08:30:00', 'SUCCESS', 1200, 'AUD-992'),
-        ('RUN-003', 'Customer_Master_ETL', '2026-03-22 09:00:00', 'FAILED', 85000, 'AUD-993'),
-        ('RUN-004', 'Inventory_Hourly_Delta', '2026-03-22 10:00:00', 'SUCCESS', 450, 'AUD-994'),
-        ('RUN-005', 'Logistics_API_Pulse', '2026-03-22 10:15:00', 'SUCCESS', 11000, 'AUD-995');
+        INSERT INTO etl_execution_logs (workflow_name, mapping_name, pipeline_name, source_system, target_table, start_time, end_time, records_read, records_inserted, records_updated, status, notes, db_audit_ref) VALUES
+        ('WF_Retail_Sync', 'MAP_NIGHTLY', 'Retail_Nightly_Sync', 'PostgreSQL', 'fact_sales', '2026-03-22 08:00:00', '2026-03-22 08:15:00', 150000, 149500, 500, 'SUCCESS', 'Routine batch complete.', 'AUD-991'),
+        ('WF_Returns_Sync', 'MAP_RETURNS', 'Retail_Returns_Sync', 'CSV File', 'dim_returns', '2026-03-22 08:30:00', '2026-03-22 08:32:00', 1200, 1200, 0, 'SUCCESS', 'Daily returns ingestion.', 'AUD-992'),
+        ('WF_Customer_MDM', 'MAP_CUST_PROF', 'Customer_Master_ETL', 'MySQL DB', 'dim_customers', '2026-03-22 09:00:00', '2026-03-22 09:12:00', 85000, 0, 0, 'FAILED', 'Data truncation error on contact column', 'AUD-993'),
+        ('WF_Inventory_Tick', 'MAP_INV_DELTA', 'Inventory_Hourly_Delta', 'Oracle Inventory', 'fact_inventory', '2026-03-22 10:00:00', '2026-03-22 10:01:00', 450, 50, 400, 'SUCCESS', 'Hourly stock tick.', 'AUD-994'),
+        ('WF_Logistics_Run', 'MAP_FEDEX', 'Logistics_API_Pulse', 'REST API', 'dim_shipments', '2026-03-22 10:15:00', '2026-03-22 10:18:00', 11000, 11000, 0, 'SUCCESS', 'API hook ingestion.', 'AUD-995');
     """)
 
     # Populate DB Audit

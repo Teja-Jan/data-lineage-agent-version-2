@@ -17,7 +17,11 @@ def create_finance_db():
             table_name TEXT, column_name TEXT, data_type TEXT, is_pii BOOLEAN, etl_pipeline TEXT
         );
         CREATE TABLE IF NOT EXISTS etl_execution_logs (
-            run_id TEXT, pipeline_name TEXT, start_time TEXT, status TEXT, records_processed INTEGER, audit_ref TEXT
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            workflow_name TEXT, mapping_name TEXT, pipeline_name TEXT, source_system TEXT, target_table TEXT,
+            start_time TEXT, end_time TEXT, records_read INTEGER, records_inserted INTEGER,
+            records_updated INTEGER, transformation_metrics TEXT, status TEXT, error_message TEXT,
+            notes TEXT, db_audit_ref TEXT
         );
         CREATE TABLE IF NOT EXISTS db_audit_log (
             audit_id TEXT, event_time TEXT, event_type TEXT, target_object TEXT, changed_by_user TEXT, user_role TEXT, access_type TEXT, environment TEXT, change_description TEXT
@@ -65,12 +69,12 @@ def create_finance_db():
 
     # Populate ETL Logs
     cur.executescript("""
-        INSERT INTO etl_execution_logs (run_id, pipeline_name, start_time, status, records_processed, audit_ref) VALUES
-        ('BATCH-F1', 'Finance_Nightly_Batch', '2026-03-23 02:00:00', 'SUCCESS', 2500000, 'AUD-F100'),
-        ('BATCH-F2', 'Account_Sync_API', '2026-03-23 02:15:00', 'SUCCESS', 84000, 'AUD-F101'),
-        ('BATCH-F3', 'Loan_Origination_ETL', '2026-03-23 03:00:00', 'SUCCESS', 1500, 'AUD-F103'),
-        ('BATCH-F4', 'Wire_Ingest_Pulse', '2026-03-23 03:30:00', 'SUCCESS', 580000, 'AUD-F104'),
-        ('BATCH-F5', 'Risk_Aggregation_Batch', '2026-03-23 04:00:00', 'FAILED', 120, 'AUD-F105');
+        INSERT INTO etl_execution_logs (workflow_name, mapping_name, pipeline_name, source_system, target_table, start_time, end_time, records_read, records_inserted, records_updated, status, notes, db_audit_ref) VALUES
+        ('WF_Finance_Batch', 'MAP_LEDGER', 'Finance_Nightly_Batch', 'Oracle DB', 'fact_ledger', '2026-03-23 02:00:00', '2026-03-23 02:45:00', 2500000, 2450000, 50000, 'SUCCESS', 'Executed full historical ledger delta load.', 'AUD-F100'),
+        ('WF_Acct_Sync', 'MAP_API_SYNC', 'Account_Sync_API', 'Auth API', 'dim_accounts', '2026-03-23 02:15:00', '2026-03-23 02:18:00', 84000, 100, 83900, 'SUCCESS', 'Completed identity pull.', 'AUD-F101'),
+        ('WF_Loan_Pulse', 'MAP_ORIGINATION', 'Loan_Origination_ETL', 'Oracle DB', 'dim_loans', '2026-03-23 03:00:00', '2026-03-23 03:05:00', 1500, 1500, 0, 'SUCCESS', 'New approvals processed.', 'AUD-F103'),
+        ('WF_Wire_Pulse', 'MAP_SWIFT', 'Wire_Ingest_Pulse', 'SWIFT Network Gateway', 'fact_transfers', '2026-03-23 03:30:00', '2026-03-23 03:45:00', 580000, 580000, 0, 'SUCCESS', 'Global wire ingestion finalized.', 'AUD-F104'),
+        ('WF_Fraud_Agg', 'MAP_ALERT', 'Risk_Aggregation_Batch', 'CSV Export', 'dim_fraud', '2026-03-23 04:00:00', '2026-03-23 04:01:00', 120, 0, 0, 'FAILED', 'Data mismatch in fraud codes payload', 'AUD-F105');
     """)
 
     # Populate DB Audit
