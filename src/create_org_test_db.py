@@ -78,6 +78,10 @@ def create_mock_db():
         INSERT INTO report_dependency (report_name, business_owner, target_audience, dw_table, metrics_kpis, usage_frequency, run_count, last_refreshed) VALUES
         ('Daily Revenue Exec Dash', 'CFO', 'Execs', 'fact_sales', 'Total Revenue, Refunds', 'Daily', 540, '2026-03-22'),
         ('Returns Analysis', 'Support Lead', 'Support Team', 'dim_returns', 'Return Rate', 'Weekly', 120, '2026-03-22');
+
+        INSERT INTO bi_report_usage (report_name, user_group, user_email, access_level, run_count, last_run_timestamp, refresh_frequency) VALUES
+        ('Daily Revenue Exec Dash', 'C-Suite', 'cfo@retail.org', 'Viewer', 300, '2026-03-22 09:00:00', 'Daily'),
+        ('Returns Analysis', 'Support Team', 'support@retail.org', 'Editor', 120, '2026-03-21 14:00:00', 'Weekly');
     """)
 
     conn.commit()

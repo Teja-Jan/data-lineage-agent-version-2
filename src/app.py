@@ -690,34 +690,53 @@ with right_col:
             tidx += 1
             st.markdown(f"<div class='ctx-badge'>BI Reports & KPIs — {header_context}</div>", unsafe_allow_html=True)
             try:
-                df_bi = pd.read_sql(f"""
-                    SELECT DISTINCT
-                        rd.report_name   AS "Report Name",
-                        rd.business_owner AS "Owner",
-                        rd.dw_table      AS "Source Table",
-                        rd.metrics_kpis  AS "Metrics & KPIs",
-                        rd.usage_frequency AS "Refresh Freq",
-                        rd.run_count     AS "Total Runs",
-                        rd.last_refreshed AS "Last Refreshed"
-                    FROM report_dependency rd
-                    WHERE rd.dw_table IN ({placeholders})
-                       OR rd.report_name IN ({placeholders})
-                    ORDER BY rd.report_name
-                """, conn, params=lookup_names * 2)
+                # 1. Resolve selected entities to their downstream reports
+                cursor = conn.cursor()
+                qm = ','.join(['?'] * len(lookup_names))
+                cursor.execute(f"""
+                    SELECT DISTINCT r.report_name
+                    FROM report_dependency r
+                    LEFT JOIN data_lineage_map d ON r.dw_table = d.target_table
+                    WHERE r.dw_table      IN ({qm})
+                       OR r.report_name   IN ({qm})
+                       OR d.source_table  IN ({qm})
+                       OR d.source_system IN ({qm})
+                """, lookup_names * 4)
+                
+                valid_reports = [row[0] for row in cursor.fetchall()]
 
-                df_usage = pd.read_sql(f"""
-                    SELECT
-                        report_name     AS "Report",
-                        user_group      AS "User Group",
-                        user_email      AS "User",
-                        access_level    AS "Access Level",
-                        run_count       AS "Run Count",
-                        last_run_timestamp AS "Last Run",
-                        refresh_frequency AS "Refresh"
-                    FROM bi_report_usage
-                    WHERE report_name IN ({placeholders})
-                    ORDER BY run_count DESC LIMIT 20
-                """, conn, params=lookup_names)
+                df_bi = pd.DataFrame()
+                df_usage = pd.DataFrame()
+                
+                if valid_reports:
+                    rep_qm = ','.join(['?'] * len(valid_reports))
+                    df_bi = pd.read_sql(f"""
+                        SELECT DISTINCT
+                            rd.report_name   AS "Report Name",
+                            rd.business_owner AS "Owner",
+                            rd.dw_table      AS "Source Table",
+                            rd.metrics_kpis  AS "Metrics & KPIs",
+                            rd.usage_frequency AS "Refresh Freq",
+                            rd.run_count     AS "Total Runs",
+                            rd.last_refreshed AS "Last Refreshed"
+                        FROM report_dependency rd
+                        WHERE rd.report_name IN ({rep_qm})
+                        ORDER BY rd.report_name
+                    """, conn, params=valid_reports)
+
+                    df_usage = pd.read_sql(f"""
+                        SELECT
+                            report_name     AS "Report",
+                            user_group      AS "User Group",
+                            user_email      AS "User",
+                            access_level    AS "Access Level",
+                            run_count       AS "Run Count",
+                            last_run_timestamp AS "Last Run",
+                            refresh_frequency AS "Refresh"
+                        FROM bi_report_usage
+                        WHERE report_name IN ({rep_qm})
+                        ORDER BY run_count DESC LIMIT 20
+                    """, conn, params=valid_reports)
 
                 if not df_bi.empty:
                     st.markdown("##### 📈 Report Definitions & KPIs")

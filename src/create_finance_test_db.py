@@ -28,6 +28,9 @@ def create_finance_db():
         CREATE TABLE IF NOT EXISTS report_dependency (
             report_name TEXT, business_owner TEXT, target_audience TEXT, dw_table TEXT, metrics_kpis TEXT, usage_frequency TEXT, run_count INTEGER, last_refreshed TEXT
         );
+        CREATE TABLE IF NOT EXISTS bi_report_usage (
+            report_name TEXT, user_group TEXT, user_email TEXT, access_level TEXT, run_count INTEGER, last_run_timestamp TEXT, refresh_frequency TEXT
+        );
     """)
 
     # Populate Lineage Map (Finance System)
@@ -75,6 +78,10 @@ def create_finance_db():
         INSERT INTO report_dependency (report_name, business_owner, target_audience, dw_table, metrics_kpis, usage_frequency, run_count, last_refreshed) VALUES
         ('Daily Trading Volume', 'Chief Risk Officer', 'Executive Board', 'fact_ledger', 'Gross Trade Volume', 'Daily', 1850, '2026-03-23'),
         ('Fraud Detection Tracker', 'Fraud Lead', 'Compliance Team', 'dim_fraud', 'High Risk Txns', 'Hourly', 4500, '2026-03-23');
+
+        INSERT INTO bi_report_usage (report_name, user_group, user_email, access_level, run_count, last_run_timestamp, refresh_frequency) VALUES
+        ('Daily Trading Volume', 'Execs', 'ceo@finance.org', 'Viewer', 850, '2026-03-23 08:00:00', 'Daily'),
+        ('Fraud Detection Tracker', 'Analysts', 'analyst@finance.org', 'Editor', 4000, '2026-03-23 09:15:00', 'Hourly');
     """)
 
     conn.commit()
