@@ -540,22 +540,25 @@ with right_col:
             multi_names = ", ".join(f"`{s['name']}`" for s in all_selected)
             st.info(f"**Multi-asset view** — {len(all_selected)} assets selected: {multi_names}. Showing detailed drill-down for `{entity}`. Scroll to Intelligence Impact Analysis for full multi-asset breakdown.")
 
-        # Build ecosystem lookup
+        # Build ecosystem lookup across all strictly selected assets
+        base_entities = [s["name"] for s in all_selected] if all_selected else [entity]
+        
         conn = get_db_conn()
         cur = conn.cursor()
         mappings = []
-        cur.execute("SELECT DISTINCT target_table FROM data_lineage_map WHERE source_table=?", (entity,))
-        mappings += [r[0] for r in cur.fetchall() if r[0]]
-        cur.execute("SELECT DISTINCT source_table FROM data_lineage_map WHERE target_table=?", (entity,))
-        mappings += [r[0] for r in cur.fetchall() if r[0]]
-        cur.execute("SELECT DISTINCT etl_pipeline FROM table_catalog WHERE table_name=?", (entity,))
-        mappings += [r[0] for r in cur.fetchall() if r[0] and r[0] != 'N/A']
-        cur.execute("SELECT DISTINCT report_name FROM report_dependency WHERE dw_table=?", (entity,))
-        mappings += [r[0] for r in cur.fetchall() if r[0]]
-        cur.execute("SELECT DISTINCT dw_table FROM report_dependency WHERE report_name=?", (entity,))
-        mappings += [r[0] for r in cur.fetchall() if r[0]]
+        for ent in base_entities:
+            cur.execute("SELECT DISTINCT target_table FROM data_lineage_map WHERE source_table=?", (ent,))
+            mappings += [r[0] for r in cur.fetchall() if r[0]]
+            cur.execute("SELECT DISTINCT source_table FROM data_lineage_map WHERE target_table=?", (ent,))
+            mappings += [r[0] for r in cur.fetchall() if r[0]]
+            cur.execute("SELECT DISTINCT etl_pipeline FROM table_catalog WHERE table_name=?", (ent,))
+            mappings += [r[0] for r in cur.fetchall() if r[0] and r[0] != 'N/A']
+            cur.execute("SELECT DISTINCT report_name FROM report_dependency WHERE dw_table=?", (ent,))
+            mappings += [r[0] for r in cur.fetchall() if r[0]]
+            cur.execute("SELECT DISTINCT dw_table FROM report_dependency WHERE report_name=?", (ent,))
+            mappings += [r[0] for r in cur.fetchall() if r[0]]
 
-        lookup_names = list(set([entity] + mappings))
+        lookup_names = list(set(base_entities + mappings))
         placeholders = ', '.join(['?'] * len(lookup_names))
 
         tab_labels = []
@@ -624,7 +627,7 @@ with right_col:
                     )
                        OR target_table  IN ({qm_ctx})
                        OR source_system IN ({qm_ctx})
-                    ORDER BY start_time DESC LIMIT 20
+                    ORDER BY start_time DESC LIMIT 200
                 """, conn, params=ctx_nodes * 3)
 
                 if not df_etl.empty:
@@ -663,7 +666,7 @@ with right_col:
                         change_description AS "Description"
                     FROM db_audit_log
                     WHERE target_object IN ({qm_ctx})
-                    ORDER BY event_time DESC LIMIT 20
+                    ORDER BY event_time DESC LIMIT 200
                 """, conn, params=ctx_nodes)
                 if not df_audit.empty:
                     ec1, ec2 = st.columns(2)
@@ -752,7 +755,7 @@ with right_col:
                             refresh_frequency AS "Refresh"
                         FROM bi_report_usage
                         WHERE report_name IN ({rep_qm})
-                        ORDER BY run_count DESC LIMIT 20
+                        ORDER BY run_count DESC LIMIT 200
                     """, conn, params=valid_reports)
 
                 if not df_bi.empty:
