@@ -581,6 +581,24 @@ with right_col:
         # GROUPED HEADER LOGIC
         header_context = ", ".join([f"{s['type'].split(' ')[0]}: {s['name']}" for s in all_selected]) if all_selected else f"{asset_type}: {entity}"
 
+        # --- UNIVERSAL CONTEXT TRAVERSAL ---
+        # Resolve all upstream and downstream nodes natively to ensure tabs populate correctly regardless of selection type
+        cursor = conn.cursor()
+        qm_main = ','.join(['?'] * len(lookup_names))
+        
+        # 1. Fetch Downstream Targets
+        cursor.execute(f"SELECT target_table FROM data_lineage_map WHERE source_table IN ({qm_main}) OR source_system IN ({qm_main})", lookup_names * 2)
+        downstream = [row[0] for row in cursor.fetchall() if row[0]]
+        
+        # 2. Fetch Upstream Sources
+        cursor.execute(f"SELECT source_table FROM data_lineage_map WHERE target_table IN ({qm_main})", lookup_names)
+        upstream = [row[0] for row in cursor.fetchall() if row[0]]
+        
+        # Unified context array
+        ctx_nodes = list(set(lookup_names + downstream + upstream))
+        qm_ctx = ','.join(['?'] * len(ctx_nodes))
+        # ------------------------------------
+
         # TAB: ETL LOGS
         with tabs[tidx]:
             tidx += 1
@@ -601,10 +619,13 @@ with right_col:
                         notes            AS "Notes",
                         db_audit_ref     AS "Audit Ref"
                     FROM etl_execution_logs
-                    WHERE pipeline_name IN ({placeholders})
-                       OR target_table  IN ({placeholders})
+                    WHERE pipeline_name IN (
+                        SELECT etl_pipeline FROM table_catalog WHERE table_name IN ({qm_ctx})
+                    )
+                       OR target_table  IN ({qm_ctx})
+                       OR source_system IN ({qm_ctx})
                     ORDER BY start_time DESC LIMIT 20
-                """, conn, params=lookup_names * 2)
+                """, conn, params=ctx_nodes * 3)
 
                 if not df_etl.empty:
                     def badge(v):
@@ -641,9 +662,9 @@ with right_col:
                         environment     AS "Env",
                         change_description AS "Description"
                     FROM db_audit_log
-                    WHERE target_object IN ({placeholders})
+                    WHERE target_object IN ({qm_ctx})
                     ORDER BY event_time DESC LIMIT 20
-                """, conn, params=lookup_names)
+                """, conn, params=ctx_nodes)
                 if not df_audit.empty:
                     ec1, ec2 = st.columns(2)
                     ec1.metric("Total Audit Events", len(df_audit))
@@ -671,9 +692,9 @@ with right_col:
                         access_level AS "Access Level",
                         granted_date AS "Granted"
                     FROM asset_access_control
-                    WHERE asset_name IN ({placeholders})
+                    WHERE asset_name IN ({qm_ctx})
                     ORDER BY asset_name, user_group
-                """, conn, params=lookup_names)
+                """, conn, params=ctx_nodes)
                 if not df_acc.empty:
                     ac1, ac2, ac3 = st.columns(3)
                     ac1.metric("Total Access Rules", len(df_acc))
@@ -692,18 +713,14 @@ with right_col:
             try:
                 # 1. Resolve selected entities to their downstream reports
                 cursor = conn.cursor()
-                qm = ','.join(['?'] * len(lookup_names))
                 cursor.execute(f"""
-                    SELECT DISTINCT r.report_name
-                    FROM report_dependency r
-                    LEFT JOIN data_lineage_map d ON r.dw_table = d.target_table
-                    WHERE r.dw_table      IN ({qm})
-                       OR r.report_name   IN ({qm})
-                       OR d.source_table  IN ({qm})
-                       OR d.source_system IN ({qm})
-                """, lookup_names * 4)
+                    SELECT DISTINCT report_name
+                    FROM report_dependency
+                    WHERE dw_table      IN ({qm_ctx})
+                       OR report_name   IN ({qm_ctx})
+                """, ctx_nodes * 2)
                 
-                valid_reports = [row[0] for row in cursor.fetchall()]
+                valid_reports = [row[0] for row in cursor.fetchall() if row[0]]
 
                 df_bi = pd.DataFrame()
                 df_usage = pd.DataFrame()
