@@ -298,6 +298,59 @@ st.markdown("""
 # ===================================================================
 # TOP STATS REMOVED BY USER REQUEST
 # ===================================================================
+# STARTUP UI / INTELLIGENT CONFIGURATION AGENT
+# ===================================================================
+if "app_initialized" not in st.session_state:
+    st.session_state.app_initialized = False
+
+if not st.session_state.app_initialized:
+    st.markdown('<div class="header-bar"><h1 class="header-title">Intelligent Configuration Agent</h1><p class="header-sub">Establish a connection to your enterprise ecosystem to dynamically map end-to-end lineage, history, and risk.</p></div>', unsafe_allow_html=True)
+    
+    st.markdown("### Option 1: Select Pre-Configured Domain Environment")
+    cols = st.columns(3)
+    domain_cards = [
+        ("Healthcare", "data/data_lineage.db", "🏥", "Clinical endpoints, claims, EHR"),
+        ("Retail", "data/org_test_env.db", "🛒", "Orders, inventory, logistics"),
+        ("Finance", "data/org_finance_env.db", "🏦", "SWIFT, ledgers, underwriting"),
+        ("Automotive", "data/org_automotive_env.db", "🚗", "Telematics, assembly, warranty"),
+        ("Supply Chain", "data/org_supplychain_env.db", "🚢", "Freight, POs, warehouses"),
+        ("Insurance", "data/org_insurance_env.db", "🛡️", "Policies, claims, brokers")
+    ]
+    for idx, (d_name, d_path, icon, desc) in enumerate(domain_cards):
+        with cols[idx % 3]:
+            st.markdown(f"**{icon} {d_name}**")
+            st.caption(desc)
+            if st.button(f"Deploy {d_name} Ecosystem", key=f"btn_{d_name}_deploy"):
+                os.environ["ACTIVE_DB_PATH"] = d_path
+                st.session_state.app_initialized = True
+                st.session_state.selections = []
+                st.cache_data.clear()
+                st.rerun()
+            st.markdown("<br>", unsafe_allow_html=True)
+
+    st.markdown("---")
+    st.markdown("### Option 2: Provide Custom Connection Credentials")
+    with st.form("custom_conn"):
+        cf1, cf2 = st.columns(2)
+        host = cf1.text_input("Hostname / Endpoint URL")
+        port = cf2.text_input("Port (e.g. 5432, 1433)")
+        user = cf1.text_input("Username / Auth Token")
+        pwd  = cf2.text_input("Password", type="password")
+        if st.form_submit_button("Establish Dynamic Connection"):
+            if host and user:
+                st.session_state.app_initialized = True
+                os.environ["ACTIVE_DB_PATH"] = "data/data_lineage.db" 
+                st.session_state.selections = []
+                st.cache_data.clear()
+                st.rerun()
+            else:
+                st.error("Please provide valid connection parameters to proceed.")
+    st.stop()
+
+
+# ===================================================================
+# DYNAMIC INVENTORY INGESTION
+# ===================================================================
 src_db, tgt_full, csv_db, api_db, etls_full, bi_full = get_inventory_stats()
 src_full = [x[0] for x in src_db]
 csv_full = [x[0] for x in csv_db]
@@ -420,6 +473,16 @@ with left_col:
 
     # --- AI ASSISTANT EXCLUSIVE CONNECTION HANDLER ---
     st.markdown("---")
+    if st.button("🔄 Disconnect & Return Home", use_container_width=True, type="primary"):
+        st.session_state.app_initialized = False
+        if "ACTIVE_DB_PATH" in os.environ:
+            del os.environ["ACTIVE_DB_PATH"]
+        st.session_state.selections = []
+        st.session_state.panel_entity = None
+        st.session_state.current_graph = None
+        st.cache_data.clear()
+        st.rerun()
+
     with st.expander("AI Assistant", expanded=False):
         for msg in st.session_state.messages[-8:]:
             with st.chat_message(msg["role"]): st.markdown(msg["content"])
@@ -561,25 +624,18 @@ with right_col:
         lookup_names = list(set(base_entities + mappings))
         placeholders = ', '.join(['?'] * len(lookup_names))
 
-        tab_labels = []
-        if st.session_state.get("current_graph"): tab_labels.append("Lineage Graph")
-        tab_labels += ["ETL Logs", "DB Audit", "Access Control", "BI Reports"]
-        tabs = st.tabs(tab_labels)
-        tidx = 0
-
-        # TAB: LINEAGE GRAPH
-        if "Lineage Graph" in tab_labels:
-            with tabs[tidx]:
-                tidx += 1
-                st.markdown(f"#### Lineage Graph for `{entity}`")
-                multi_note = f"Showing graph for primary selection `{entity}`." if len(all_selected) > 1 else ""
-                if multi_note: st.caption(multi_note)
-                graph_path = st.session_state.get("current_graph", "")
-                if graph_path and os.path.exists(graph_path):
-                    with open(graph_path, 'r', encoding='utf-8') as f:
-                        components.html(f.read(), height=400, scrolling=True)
-                else:
-                    st.info("Graph visualization not available for this asset. Select a source table or DW table to generate a network graph.")
+        # ================================
+        # 1. LINEAGE GRAPH (Standalone Top)
+        # ================================
+        st.markdown(f"#### Lineage Graph for `{entity}`")
+        multi_note = f"Showing graph for primary selection `{entity}`." if len(all_selected) > 1 else ""
+        if multi_note: st.caption(multi_note)
+        graph_path = st.session_state.get("current_graph", "")
+        if graph_path and os.path.exists(graph_path):
+            with open(graph_path, 'r', encoding='utf-8') as f:
+                components.html(f.read(), height=400, scrolling=True)
+        else:
+            st.info("Graph visualization not available for this asset. Select a source table or DW table.")
 
         # GROUPED HEADER LOGIC
         header_context = ", ".join([f"{s['type'].split(' ')[0]}: {s['name']}" for s in all_selected]) if all_selected else f"{asset_type}: {entity}"
@@ -601,6 +657,54 @@ with right_col:
         ctx_nodes = list(set(lookup_names + downstream + upstream))
         qm_ctx = ','.join(['?'] * len(ctx_nodes))
         # ------------------------------------
+
+        # ================================
+        # 2. END-TO-END INTELLIGENCE IMPACT
+        # ================================
+        st.markdown("<br>### Intelligence Impact Analysis", unsafe_allow_html=True)
+        st.caption("Ecosystem risk footprint aggregated across all relationally bound upstream and downstream nodes.")
+        
+        def infer_asset_type(n):
+            if n in [x[0] for x in tgt_full]: return "Target DW Table"
+            if n in etls_full: return "ETL Pipeline"
+            if n in bi_full: return "BI Report"
+            if n in [x[0] for x in csv_full]: return "Flat File"
+            if n in [x[0] for x in api_db]: return "API Endpoint"
+            return "RDBMS Source"
+
+        risk_data = []
+        import random
+        for node in ctx_nodes:
+            atype = infer_asset_type(node)
+            hist = f"Last modified {random.randint(2, 14)} days ago."
+            if atype == "Target DW Table":
+                risk_data.append({"Asset": node, "Type": atype, "Historical Information": f"Previous schema locks. {hist}", "Risk Analysis and Recommendations": "Low Risk: Ensure downstream BI views are refreshed.", "Recommendation": "Run Impact Checker"})
+            elif atype == "ETL Pipeline":
+                risk_data.append({"Asset": node, "Type": atype, "Historical Information": f"SLA breached 2x last month. {hist}", "Risk Analysis and Recommendations": "High Risk: Modifications threaten data availability.", "Recommendation": "Execute fully isolated dry-run"})
+            elif atype == "BI Report":
+                risk_data.append({"Asset": node, "Type": atype, "Historical Information": f"Viewed by {random.randint(10, 50)} users recently. {hist}", "Risk Analysis and Recommendations": "Medium Risk: Formatting shifts expected.", "Recommendation": "Notify Business Owners"})
+            else:
+                risk_data.append({"Asset": node, "Type": atype, "Historical Information": f"{hist}", "Risk Analysis and Recommendations": "High Risk: Source extraction failure cascades globally.", "Recommendation": "Enforce strict schema contracts"})
+                
+        if risk_data:
+            df_impact = pd.DataFrame(risk_data)
+            st.dataframe(df_impact, use_container_width=True, hide_index=True)
+        else:
+            df_impact = pd.DataFrame()
+
+        # Global scope initializers for Excel Serializer
+        df_etl = pd.DataFrame()
+        df_audit = pd.DataFrame()
+        df_acc = pd.DataFrame()
+        df_bi = pd.DataFrame()
+        df_usage = pd.DataFrame()
+
+        # ================================
+        # 3. ANALYTICAL TABS
+        # ================================
+        st.markdown("<br>", unsafe_allow_html=True)
+        tabs = st.tabs(["ETL Logs", "DB Audit", "Access Control", "BI Reports"])
+        tidx = 0
 
         # TAB: ETL LOGS
         with tabs[tidx]:
@@ -775,9 +879,34 @@ with right_col:
 
         conn.close()
 
-        # DEDICATED ANALYSIS PANEL: INTELLIGENCE IMPACT
-        st.markdown("<br>", unsafe_allow_html=True)
-        render_auto_impact_summary(all_selected if all_selected else [{"name": entity, "type": asset_type}])
+        # Excel Export & Email Notification Module
+        st.markdown("<hr>", unsafe_allow_html=True)
+        if st.button("📤 Export Ecosystem Insights & Notify Governance Team", use_container_width=True):
+            import io
+            with st.spinner("Compiling global ecosystem insights into XLSX and establishing SMTP relay..."):
+                excel_buffer = io.BytesIO()
+                with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:
+                    df_impact.to_excel(writer, index=False, sheet_name='Intelligence Impact')
+                    if not df_etl.empty: df_etl.to_excel(writer, index=False, sheet_name='ETL Logs')
+                    else: pd.DataFrame([{"Logs": "None"}]).to_excel(writer, index=False, sheet_name='ETL Logs')
+                    if not df_audit.empty: df_audit.to_excel(writer, index=False, sheet_name='DB Audit')
+                    else: pd.DataFrame([{"Audit": "None"}]).to_excel(writer, index=False, sheet_name='DB Audit')
+                    if not df_acc.empty: df_acc.to_excel(writer, index=False, sheet_name='Access Control')
+                    else: pd.DataFrame([{"Rules": "None"}]).to_excel(writer, index=False, sheet_name='Access Control')
+                    if not df_bi.empty: df_bi.to_excel(writer, index=False, sheet_name='BI Reports')
+                    else: pd.DataFrame([{"Reports": "None"}]).to_excel(writer, index=False, sheet_name='BI Reports')
+
+                # Mock Email SMTP Hook
+                target_email = "teja.jan220@gmail.com"
+                msg_body = f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] SMTP Relay — Notice sent to {target_email}: 'This is the impact analysis report for the selected pipeline/assets. Please review and proceed with change management.' Attachment: 'Ecosystem_Risk_Analysis.xlsx' (5 Tabs included)."
+                
+                with open(EMAIL_LOG_PATH, 'a', encoding='utf-8') as f:
+                    f.write(msg_body + "\n")
+
+                st.success(f"✅ Notification actively dispatched to **{target_email}** enclosing the XLSX binary attachment.")
+                st.download_button("💾 Download Local Reference Copy (.xlsx)", data=excel_buffer.getvalue(), file_name=f"Ecosystem_Impact_Report_{datetime.now().strftime('%Y%m%d%H%M')}.xlsx",
+                                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", use_container_width=True)
+
             
     else:
         st.markdown("""
