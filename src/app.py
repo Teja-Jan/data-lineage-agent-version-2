@@ -321,7 +321,7 @@ if not st.session_state.app_initialized:
             st.markdown(f"**{icon} {d_name}**")
             st.caption(desc)
             if st.button(f"Deploy {d_name} Ecosystem", key=f"btn_{d_name}_deploy"):
-                os.environ["ACTIVE_DB_PATH"] = d_path
+                os.environ["ACTIVE_DB_PATH"] = os.path.join(BASE_DIR, d_path)
                 st.session_state.app_initialized = True
                 st.session_state.selections = []
                 st.cache_data.clear()
@@ -339,7 +339,7 @@ if not st.session_state.app_initialized:
         if st.form_submit_button("Establish Dynamic Connection"):
             if host and user:
                 st.session_state.app_initialized = True
-                os.environ["ACTIVE_DB_PATH"] = "data/data_lineage.db" 
+                os.environ["ACTIVE_DB_PATH"] = os.path.join(BASE_DIR, "data", "data_lineage.db")
                 st.session_state.selections = []
                 st.cache_data.clear()
                 st.rerun()
@@ -494,7 +494,7 @@ with left_col:
 
             if any(k in p_lower for k in ["retail", "ecommerce", "sales", "test database", "generic"]):
                 import os
-                os.environ["ACTIVE_DB_PATH"] = "data/org_test_env.db"
+                os.environ["ACTIVE_DB_PATH"] = os.path.join(BASE_DIR, "data", "org_test_env.db")
                 st.cache_data.clear()
                 st.session_state.selections = []
                 success_msg = "🔄 **Connection Successful!** I've dynamically overridden the core engine string using generic credentials. I am re-routing the dashboard framework to the organizational **Retail / eCommerce** environment. Refreshing data now..."
@@ -503,7 +503,7 @@ with left_col:
                 
             elif any(k in p_lower for k in ["finance", "banking", "ledger", "transactions"]):
                 import os
-                os.environ["ACTIVE_DB_PATH"] = "data/org_finance_env.db"
+                os.environ["ACTIVE_DB_PATH"] = os.path.join(BASE_DIR, "data", "org_finance_env.db")
                 st.cache_data.clear()
                 st.session_state.selections = []
                 success_msg = "🔄 **Connection Successful!** I've dynamically overridden the core engine string using generic credentials. I am re-routing the dashboard framework to the organizational **Finance / Banking** environment. Refreshing data now..."
