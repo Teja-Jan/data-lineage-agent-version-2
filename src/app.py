@@ -322,6 +322,7 @@ if not st.session_state.app_initialized:
             st.caption(desc)
             if st.button(f"Deploy {d_name} Ecosystem", key=f"btn_{d_name}_deploy"):
                 os.environ["ACTIVE_DB_PATH"] = os.path.join(BASE_DIR, d_path)
+                os.environ["ACTIVE_DOMAIN"] = d_name.lower().replace(" ", "_")
                 st.session_state.app_initialized = True
                 st.session_state.selections = []
                 st.cache_data.clear()
@@ -329,13 +330,29 @@ if not st.session_state.app_initialized:
             st.markdown("<br>", unsafe_allow_html=True)
 
     st.markdown("---")
+    st.markdown("---")
     st.markdown("### Option 2: Provide Custom Connection Credentials")
+    conn_type = st.radio("Select Connection Type", ["Database", "REST API", "Flat File", "Cloud Storage"], horizontal=True)
     with st.form("custom_conn"):
-        cf1, cf2 = st.columns(2)
-        host = cf1.text_input("Hostname / Endpoint URL")
-        port = cf2.text_input("Port (e.g. 5432, 1433)")
-        user = cf1.text_input("Username / Auth Token")
-        pwd  = cf2.text_input("Password", type="password")
+        if conn_type == "Database":
+            cf1, cf2 = st.columns(2)
+            host = cf1.text_input("Hostname / Network Address")
+            port = cf2.text_input("Port (e.g. 5432, 1433)")
+            user = cf1.text_input("Username")
+            pwd  = cf2.text_input("Password", type="password")
+        elif conn_type == "REST API":
+            cf1, cf2 = st.columns(2)
+            host = cf1.text_input("Endpoint URL")
+            user = cf2.text_input("Bearer Token / API Key")
+        elif conn_type == "Flat File":
+            host = st.text_input("S3 Bucket / Local Filepath")
+            user = st.text_input("Schema Mapping Config (Optional)")
+        else:
+            cf1, cf2 = st.columns(2)
+            host = cf1.text_input("Cloud Provider (AWS/Azure/GCP)")
+            user = cf2.text_input("Access Key ID")
+            pwd  = st.text_input("Secret Access Key", type="password")
+
         if st.form_submit_button("Establish Dynamic Connection"):
             if host and user:
                 st.session_state.app_initialized = True
@@ -673,18 +690,44 @@ with right_col:
             return "RDBMS Source"
 
         risk_data = []
+        rules = get_risk_rules()
         import random
         for node in ctx_nodes:
             atype = infer_asset_type(node)
-            hist = f"Last modified {random.randint(2, 14)} days ago."
-            if atype == "Target DW Table":
-                risk_data.append({"Asset": node, "Type": atype, "Historical Information": f"Previous schema locks. {hist}", "Risk Analysis and Recommendations": "Low Risk: Ensure downstream BI views are refreshed.", "Recommendation": "Run Impact Checker"})
-            elif atype == "ETL Pipeline":
-                risk_data.append({"Asset": node, "Type": atype, "Historical Information": f"SLA breached 2x last month. {hist}", "Risk Analysis and Recommendations": "High Risk: Modifications threaten data availability.", "Recommendation": "Execute fully isolated dry-run"})
-            elif atype == "BI Report":
-                risk_data.append({"Asset": node, "Type": atype, "Historical Information": f"Viewed by {random.randint(10, 50)} users recently. {hist}", "Risk Analysis and Recommendations": "Medium Risk: Formatting shifts expected.", "Recommendation": "Notify Business Owners"})
+            
+            # Context-Driven Risk Matching returning precision mapped strictures
+            matched_rule = next((r for r in rules if r.get('keyword', '').lower() in node.lower()), None)
+            hist_days = random.randint(15, 360)
+            
+            if matched_rule:
+                risk_level = f"{matched_rule.get('level', 'HIGH')} Risk: {matched_rule.get('message', 'Constraint violated.')}"
+                rec = f"Enforce {matched_rule.get('keyword').upper()} compliance policy natively"
+                hist = f"Audited {hist_days} days ago against strict {matched_rule.get('keyword')} limitations."
             else:
-                risk_data.append({"Asset": node, "Type": atype, "Historical Information": f"{hist}", "Risk Analysis and Recommendations": "High Risk: Source extraction failure cascades globally.", "Recommendation": "Enforce strict schema contracts"})
+                if atype == "Target DW Table":
+                    risk_level = "Low Risk: Ensure downstream BI views are refreshed."
+                    rec = "Run Impact Checker"
+                    hist = f"Previous schema locks resolved {hist_days} days ago in Q2 2025."
+                elif atype == "ETL Pipeline":
+                    risk_level = "High Risk: Modifications threaten data availability."
+                    rec = "Execute fully isolated dry-run"
+                    hist = f"SLA breached {random.randint(1,4)}x over the last 12 months. Last incident {hist_days} days ago."
+                elif atype == "BI Report":
+                    risk_level = "Medium Risk: Formatting shifts expected."
+                    rec = "Notify Business Owners"
+                    hist = f"Viewed by {random.randint(50, 200)} users across Q1-Q3 2025."
+                else:
+                    risk_level = "High Risk: Source extraction failure cascades globally."
+                    rec = "Enforce strict schema contracts"
+                    hist = f"Schema evolved {random.randint(1,3)} times in 2025."
+
+            risk_data.append({
+                "Asset": node, 
+                "Type": atype, 
+                "Risk Analysis and Recommendations": risk_level,
+                "Historical Information": hist,
+                "Recommendation": rec
+            })
                 
         if risk_data:
             df_impact = pd.DataFrame(risk_data)

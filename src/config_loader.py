@@ -21,6 +21,10 @@ def load_config():
     return _config
 
 def get_active_domain():
+    import os
+    env_domain = os.environ.get("ACTIVE_DOMAIN")
+    if env_domain:
+        return env_domain
     cfg = load_config()
     return cfg.get('domain', 'healthcare')
 

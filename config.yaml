@@ -149,3 +149,84 @@ domains:
       - keyword: Budget
         level: MEDIUM
         message: "Budget changes cascade to P&L and Cost Center reports."
+
+  automotive:
+    rdbms_tables:
+      - Vehicles
+      - AssemblyLines
+      - Telematics
+      - Dealers
+      - WarrantyClaims
+    target_tables:
+      - Dim_Vehicle
+      - Dim_Dealer
+      - Fact_Manufacturing
+      - Fact_Warranty
+    bi_reports:
+      - Production Yield Dashboard
+      - Warranty Cost Analysis
+      - Dealer Performance Report
+    risk_rules:
+      - keyword: Vehicle
+        level: HIGH
+        message: "Critical Constraint: Modifying the VIN structure breaks the global Fact_Manufacturing telemetry sequence. Halt execution if downstream schemas aren't synced."
+      - keyword: Assembly
+        level: MEDIUM
+        message: "Operational Warning: Modifying assembly mappings alters the Production Yield KPI thresholds natively."
+      - keyword: Warranty
+        level: HIGH
+        message: "Financial Risk: Changes to claims data immediately flags Finance/Accounting P&L ledgers. Engage Business Owners."
+
+  supply_chain:
+    rdbms_tables:
+      - Inventory
+      - Shipments
+      - Warehouses
+      - Suppliers
+      - PurchaseOrders
+    target_tables:
+      - Dim_Supplier
+      - Dim_Warehouse
+      - Fact_Shipment
+      - Fact_InventoryLevels
+    bi_reports:
+      - Logistics Velocity Map
+      - Supplier Reliability Scorecard
+      - Inventory Hold Report
+    risk_rules:
+      - keyword: Shipment
+        level: HIGH
+        message: "Execution Block: Modifying Shipment tracking cascades errors into the Logistics Velocity Map. A full dry-run is mandated."
+      - keyword: Supplier
+        level: MEDIUM
+        message: "Governance Alert: Altering Vendor IDs orphans existing Fact_InventoryLevels historical spans."
+      - keyword: Warehouse
+        level: MEDIUM
+        message: "Restate location geometries via explicit API handshakes prior to metadata updates."
+
+  insurance:
+    rdbms_tables:
+      - Policies
+      - Claims
+      - Underwriters
+      - Brokers
+      - Premiums
+    target_tables:
+      - Dim_Policy
+      - Dim_Broker
+      - Fact_Premium
+      - Fact_ClaimPayout
+    bi_reports:
+      - Actuarial Risk Heatmap
+      - Broker Commission Ledger
+      - Premium Collection Report
+    risk_rules:
+      - keyword: Policy
+        level: HIGH
+        message: "PII Violation Risk: Modifying Policy data models threatens SSN and HIPAA compliance thresholds natively."
+      - keyword: Claim
+        level: HIGH
+        message: "Underwriting Constraint: Altering Claims payout mappings directly degrades the Actuarial Risk Heatmap accuracy."
+      - keyword: Premium
+        level: MEDIUM
+        message: "Financial Warning: Premium ledger shifts require strict Treasury approval prior to execution."
